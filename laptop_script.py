@@ -1,12 +1,7 @@
 from datetime import datetime
 
 import speech_recognition as sr
-import paramiko
 
-
-SERVER = "ucsdrobocar-148-12.local"
-USERNAME = "jetson"
-PASSWORD = "jetsonucsd12"
 
 recognizer = sr.Recognizer()
 
@@ -63,32 +58,19 @@ def match_command(text_recognized: str) -> tuple[str, bool]:
         return "", False
 
 
-def send_command_to_jetson(ssh_session, command: str):
+def send_command_to_jetson(topic, command: str):
     # TODO publish to ROS2 topic?
-    cmd = f'python steering.py {command}'
-    ssh_stdin, ssh_stdout, ssh_stderr = ssh_session.exec_command(cmd)
-
-
-def setup_ssh(server, username, password):
-    ssh = paramiko.SSHClient()
-    ssh.connect(server, username=username, password=password)
-
-    # Additional setup commands
-    ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command("cd projects/final")
-    # TODO activate environment
-    return ssh
+    pass
 
 
 if __name__ == "__main__":
-    #ssh = setup_ssh(SERVER, USERNAME, PASSWORD)
-
     while(keep_listening):   # loop continuously
         text_recognized = speech_to_text(verbose=True)
         intended_command, valid = match_command(text_recognized)
         
         if valid:
             print(f"Matched command {intended_command}")
-            # send_command_to_jetson(ssh, intended_command)
+            # send_command_to_jetson(topic, intended_command)
         else:
             print("No matching command found")
 
