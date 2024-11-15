@@ -1,0 +1,8 @@
+Metadata-Version: 2.1
+Name: listening_bot
+Version: 0.0.1
+Summary: Understands verbal commands and sends them to robot.
+Maintainer: Daniel Glatter, Nick Ji, Shivharsh Kand, Johnny Li
+Maintainer-email: dglatter@ucsd.edu
+License: MIT
+Requires-Dist: setuptools

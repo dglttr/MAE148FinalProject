@@ -1,0 +1,63 @@
+[1.485s] Invoking command in 'C:\Users\Daniel\Documents\Studium\4. Semester (WiSe 24 UCSD)\ECE 148 Autonomous Vehicles\MAE148FinalProject\listening_bot': PYTHONPATH=C:\Users\Daniel\Documents\Studium\4. Semester (WiSe 24 UCSD)\ECE 148 Autonomous Vehicles\MAE148FinalProject\build\listening_bot\prefix_override;c:\python38\lib\site-packages\colcon_core\task\python\colcon_distutils_commands;C:\Users\Daniel\Documents\Studium\4. Semester (WiSe 24 UCSD)\ECE 148 Autonomous Vehicles\MAE148FinalProject\install\Lib\site-packages;%PYTHONPATH% c:\python38\python.exe -W ignore:setup.py install is deprecated setup.py egg_info --egg-base ..\build\listening_bot build --build-base C:\Users\Daniel\Documents\Studium\4. Semester (WiSe 24 UCSD)\ECE 148 Autonomous Vehicles\MAE148FinalProject\build\listening_bot\build install --record C:\Users\Daniel\Documents\Studium\4. Semester (WiSe 24 UCSD)\ECE 148 Autonomous Vehicles\MAE148FinalProject\build\listening_bot\install.log --install-scripts $base/lib/listening_bot --single-version-externally-managed install_data
+[1.907s] running egg_info
+[1.938s] creating ..\build\listening_bot\listening_bot.egg-info
+[1.938s] writing ..\build\listening_bot\listening_bot.egg-info\PKG-INFO
+[1.938s] writing dependency_links to ..\build\listening_bot\listening_bot.egg-info\dependency_links.txt
+[1.938s] writing entry points to ..\build\listening_bot\listening_bot.egg-info\entry_points.txt
+[1.938s] writing requirements to ..\build\listening_bot\listening_bot.egg-info\requires.txt
+[1.938s] writing top-level names to ..\build\listening_bot\listening_bot.egg-info\top_level.txt
+[1.938s] writing manifest file '..\build\listening_bot\listening_bot.egg-info\SOURCES.txt'
+[1.985s] reading manifest file '..\build\listening_bot\listening_bot.egg-info\SOURCES.txt'
+[1.985s] writing manifest file '..\build\listening_bot\listening_bot.egg-info\SOURCES.txt'
+[1.985s] running build
+[1.985s] running build_py
+[1.985s] creating C:\Users\Daniel\Documents\Studium\4. Semester (WiSe 24 UCSD)\ECE 148 Autonomous Vehicles\MAE148FinalProject\build\listening_bot\build\lib\listening_bot
+[1.985s] copying listening_bot\hardware.py -> C:\Users\Daniel\Documents\Studium\4. Semester (WiSe 24 UCSD)\ECE 148 Autonomous Vehicles\MAE148FinalProject\build\listening_bot\build\lib\listening_bot
+[1.985s] copying listening_bot\publisher_laptop.py -> C:\Users\Daniel\Documents\Studium\4. Semester (WiSe 24 UCSD)\ECE 148 Autonomous Vehicles\MAE148FinalProject\build\listening_bot\build\lib\listening_bot
+[1.985s] copying listening_bot\speech_to_text.py -> C:\Users\Daniel\Documents\Studium\4. Semester (WiSe 24 UCSD)\ECE 148 Autonomous Vehicles\MAE148FinalProject\build\listening_bot\build\lib\listening_bot
+[1.985s] copying listening_bot\subscriber_jetson.py -> C:\Users\Daniel\Documents\Studium\4. Semester (WiSe 24 UCSD)\ECE 148 Autonomous Vehicles\MAE148FinalProject\build\listening_bot\build\lib\listening_bot
+[2.000s] copying listening_bot\__init__.py -> C:\Users\Daniel\Documents\Studium\4. Semester (WiSe 24 UCSD)\ECE 148 Autonomous Vehicles\MAE148FinalProject\build\listening_bot\build\lib\listening_bot
+[2.000s] running install
+[2.000s] running install_lib
+[2.032s] creating C:\Users\Daniel\Documents\Studium\4. Semester (WiSe 24 UCSD)\ECE 148 Autonomous Vehicles\MAE148FinalProject\install\Lib\site-packages\listening_bot
+[2.032s] copying C:\Users\Daniel\Documents\Studium\4. Semester (WiSe 24 UCSD)\ECE 148 Autonomous Vehicles\MAE148FinalProject\build\listening_bot\build\lib\listening_bot\hardware.py -> C:\Users\Daniel\Documents\Studium\4. Semester (WiSe 24 UCSD)\ECE 148 Autonomous Vehicles\MAE148FinalProject\install\Lib\site-packages\listening_bot
+[2.032s] copying C:\Users\Daniel\Documents\Studium\4. Semester (WiSe 24 UCSD)\ECE 148 Autonomous Vehicles\MAE148FinalProject\build\listening_bot\build\lib\listening_bot\publisher_laptop.py -> C:\Users\Daniel\Documents\Studium\4. Semester (WiSe 24 UCSD)\ECE 148 Autonomous Vehicles\MAE148FinalProject\install\Lib\site-packages\listening_bot
+[2.032s] copying C:\Users\Daniel\Documents\Studium\4. Semester (WiSe 24 UCSD)\ECE 148 Autonomous Vehicles\MAE148FinalProject\build\listening_bot\build\lib\listening_bot\speech_to_text.py -> C:\Users\Daniel\Documents\Studium\4. Semester (WiSe 24 UCSD)\ECE 148 Autonomous Vehicles\MAE148FinalProject\install\Lib\site-packages\listening_bot
+[2.047s] copying C:\Users\Daniel\Documents\Studium\4. Semester (WiSe 24 UCSD)\ECE 148 Autonomous Vehicles\MAE148FinalProject\build\listening_bot\build\lib\listening_bot\subscriber_jetson.py -> C:\Users\Daniel\Documents\Studium\4. Semester (WiSe 24 UCSD)\ECE 148 Autonomous Vehicles\MAE148FinalProject\install\Lib\site-packages\listening_bot
+[2.047s] copying C:\Users\Daniel\Documents\Studium\4. Semester (WiSe 24 UCSD)\ECE 148 Autonomous Vehicles\MAE148FinalProject\build\listening_bot\build\lib\listening_bot\__init__.py -> C:\Users\Daniel\Documents\Studium\4. Semester (WiSe 24 UCSD)\ECE 148 Autonomous Vehicles\MAE148FinalProject\install\Lib\site-packages\listening_bot
+[2.047s] byte-compiling C:\Users\Daniel\Documents\Studium\4. Semester (WiSe 24 UCSD)\ECE 148 Autonomous Vehicles\MAE148FinalProject\install\Lib\site-packages\listening_bot\hardware.py to hardware.cpython-38.pyc
+[2.047s] byte-compiling C:\Users\Daniel\Documents\Studium\4. Semester (WiSe 24 UCSD)\ECE 148 Autonomous Vehicles\MAE148FinalProject\install\Lib\site-packages\listening_bot\publisher_laptop.py to publisher_laptop.cpython-38.pyc
+[2.047s] byte-compiling C:\Users\Daniel\Documents\Studium\4. Semester (WiSe 24 UCSD)\ECE 148 Autonomous Vehicles\MAE148FinalProject\install\Lib\site-packages\listening_bot\speech_to_text.py to speech_to_text.cpython-38.pyc
+[2.063s] byte-compiling C:\Users\Daniel\Documents\Studium\4. Semester (WiSe 24 UCSD)\ECE 148 Autonomous Vehicles\MAE148FinalProject\install\Lib\site-packages\listening_bot\subscriber_jetson.py to subscriber_jetson.cpython-38.pyc
+[2.063s] byte-compiling C:\Users\Daniel\Documents\Studium\4. Semester (WiSe 24 UCSD)\ECE 148 Autonomous Vehicles\MAE148FinalProject\install\Lib\site-packages\listening_bot\__init__.py to __init__.cpython-38.pyc
+[2.063s] running install_data
+[2.063s] creating C:\Users\Daniel\Documents\Studium\4. Semester (WiSe 24 UCSD)\ECE 148 Autonomous Vehicles\MAE148FinalProject\install\share\ament_index\resource_index\packages
+[2.063s] copying resource\listening_bot -> C:\Users\Daniel\Documents\Studium\4. Semester (WiSe 24 UCSD)\ECE 148 Autonomous Vehicles\MAE148FinalProject\install\share\ament_index\resource_index\packages
+[2.063s] creating C:\Users\Daniel\Documents\Studium\4. Semester (WiSe 24 UCSD)\ECE 148 Autonomous Vehicles\MAE148FinalProject\install\share\listening_bot
+[2.063s] copying package.xml -> C:\Users\Daniel\Documents\Studium\4. Semester (WiSe 24 UCSD)\ECE 148 Autonomous Vehicles\MAE148FinalProject\install\share\listening_bot
+[2.063s] running install_egg_info
+[2.094s] Copying ..\build\listening_bot\listening_bot.egg-info to C:\Users\Daniel\Documents\Studium\4. Semester (WiSe 24 UCSD)\ECE 148 Autonomous Vehicles\MAE148FinalProject\install\Lib\site-packages\listening_bot-0.0.1-py3.8.egg-info
+[2.157s] running install_scripts
+[2.328s] Installing publisher-script.py script to C:\Users\Daniel\Documents\Studium\4. Semester (WiSe 24 UCSD)\ECE 148 Autonomous Vehicles\MAE148FinalProject\install\lib\listening_bot
+[2.344s] Installing publisher.exe script to C:\Users\Daniel\Documents\Studium\4. Semester (WiSe 24 UCSD)\ECE 148 Autonomous Vehicles\MAE148FinalProject\install\lib\listening_bot
+[2.344s] Installing subscriber-script.py script to C:\Users\Daniel\Documents\Studium\4. Semester (WiSe 24 UCSD)\ECE 148 Autonomous Vehicles\MAE148FinalProject\install\lib\listening_bot
+[2.360s] Installing subscriber.exe script to C:\Users\Daniel\Documents\Studium\4. Semester (WiSe 24 UCSD)\ECE 148 Autonomous Vehicles\MAE148FinalProject\install\lib\listening_bot
+[2.360s] writing list of installed files to 'C:\Users\Daniel\Documents\Studium\4. Semester (WiSe 24 UCSD)\ECE 148 Autonomous Vehicles\MAE148FinalProject\build\listening_bot\install.log'
+[2.360s] c:\python38\lib\site-packages\setuptools\dist.py:495: SetuptoolsDeprecationWarning: Invalid dash-separated options
+[2.360s] !!
+[2.360s] 
+[2.360s]         ********************************************************************************
+[2.360s]         Usage of dash-separated 'script-dir' will not be supported in future
+[2.360s]         versions. Please use the underscore name 'script_dir' instead.
+[2.360s] 
+[2.360s]         By 2025-Mar-03, you need to update your project and remove deprecated calls
+[2.360s]         or your builds will no longer be supported.
+[2.360s] 
+[2.360s]         See https://setuptools.pypa.io/en/latest/userguide/declarative_config.html for details.
+[2.360s]         ********************************************************************************
+[2.360s] 
+[2.360s] !!
+[2.360s]   opt = self.warn_dash_deprecation(opt, section)
+[2.360s] c:\python38\lib\site-packages\setuptools\_distutils\dist.py:261: UserWarning: Unknown distribution option: 'tests_require'
+[2.360s]   warnings.warn(msg)
+[2.375s] Invoked command in 'C:\Users\Daniel\Documents\Studium\4. Semester (WiSe 24 UCSD)\ECE 148 Autonomous Vehicles\MAE148FinalProject\listening_bot' returned '0': PYTHONPATH=C:\Users\Daniel\Documents\Studium\4. Semester (WiSe 24 UCSD)\ECE 148 Autonomous Vehicles\MAE148FinalProject\build\listening_bot\prefix_override;c:\python38\lib\site-packages\colcon_core\task\python\colcon_distutils_commands;C:\Users\Daniel\Documents\Studium\4. Semester (WiSe 24 UCSD)\ECE 148 Autonomous Vehicles\MAE148FinalProject\install\Lib\site-packages;%PYTHONPATH% c:\python38\python.exe -W ignore:setup.py install is deprecated setup.py egg_info --egg-base ..\build\listening_bot build --build-base C:\Users\Daniel\Documents\Studium\4. Semester (WiSe 24 UCSD)\ECE 148 Autonomous Vehicles\MAE148FinalProject\build\listening_bot\build install --record C:\Users\Daniel\Documents\Studium\4. Semester (WiSe 24 UCSD)\ECE 148 Autonomous Vehicles\MAE148FinalProject\build\listening_bot\install.log --install-scripts $base/lib/listening_bot --single-version-externally-managed install_data

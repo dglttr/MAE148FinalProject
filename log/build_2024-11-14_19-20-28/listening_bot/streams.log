@@ -1,0 +1,33 @@
+[1.750s] Invoking command in 'C:\dev\MAE148FinalProject\listening_bot': PYTHONPATH=C:\dev\MAE148FinalProject\build\listening_bot\prefix_override;c:\python38\lib\site-packages\colcon_core\task\python\colcon_distutils_commands;C:\dev\MAE148FinalProject\install\Lib\site-packages;%PYTHONPATH% c:\python38\python.exe -W ignore:setup.py install is deprecated setup.py egg_info --egg-base ..\build\listening_bot build --build-base C:\dev\MAE148FinalProject\build\listening_bot\build install --record C:\dev\MAE148FinalProject\build\listening_bot\install.log --single-version-externally-managed install_data
+[2.297s] running egg_info
+[2.313s] writing ..\build\listening_bot\listening_bot.egg-info\PKG-INFO
+[2.328s] writing dependency_links to ..\build\listening_bot\listening_bot.egg-info\dependency_links.txt
+[2.328s] writing entry points to ..\build\listening_bot\listening_bot.egg-info\entry_points.txt
+[2.328s] writing requirements to ..\build\listening_bot\listening_bot.egg-info\requires.txt
+[2.328s] writing top-level names to ..\build\listening_bot\listening_bot.egg-info\top_level.txt
+[2.391s] reading manifest file '..\build\listening_bot\listening_bot.egg-info\SOURCES.txt'
+[2.391s] writing manifest file '..\build\listening_bot\listening_bot.egg-info\SOURCES.txt'
+[2.391s] running build
+[2.391s] running build_py
+[2.391s] copying listening_bot\hardware.py -> C:\dev\MAE148FinalProject\build\listening_bot\build\lib\listening_bot
+[2.391s] copying listening_bot\publisher_laptop.py -> C:\dev\MAE148FinalProject\build\listening_bot\build\lib\listening_bot
+[2.391s] copying listening_bot\speech_to_text.py -> C:\dev\MAE148FinalProject\build\listening_bot\build\lib\listening_bot
+[2.391s] copying listening_bot\subscriber_jetson.py -> C:\dev\MAE148FinalProject\build\listening_bot\build\lib\listening_bot
+[2.406s] copying listening_bot\__init__.py -> C:\dev\MAE148FinalProject\build\listening_bot\build\lib\listening_bot
+[2.406s] running install
+[2.406s] running install_lib
+[2.422s] running install_data
+[2.438s] copying resource\listening_bot -> C:\dev\MAE148FinalProject\install\share\ament_index\resource_index\packages
+[2.438s] copying package.xml -> C:\dev\MAE148FinalProject\install\share\listening_bot
+[2.438s] running install_egg_info
+[2.469s] removing 'C:\dev\MAE148FinalProject\install\Lib\site-packages\listening_bot-0.0.1-py3.8.egg-info' (and everything under it)
+[2.469s] Copying ..\build\listening_bot\listening_bot.egg-info to C:\dev\MAE148FinalProject\install\Lib\site-packages\listening_bot-0.0.1-py3.8.egg-info
+[2.500s] running install_scripts
+[2.703s] Installing actuate-script.py script to C:\dev\MAE148FinalProject\install\lib\listening_bot
+[2.703s] Installing actuate.exe script to C:\dev\MAE148FinalProject\install\lib\listening_bot
+[2.703s] Installing publisher-script.py script to C:\dev\MAE148FinalProject\install\lib\listening_bot
+[2.703s] Installing publisher.exe script to C:\dev\MAE148FinalProject\install\lib\listening_bot
+[2.703s] Installing subscriber-script.py script to C:\dev\MAE148FinalProject\install\lib\listening_bot
+[2.703s] Installing subscriber.exe script to C:\dev\MAE148FinalProject\install\lib\listening_bot
+[2.719s] writing list of installed files to 'C:\dev\MAE148FinalProject\build\listening_bot\install.log'
+[2.735s] Invoked command in 'C:\dev\MAE148FinalProject\listening_bot' returned '0': PYTHONPATH=C:\dev\MAE148FinalProject\build\listening_bot\prefix_override;c:\python38\lib\site-packages\colcon_core\task\python\colcon_distutils_commands;C:\dev\MAE148FinalProject\install\Lib\site-packages;%PYTHONPATH% c:\python38\python.exe -W ignore:setup.py install is deprecated setup.py egg_info --egg-base ..\build\listening_bot build --build-base C:\dev\MAE148FinalProject\build\listening_bot\build install --record C:\dev\MAE148FinalProject\build\listening_bot\install.log --single-version-externally-managed install_data

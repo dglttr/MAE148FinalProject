@@ -4,11 +4,12 @@
   <name>listening_bot</name>
   <version>0.0.1</version>
   <description>Understands verbal commands and sends them to robot.</description>
-  <maintainer>Daniel Glatter, Nick Ji, Shivharsh Kand, Johnny Li</maintainer>
+  <maintainer email="dglatter@ucsd.edu">Daniel Glatter, Nick Ji, Shivharsh Kand, Johnny Li</maintainer>
   <license>MIT</license>
 
   <exec_depend>rclpy</exec_depend>
   <exec_depend>std_msgs</exec_depend>
+  <exec_depend>geometry_msgs</exec_depend>
 
   <test_depend>ament_copyright</test_depend>
   <test_depend>ament_flake8</test_depend>
