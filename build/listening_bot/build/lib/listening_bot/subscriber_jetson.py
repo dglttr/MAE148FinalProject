@@ -1,4 +1,4 @@
-from hardware import actuate_forward, actuate_backward, actuate_left, actuate_right, actuate_stop, check_lidar
+from listening_bot.hardware import actuate_forward, actuate_backward, actuate_left, actuate_right, actuate_stop, check_lidar
 
 import rclpy
 from rclpy.node import Node
@@ -39,7 +39,7 @@ class SteeringCommandSubscriber(Node):
 
     def listener_callback(self, msg):
         self.get_logger().info(f'Command received: "{msg.data}". Actuating...')
-        actuate(msg.data)        
+        #actuate(msg.data)        
 
     def avoid_collision(self):
         too_close = check_lidar()
