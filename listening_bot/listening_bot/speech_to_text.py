@@ -5,8 +5,6 @@ import speech_recognition as sr
 
 recognizer = sr.Recognizer()
 
-keep_listening = True
-
 def speech_to_text(verbose: bool = False) -> str:
     try:
         # use the microphone as source for input.
@@ -56,20 +54,3 @@ def match_command(text_recognized: str) -> tuple:
     else:
         print(f'No matching command found for recognized text "{text_recognized}"')
         return "", False
-
-
-def send_command_to_jetson(topic, command: str):
-    # TODO publish to ROS2 topic?
-    pass
-
-
-if __name__ == "__main__":
-    while(keep_listening):   # loop continuously
-        text_recognized = speech_to_text(verbose=True)
-        intended_command, valid = match_command(text_recognized)
-        
-        if valid:
-            print(f"Matched command {intended_command}")
-            # send_command_to_jetson(topic, intended_command)
-        else:
-            print("No matching command found")        
