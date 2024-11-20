@@ -75,6 +75,7 @@ class VESC_:
 
 NODE_NAME = 'word_actuation_node'
 TOPIC_NAME = '/cmd_vel'
+DEFAULT_RPM = 3000
 
 class WordActuation(Node):
     def __init__(self):
@@ -167,24 +168,24 @@ class WordActuation(Node):
         return data_c 
 	
     def actuate_backward(self):
-        self.vesc.send_rpm(-1500)
+        self.vesc.send_rpm(-DEFAULT_RPM)
         self.vesc.send_servo_angle(0)
         
-    def actuate_left(self):
-        self.vesc.send_rpm(1500)
-        self.vesc.send_servo_angle(-0.6)
+    def actuate_left(self, angle=0.0):
+        self.vesc.send_rpm(DEFAULT_RPM)
+        self.vesc.send_servo_angle(angle)
 
-    def actuate_right(self):
-        self.vesc.send_rpm(1500)
-        self.vesc.send_servo_angle(0.6)
+    def actuate_right(self, angle=1.0):
+        self.vesc.send_rpm(DEFAULT_RPM)
+        self.vesc.send_servo_angle(angle)
 
     def actuate_stop(self):
         self.vesc.send_rpm(0)
-        self.vesc.send_servo_angle(0)
+        self.vesc.send_servo_angle(0.5)
 
-    def actuate_forward(self):
-        self.vesc.send_rpm(3000)
-        self.vesc.send_servo_angle(0)
+    def actuate_forward(self, rpm=DEFAULT_RPM):
+        self.vesc.send_rpm(rpm)
+        self.vesc.send_servo_angle(0.5)
 
 def initialize_hardware():
     rclpy.init(args=None)
@@ -202,8 +203,7 @@ def initialize_hardware():
 if __name__ == "__main__":
     print('MAKE SURE YOUR CAR IS ON A STAND AND WHEELS CAN SPIN FREELY')
     input('Hit ENTER to continue...')
-    v = VESC_()
-    v.print_firmware_version()
+    '''v = VESC_()
     backward_rpm = -2000
     steering_angle_left = 0.0  # in the range of [0, 1]
     steering_angle_right = 1.0
@@ -225,4 +225,16 @@ if __name__ == "__main__":
     
     print('stop')
     time.sleep(2)
-    v.send_rpm(0)
+    v.send_rpm(0)'''
+
+    act = WordActuation()
+    act.actuate_left()
+    time.sleep(2)
+    act.actuate_right()
+    time.sleep(2)
+    act.actuate_forward()
+    time.sleep(2)
+    act.actuate_backward()
+    time.sleep(2)
+    act.actuate_stop()
+
