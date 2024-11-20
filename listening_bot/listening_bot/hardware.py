@@ -47,8 +47,8 @@ class VESC_:
             print("VESC Connected")
             self.send_rpm(0)
             self.inverted = -1 if self.is_inverted else 1
-        except:
-            print("Could not connect to VESC")
+        except Exception as e:
+            print(f"Could not connect to VESC. Reason: {e}")
 
     def print_firmware_version(self):
         print("VESC Firmware Version: ", self.v.get_firmware_version())
