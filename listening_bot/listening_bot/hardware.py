@@ -75,7 +75,7 @@ class VESC_:
     
     def actuate_backward(self):
         self.send_rpm(-DEFAULT_RPM)
-        self.send_servo_angle(0)
+        self.send_servo_angle(0.5)
         
     def actuate_left(self, angle=0.0):
         self.send_rpm(DEFAULT_RPM)
@@ -254,7 +254,7 @@ if __name__ == "__main__":
 
     print("Left")
     v.actuate_left()
-    time.sleep(3)
+    """time.sleep(3)
 
     print("Right")
     v.actuate_right()
@@ -269,5 +269,5 @@ if __name__ == "__main__":
     time.sleep(3)
 
     print("Stop")
-    v.actuate_stop()
+    v.actuate_stop()"""
 
