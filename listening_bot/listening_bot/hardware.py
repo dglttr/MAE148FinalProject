@@ -32,6 +32,7 @@ from pyvesc import VESC
 
 VESC_NODE_NAME = 'vesc_client'
 VESC_TOPIC_NAME = 'vesc'
+DEFAULT_RPM = 3000
 
 
 class VESC_:
@@ -71,11 +72,31 @@ class VESC_:
 
     def get_motor_position(self):
         return self.v.get_motor_position()
+    
+    def actuate_backward(self):
+        self.send_rpm(-DEFAULT_RPM)
+        self.send_servo_angle(0)
+        
+    def actuate_left(self, angle=0.0):
+        self.send_rpm(DEFAULT_RPM)
+        self.send_servo_angle(angle)
+
+    def actuate_right(self, angle=1.0):
+        self.send_rpm(DEFAULT_RPM)
+        self.send_servo_angle(angle)
+
+    def actuate_stop(self):
+        self.send_rpm(0)
+        self.send_servo_angle(0.5)
+
+    def actuate_forward(self, rpm=DEFAULT_RPM):
+        self.send_rpm(rpm)
+        self.send_servo_angle(0.5)
 
 
 NODE_NAME = 'word_actuation_node'
 TOPIC_NAME = '/cmd_vel'
-DEFAULT_RPM = 3000
+
 
 class WordActuation(Node):
     def __init__(self):
@@ -205,12 +226,13 @@ class WordActuation(Node):
 if __name__ == "__main__":
     print('MAKE SURE YOUR CAR IS ON A STAND AND WHEELS CAN SPIN FREELY')
     input('Hit ENTER to continue...')
-    '''v = VESC_()
+    v = VESC_()
     backward_rpm = -2000
     steering_angle_left = 0.0  # in the range of [0, 1]
     steering_angle_right = 1.0
     steering_angle_straight = 0.5
 
+    """
     v.send_servo_angle(steering_angle_straight)
 
     print('right turn')
@@ -227,16 +249,16 @@ if __name__ == "__main__":
     
     print('stop')
     time.sleep(2)
-    v.send_rpm(0)'''
+    v.send_rpm(0)
+    """
 
-    act = WordActuation()
-    act.actuate_left()
+    v.actuate_left()
     time.sleep(2)
-    act.actuate_right()
+    v.actuate_right()
     time.sleep(2)
-    act.actuate_forward()
+    v.actuate_forward()
     time.sleep(2)
-    act.actuate_backward()
+    v.actuate_backward()
     time.sleep(2)
-    act.actuate_stop()
+    v.actuate_stop()
 
