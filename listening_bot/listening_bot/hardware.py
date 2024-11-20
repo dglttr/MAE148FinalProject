@@ -80,6 +80,7 @@ DEFAULT_RPM = 3000
 class WordActuation(Node):
     def __init__(self):
         super().__init__(NODE_NAME)
+        self.initialize_node()
         self.vesc = VESC_()
         self.rpm_subscriber = self.create_subscription(Twist, TOPIC_NAME, self.callback, 10)
 
@@ -187,18 +188,19 @@ class WordActuation(Node):
         self.vesc.send_rpm(rpm)
         self.vesc.send_servo_angle(0.5)
 
-def initialize_hardware():
-    rclpy.init(args=None)
-    try:
-        word_actuation = WordActuation()
-        rclpy.spin(word_actuation)
-        word_actuation.destroy_node()
-        rclpy.shutdown()
-    except:
-        word_actuation.get_logger().info(f'Could not connect to VESC, Shutting down {NODE_NAME}...')
-        word_actuation.destroy_node()
-        rclpy.shutdown()
-        word_actuation.get_logger().info(f'{NODE_NAME} shut down successfully.')
+    def initialize_node(self):
+        rclpy.init(args=None)
+
+        try:
+            rclpy.spin(self)
+            self.destroy_node()
+            rclpy.shutdown()
+        except Exception as e:
+            self.get_logger().info(f'Could not connect to VESC, Shutting down {NODE_NAME}...')
+            self.get_logger().info(f'Exception was {e}')
+            self.destroy_node()
+            rclpy.shutdown()
+            self.get_logger().info(f'{NODE_NAME} shut down successfully.')
 
 if __name__ == "__main__":
     print('MAKE SURE YOUR CAR IS ON A STAND AND WHEELS CAN SPIN FREELY')
