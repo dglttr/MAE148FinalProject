@@ -42,6 +42,7 @@ class SteeringCommandSubscriber(Node):
         #actuate(msg.data)        
 
     def avoid_collision(self):
+        self.get_logger().info('Checking for collisions')
         too_close = check_lidar()
 
         if too_close:
