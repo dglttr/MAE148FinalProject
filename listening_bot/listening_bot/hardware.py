@@ -252,13 +252,22 @@ if __name__ == "__main__":
     v.send_rpm(0)
     """
 
+    print("Left")
     v.actuate_left()
-    time.sleep(2)
+    time.sleep(3)
+
+    print("Right")
     v.actuate_right()
-    time.sleep(2)
+    time.sleep(3)
+
+    print("Forward")
     v.actuate_forward()
-    time.sleep(2)
+    time.sleep(3)
+
+    print("Backward")
     v.actuate_backward()
-    time.sleep(2)
+    time.sleep(3)
+
+    print("Stop")
     v.actuate_stop()
 
