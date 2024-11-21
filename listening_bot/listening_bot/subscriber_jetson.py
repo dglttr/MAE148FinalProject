@@ -1,35 +1,55 @@
 from listening_bot.hardware import actuate_forward, actuate_backward, actuate_left, actuate_right, actuate_stop, check_lidar
 
+import time
+
 import rclpy
 from rclpy.node import Node
 
 from std_msgs.msg import String
+from geometry_msgs.msg import Twist
+
+ACTUATOR_TOPIC_NAME = '/cmd_vel'
+DEFAULT_THROTTLE = 0.5
+MAX_THROTTLE = 1.0
+ZERO_THROTTLE = 0.0
 
 
 def actuate(command: str):
+    """Returns tuple (steering_float, throttle_float, valid)"""
     if command == "forward":
-        actuate_forward()
+        #actuate_forward()
+        return 0, DEFAULT_THROTTLE, True
     elif command == "backward":
-        actuate_backward()
+        #actuate_backward()
+        return 0, -DEFAULT_THROTTLE, True
     elif command == "left":
-        actuate_left()
+        #actuate_left()
+        return -1.0, DEFAULT_THROTTLE, True
     elif command == "right":
-        actuate_right()
+        #actuate_right()
+        return 1.0, DEFAULT_THROTTLE, True
     elif command == "stop":
-        actuate_stop()
+        #actuate_stop()
+        return 0, ZERO_THROTTLE, True
     else:
-        print("Invalid command.")
+        return None, None, False
 
 
 class SteeringCommandSubscriber(Node):
 
     def __init__(self):
         super().__init__('steering_command_subscriber')
+
+        # Subscriber
         self.subscription = self.create_subscription(
             String,
             'steering_commands',
             self.listener_callback,
             10)
+        
+        # Publisher for actuation
+        self.twist_publisher = self.create_publisher(Twist, ACTUATOR_TOPIC_NAME, 10)
+        self.twist_cmd = Twist()
 
         # Regularly check for collisions
         timer_period = 0.5  # seconds
@@ -39,7 +59,18 @@ class SteeringCommandSubscriber(Node):
 
     def listener_callback(self, msg):
         self.get_logger().info(f'Command received: "{msg.data}". Actuating...')
-        #actuate(msg.data)        
+        
+        steering_float, throttle_float, valid = actuate(msg.data)
+
+        if valid:
+            try:
+                # publish control signals
+                self.twist_cmd.angular.z = steering_float
+                self.twist_cmd.linear.x = throttle_float
+                self.twist_publisher.publish(self.twist_cmd)
+            except KeyboardInterrupt:
+                self.twist_cmd.linear.x = ZERO_THROTTLE     # stop movement
+                self.twist_publisher.publish(self.twist_cmd)
 
     def avoid_collision(self):
         self.get_logger().info('Checking for collisions')
@@ -49,12 +80,38 @@ class SteeringCommandSubscriber(Node):
             actuate("stop")
 
 
+def testing():
+    publisher = Node.create_publisher(String, 'steering_commands', 10)
+    msg = String()
+
+    msg.data = "forward"
+    publisher.publish(msg)
+    time.sleep(3)
+
+    msg.data = "backward"
+    publisher.publish(msg)
+    time.sleep(3)
+
+    msg.data = "left"
+    publisher.publish(msg)
+    time.sleep(3)
+
+    msg.data = "right"
+    publisher.publish(msg)
+    time.sleep(3)
+
+    msg.data = "stop"
+    publisher.publish(msg)
+
+
 def main(args=None):
     rclpy.init(args=args)
 
     steering_command_subscriber = SteeringCommandSubscriber()
 
     rclpy.spin(steering_command_subscriber)
+
+    testing()
 
     # Destroy the node explicitly
     # (optional - otherwise it will be done automatically
