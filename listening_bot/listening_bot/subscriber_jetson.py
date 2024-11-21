@@ -54,6 +54,10 @@ class SteeringCommandSubscriber(Node):
         self.twist_publisher = self.create_publisher(Twist, ACTUATOR_TOPIC_NAME, 10)
         self.twist_cmd = Twist()
 
+        # Ensure there are no stops in between
+        self.keep_moving_timer = self.create_timer(0.01, self.keep_moving)
+        self.current_command = ""
+
         # Regularly check for collisions
         timer_period = 0.5  # seconds
         self.timer = self.create_timer(timer_period, self.avoid_collision)
@@ -75,6 +79,9 @@ class SteeringCommandSubscriber(Node):
                 self.twist_cmd.linear.x = ZERO_THROTTLE     # stop movement
                 self.twist_publisher.publish(self.twist_cmd)
 
+    def keep_moving(self):
+        self.twist_publisher.publish(self.twist_cmd)
+        
     def avoid_collision(self):
         self.get_logger().info('Checking for collisions')
         too_close = check_lidar()
