@@ -12,25 +12,28 @@ ACTUATOR_TOPIC_NAME = '/cmd_vel'
 DEFAULT_THROTTLE = 0.5
 MAX_THROTTLE = 1.0
 ZERO_THROTTLE = 0.0
+MAX_LEFT_ANGLE = -1.0
+MAX_RIGHT_ANGLE = 1.0
+STRAIGHT_ANGLE = 0.0
 
 
 def actuate(command: str):
     """Returns tuple (steering_float, throttle_float, valid)"""
     if command == "forward":
         #actuate_forward()
-        return 0, DEFAULT_THROTTLE, True
+        return STRAIGHT_ANGLE, DEFAULT_THROTTLE, True
     elif command == "backward":
         #actuate_backward()
-        return 0, -DEFAULT_THROTTLE, True
+        return STRAIGHT_ANGLE, -DEFAULT_THROTTLE, True
     elif command == "left":
         #actuate_left()
-        return -1.0, DEFAULT_THROTTLE, True
+        return MAX_LEFT_ANGLE, DEFAULT_THROTTLE, True
     elif command == "right":
         #actuate_right()
-        return 1.0, DEFAULT_THROTTLE, True
+        return MAX_RIGHT_ANGLE, DEFAULT_THROTTLE, True
     elif command == "stop":
         #actuate_stop()
-        return 0, ZERO_THROTTLE, True
+        return STRAIGHT_ANGLE, ZERO_THROTTLE, True
     else:
         return None, None, False
 
