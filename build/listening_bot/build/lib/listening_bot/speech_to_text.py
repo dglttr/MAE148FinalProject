@@ -51,6 +51,8 @@ def match_command(text_recognized: str) -> tuple:
         return "left", True
     elif text_recognized in ["right"]:
         return "right", True
+    elif text_recognized in ["stop"]:
+        return "stop", True
     else:
         print(f'No matching command found for recognized text "{text_recognized}"')
         return "", False
