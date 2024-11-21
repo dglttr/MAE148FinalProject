@@ -1,4 +1,4 @@
-import listening_bot.listening_bot.hardware as hardware
+import _deprecated.hardware as hardware
 
 def connect_to_topic():
     # TODO

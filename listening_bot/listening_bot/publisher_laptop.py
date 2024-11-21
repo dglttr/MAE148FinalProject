@@ -1,16 +1,35 @@
-from listening_bot.speech_to_text import speech_to_text, match_command
+from listening_bot.speech_to_text import speech_to_text
 
 import rclpy
 from rclpy.node import Node
 
 from std_msgs.msg import String
 
+COMMAND_TOPIC_NAME = 'steering_commands'
+
+
+def match_command(text_recognized: str) -> tuple[str, bool]:
+    """Matches recognized text to the supported commands. Returns command and flag indicating if the command is supported."""
+    if text_recognized in ["forward"]:
+        return "forward", True
+    elif text_recognized in ["backwards", "backward"]:
+        return "backward", True
+    elif text_recognized in ["left"]:
+        return "left", True
+    elif text_recognized in ["right"]:
+        return "right", True
+    elif text_recognized in ["stop"]:
+        return "stop", True
+    else:
+        print(f'No matching command found for recognized text "{text_recognized}"')
+        return "", False
+    
 
 class SteeringCommandPublisher(Node):
 
     def __init__(self):
         super().__init__('command_publisher')
-        self.publisher_ = self.create_publisher(String, 'steering_commands', 10)
+        self.publisher_ = self.create_publisher(String, COMMAND_TOPIC_NAME, 10)
         timer_period = 0.01  # seconds
         self.timer = self.create_timer(timer_period, self.timer_callback)
 
