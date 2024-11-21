@@ -7,7 +7,7 @@ from sensor_msgs.msg import LaserScan
 
 COMMAND_TOPIC_NAME = 'steering_commands'
 ACTUATOR_TOPIC_NAME = '/cmd_vel'
-LIDAR_TOPIC_NAME = 'scan'
+LIDAR_TOPIC_NAME = '/scan'
 
 DEFAULT_THROTTLE = 0.5
 MAX_THROTTLE = 1.0
@@ -15,6 +15,8 @@ ZERO_THROTTLE = 0.0
 MAX_LEFT_ANGLE = -1.0
 MAX_RIGHT_ANGLE = 1.0
 STRAIGHT_ANGLE = 0.0
+
+MIN_ALLOWED_DISTANCE = 0.2
 
 
 def get_steering_values_from_command(command: str) -> tuple[float, float, bool]:
@@ -44,7 +46,7 @@ class SteeringCommandSubscriber(Node):
         # Commands subscription
         self.commands_subscription = self.create_subscription(String, COMMAND_TOPIC_NAME, self.command_callback, 10)
 
-        # TODO LIDAR subscription
+        # LIDAR subscription
         self.lidar_subscription = self.create_subscription(LaserScan, LIDAR_TOPIC_NAME, self.lidar_callback, 10)
         
         # Publisher for actuation
@@ -53,7 +55,6 @@ class SteeringCommandSubscriber(Node):
 
         # Ensure car keeps moving until receiving another command
         self.keep_moving_timer = self.create_timer(0.01, self.keep_moving)
-        self.current_command = ""
 
     def command_callback(self, msg):
         command = msg.data
@@ -71,9 +72,16 @@ class SteeringCommandSubscriber(Node):
         self.twist_publisher.publish(self.twist_cmd)
         
     def lidar_callback(self, msg):
-        too_close = False#msg.data    # TODO check array
+        ranges = msg.ranges
+        start_idx = int(len(ranges) * 0.5)
+        end_idx = len(ranges) - 1
+        front_ranges = ranges[start_idx:end_idx]
+        min_distance = min(front_ranges)
+
+        too_close = True if min_distance <= MIN_ALLOWED_DISTANCE else False
 
         if too_close:
+            self.get_logger().info(f'Too close ({min_distance} m). Stopping vehicle...')
             self.publish_to_vesc(STRAIGHT_ANGLE, ZERO_THROTTLE)     # stop movement
 
     def publish_to_vesc(self, steering_angle: float, throttle: float):
