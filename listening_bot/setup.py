@@ -21,8 +21,7 @@ setup(
     entry_points={
         'console_scripts': [
             'publisher = listening_bot.publisher_laptop:main',
-            'subscriber = listening_bot.subscriber_jetson:main',
-            'actuate = listening_bot.hardware:main'
+            'subscriber = listening_bot.subscriber_jetson:main'
         ],
     },
 )
