@@ -61,6 +61,7 @@ class SteeringCommandSubscriber(Node):
         self.timeout = datetime.now()
 
     def command_callback(self, msg):
+        """Move car according to incoming commands."""
         command = msg.data
         self.get_logger().info(f'Command received: "{command}". Actuating...')
         
@@ -86,6 +87,7 @@ class SteeringCommandSubscriber(Node):
             self.stop_car()
         
     def lidar_callback(self, msg):
+        """Listen to LIDAR signal and stop car if an obstacle gets too close."""
         ranges = msg.ranges
         start_idx = int(len(ranges) * 0.5)
         end_idx = len(ranges) - 1
@@ -99,6 +101,7 @@ class SteeringCommandSubscriber(Node):
             self.stop_car()
 
     def publish_to_vesc(self, steering_angle: float, throttle: float):
+        """Publish steering angle and throttle value to VESC topic (/cmd_vel),"""
         self.twist_cmd.angular.z = steering_angle
         self.twist_cmd.linear.x = throttle
         self.twist_publisher.publish(self.twist_cmd)

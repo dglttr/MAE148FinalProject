@@ -4,6 +4,7 @@ import speech_recognition as sr
 
 
 def speech_to_text(verbose: bool = False) -> str:
+    """Listen to microphone, use Google API for speech to text, return  recognized text."""
     recognizer = sr.Recognizer()
 
     try:

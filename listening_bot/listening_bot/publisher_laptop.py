@@ -31,9 +31,10 @@ class SteeringCommandPublisher(Node):
         super().__init__('command_publisher')
         self.publisher_ = self.create_publisher(String, COMMAND_TOPIC_NAME, 10)
         timer_period = 0.01  # seconds
-        self.timer = self.create_timer(timer_period, self.timer_callback)
+        self.timer = self.create_timer(timer_period, self.listen_and_send_command)
 
-    def timer_callback(self):
+    def listen_and_send_command(self):
+        """Listen to microphone, find the spoken command and communicate it to Jetson."""
         msg = String()
 
         text_recognized = speech_to_text(verbose=True)
