@@ -1,3 +1,5 @@
+from datetime import datetime
+
 import rclpy
 from rclpy.node import Node
 
@@ -17,6 +19,7 @@ MAX_RIGHT_ANGLE = 1.0
 STRAIGHT_ANGLE = 0.0
 
 MIN_ALLOWED_DISTANCE = 0.2
+TIMEOUT = 10    # when to stop after receiving command (in seconds)
 
 
 def get_steering_values_from_command(command: str) -> tuple[float, float, bool]:
@@ -55,6 +58,7 @@ class SteeringCommandSubscriber(Node):
 
         # Ensure car keeps moving until receiving another command
         self.keep_moving_timer = self.create_timer(0.01, self.keep_moving)
+        self.timeout = datetime.now()
 
     def command_callback(self, msg):
         command = msg.data
@@ -64,12 +68,22 @@ class SteeringCommandSubscriber(Node):
 
         if valid:
             try:
+                self.timeout = datetime.now()
                 self.publish_to_vesc(steering_float, throttle_float)
             except KeyboardInterrupt:
-                self.publish_to_vesc(STRAIGHT_ANGLE, ZERO_THROTTLE)     # stop movement
+                self.stop_car()
 
+    def stop_car(self):
+        self.publish_to_vesc(STRAIGHT_ANGLE, ZERO_THROTTLE)
+    
     def keep_moving(self):
-        self.twist_publisher.publish(self.twist_cmd)
+        """Keep moving according to last command unless more than X seconds have passed (timeout)."""
+        time_passed = (datetime.now() - self.timeout).seconds
+        if time_passed <= TIMEOUT:      # Check that timeout has not lapsed
+            self.twist_publisher.publish(self.twist_cmd)
+        else:
+            self.get_logger().info(f"Command timed out after {TIMEOUT} seconds. Stopping car...")
+            self.stop_car()
         
     def lidar_callback(self, msg):
         ranges = msg.ranges
@@ -82,7 +96,7 @@ class SteeringCommandSubscriber(Node):
 
         if too_close:
             self.get_logger().info(f'Too close ({min_distance} m). Stopping vehicle...')
-            self.publish_to_vesc(STRAIGHT_ANGLE, ZERO_THROTTLE)     # stop movement
+            self.stop_car()
 
     def publish_to_vesc(self, steering_angle: float, throttle: float):
         self.twist_cmd.angular.z = steering_angle
