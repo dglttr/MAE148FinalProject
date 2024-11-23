@@ -3,7 +3,6 @@ from datetime import datetime
 import rclpy
 from rclpy.node import Node
 
-from std_msgs.msg import String
 from geometry_msgs.msg import Twist
 from sensor_msgs.msg import LaserScan
 
@@ -11,34 +10,11 @@ COMMAND_TOPIC_NAME = 'steering_commands'
 ACTUATOR_TOPIC_NAME = '/cmd_vel'
 LIDAR_TOPIC_NAME = '/scan'
 
-DEFAULT_THROTTLE = 0.5
-MAX_THROTTLE = 1.0
 ZERO_THROTTLE = 0.0
-MAX_LEFT_ANGLE = -1.0
-MAX_RIGHT_ANGLE = 1.0
 STRAIGHT_ANGLE = 0.0
 
 MIN_ALLOWED_DISTANCE = 0.2
 TIMEOUT = 10    # when to stop after receiving command (in seconds)
-
-
-def get_steering_values_from_command(command: str) -> tuple[float, float, bool]:
-    """Translates passed command into steering angle and throttle values.
-    
-    :Returns: tuple (steering_float, throttle_float, valid)
-    """
-    if command == "forward":
-        return STRAIGHT_ANGLE, DEFAULT_THROTTLE, True
-    elif command == "backward":
-        return STRAIGHT_ANGLE, -DEFAULT_THROTTLE, True
-    elif command == "left":
-        return MAX_LEFT_ANGLE, DEFAULT_THROTTLE, True
-    elif command == "right":
-        return MAX_RIGHT_ANGLE, DEFAULT_THROTTLE, True
-    elif command == "stop":
-        return STRAIGHT_ANGLE, ZERO_THROTTLE, True
-    else:
-        return None, None, False
 
 
 class SteeringCommandSubscriber(Node):
@@ -47,7 +23,7 @@ class SteeringCommandSubscriber(Node):
         super().__init__('steering_command_subscriber')
 
         # Commands subscription
-        self.commands_subscription = self.create_subscription(String, COMMAND_TOPIC_NAME, self.command_callback, 10)
+        self.commands_subscription = self.create_subscription(Twist, COMMAND_TOPIC_NAME, self.command_callback, 10)
 
         # LIDAR subscription
         self.lidar_subscription = self.create_subscription(LaserScan, LIDAR_TOPIC_NAME, self.lidar_callback, 10)
@@ -62,17 +38,15 @@ class SteeringCommandSubscriber(Node):
 
     def command_callback(self, msg):
         """Move car according to incoming commands."""
-        command = msg.data
-        self.get_logger().info(f'Command received: "{command}". Actuating...')
-        
-        steering_float, throttle_float, valid = get_steering_values_from_command(command)
+        steering_angle = msg.angular.z
+        throttle = msg.linear.x
+        self.get_logger().info(f'Received steering values: steering angle = {steering_angle}, throttle = {throttle}. Actuating...')
 
-        if valid:
-            try:
-                self.timeout = datetime.now()
-                self.publish_to_vesc(steering_float, throttle_float)
-            except KeyboardInterrupt:
-                self.stop_car()
+        try:
+            self.timeout = datetime.now()
+            self.publish_to_vesc(steering_angle, throttle)
+        except KeyboardInterrupt:
+            self.stop_car()
 
     def stop_car(self):
         self.publish_to_vesc(STRAIGHT_ANGLE, ZERO_THROTTLE)
