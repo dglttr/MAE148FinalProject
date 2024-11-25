@@ -69,8 +69,9 @@ class SteeringCommandSubscriber(Node):
     def lidar_callback(self, msg):
         """Listen to LIDAR signal and stop car if an obstacle gets too close."""
         ranges = msg.ranges
-        start_idx = int(len(ranges) * 0.5)
-        end_idx = len(ranges) - 1
+        # Filter: Only check between 10% and 40% (roughly front third)
+        start_idx = int(len(ranges) * 0.1)
+        end_idx = int(len(ranges) * 0.4)
         front_ranges = ranges[start_idx:end_idx]
         min_distance = min(front_ranges)
         self.get_logger().info(f"Min. distance: {min_distance}")
