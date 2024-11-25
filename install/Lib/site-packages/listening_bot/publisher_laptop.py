@@ -1,31 +1,37 @@
-from listening_bot.speech_to_text import speech_to_text, match_command
+from listening_bot.speech_processing import speech_to_text, get_steering_values_from_text
 
 import rclpy
 from rclpy.node import Node
 
-from std_msgs.msg import String
+from geometry_msgs.msg import Twist
+
+COMMAND_TOPIC_NAME = 'steering_commands'
 
 
 class SteeringCommandPublisher(Node):
 
     def __init__(self):
         super().__init__('command_publisher')
-        self.publisher_ = self.create_publisher(String, 'steering_commands', 10)
+        self.publisher_ = self.create_publisher(Twist, COMMAND_TOPIC_NAME, 10)
+        self.twist_cmd = Twist()
+
         timer_period = 0.01  # seconds
-        self.timer = self.create_timer(timer_period, self.timer_callback)
+        self.timer = self.create_timer(timer_period, self.listen_and_send_command)
 
-    def timer_callback(self):
-        msg = String()
-
+    def listen_and_send_command(self):
+        """Listen to microphone, find the spoken command, parse steering values and communicate to Jetson."""
         text_recognized = speech_to_text(verbose=True)
-        intended_command, valid = match_command(text_recognized)
+
+        if text_recognized is None:
+            return
         
-        if valid:
-            self.get_logger().info(f"Matched command {intended_command}")
-            msg.data = intended_command
-            self.publisher_.publish(msg)
-        else:
-            self.get_logger().info("No matching command found")      
+        steering_angle, throttle = get_steering_values_from_text(text_recognized)
+        
+        if (steering_angle is not None) and (throttle is not None):
+            self.get_logger().info(f"Matched steering values: steering angle = {steering_angle}, throttle = {throttle}")
+            self.twist_cmd.angular.z = steering_angle
+            self.twist_cmd.linear.x = throttle
+            self.publisher_.publish(self.twist_cmd)
 
 
 def main(args=None):

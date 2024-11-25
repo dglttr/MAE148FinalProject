@@ -1,4 +1,3 @@
 [console_scripts]
-actuate = listening_bot.hardware:main
 publisher = listening_bot.publisher_laptop:main
 subscriber = listening_bot.subscriber_jetson:main

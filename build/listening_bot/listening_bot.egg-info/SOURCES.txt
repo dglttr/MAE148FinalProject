@@ -9,9 +9,9 @@ setup.py
 ../build/listening_bot/listening_bot.egg-info/top_level.txt
 ../build/listening_bot/listening_bot.egg-info/zip-safe
 listening_bot/__init__.py
-listening_bot/hardware.py
 listening_bot/publisher_laptop.py
-listening_bot/speech_to_text.py
+listening_bot/run_object_detection_on_oak.py
+listening_bot/speech_processing.py
 listening_bot/subscriber_jetson.py
 resource/listening_bot
 test/test_copyright.py
