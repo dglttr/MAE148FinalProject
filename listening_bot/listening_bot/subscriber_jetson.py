@@ -36,6 +36,8 @@ class SteeringCommandSubscriber(Node):
         self.keep_moving_timer = self.create_timer(0.01, self.keep_moving)
         self.command_start_time = None
 
+        self.get_logger().info('Start listening for commands...')
+
     def command_callback(self, msg):
         """Move car according to incoming commands."""
         self.get_logger().info(f'Received CMD: {msg}')
@@ -63,6 +65,7 @@ class SteeringCommandSubscriber(Node):
         else:
             self.get_logger().info(f"Command timed out after {SAFETY_TIMEOUT} seconds. Stopping car...")
             self.stop_car()
+            self.command_start_time = None  # reset safety timeout
         
     def lidar_callback(self, msg):
         """Listen to LIDAR signal and stop car if an obstacle gets too close."""
