@@ -74,6 +74,7 @@ class SteeringCommandSubscriber(Node):
         front_ranges = ranges[start_idx:end_idx]
         min_distance = min(front_ranges)
         self.get_logger().info(f"Min. distance: {min_distance}")
+        self.get_logger().info(f'Ranges: {ranges}')
 
         too_close = True if min_distance <= MIN_ALLOWED_DISTANCE else False
 
