@@ -40,7 +40,6 @@ class SteeringCommandSubscriber(Node):
 
     def command_callback(self, msg):
         """Move car according to incoming commands."""
-        self.get_logger().info(f'Received CMD: {msg}')
         steering_angle = msg.angular.z
         throttle = msg.linear.x
         self.get_logger().info(f'Received steering values: steering angle = {steering_angle}, throttle = {throttle}. Actuating...')
