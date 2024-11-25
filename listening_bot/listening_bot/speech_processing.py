@@ -60,7 +60,7 @@ def speech_to_text(verbose: bool = False) -> str:
         print("Unknown value error. Did you say anything?")
 
 
-def get_steering_values_from_text(text_recognized: str) -> tuple[float, float]:
+def get_steering_values_from_text(text_recognized: str) -> tuple:
     """Matches recognized text to the supported commands. Returns command and flag indicating if the command is supported."""
     # Make sure safety prefix is uttered first
     text_recognized = text_recognized.lower()

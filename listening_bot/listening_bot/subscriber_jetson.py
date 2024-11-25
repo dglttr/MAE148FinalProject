@@ -14,7 +14,7 @@ ZERO_THROTTLE = 0.0
 STRAIGHT_ANGLE = 0.0
 
 MIN_ALLOWED_DISTANCE = 0.2
-TIMEOUT = 10    # when to stop after receiving command (in seconds)
+SAFETY_TIMEOUT = 10    # when to stop after receiving command (in seconds)
 
 
 class SteeringCommandSubscriber(Node):
@@ -34,16 +34,17 @@ class SteeringCommandSubscriber(Node):
 
         # Ensure car keeps moving until receiving another command
         self.keep_moving_timer = self.create_timer(0.01, self.keep_moving)
-        self.timeout = datetime.now()
+        self.command_start_time = None
 
     def command_callback(self, msg):
         """Move car according to incoming commands."""
+        self.get_logger().info(f'Received CMD: {msg}')
         steering_angle = msg.angular.z
         throttle = msg.linear.x
         self.get_logger().info(f'Received steering values: steering angle = {steering_angle}, throttle = {throttle}. Actuating...')
 
         try:
-            self.timeout = datetime.now()
+            self.command_start_time = datetime.now()
             self.publish_to_vesc(steering_angle, throttle)
         except KeyboardInterrupt:
             self.stop_car()
@@ -53,11 +54,14 @@ class SteeringCommandSubscriber(Node):
     
     def keep_moving(self):
         """Keep moving according to last command unless more than X seconds have passed (timeout)."""
-        time_passed = (datetime.now() - self.timeout).seconds
-        if time_passed <= TIMEOUT:      # Check that timeout has not lapsed
+        if self.command_start_time is None:    # at the beginning, when no command has been sent yet
+            return        
+        
+        time_passed = (datetime.now() - self.command_start_time).seconds
+        if time_passed <= SAFETY_TIMEOUT:      # Check that timeout has not lapsed
             self.twist_publisher.publish(self.twist_cmd)
         else:
-            self.get_logger().info(f"Command timed out after {TIMEOUT} seconds. Stopping car...")
+            self.get_logger().info(f"Command timed out after {SAFETY_TIMEOUT} seconds. Stopping car...")
             self.stop_car()
         
     def lidar_callback(self, msg):
