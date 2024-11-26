@@ -13,7 +13,7 @@ LIDAR_TOPIC_NAME = '/scan'
 ZERO_THROTTLE = 0.0
 STRAIGHT_ANGLE = 0.0
 
-MIN_ALLOWED_DISTANCE = 0.2
+MIN_ALLOWED_DISTANCE = 0.4  # in meters
 SAFETY_TIMEOUT = 10    # when to stop after receiving command (in seconds)
 
 
@@ -74,8 +74,6 @@ class SteeringCommandSubscriber(Node):
         end_idx = int(len(ranges) * 0.4)
         front_ranges = ranges[start_idx:end_idx]
         min_distance = min(front_ranges)
-        self.get_logger().info(f"Min. distance: {min_distance}")
-        self.get_logger().info(f'Ranges: {ranges}')
 
         too_close = True if min_distance <= MIN_ALLOWED_DISTANCE else False
 
