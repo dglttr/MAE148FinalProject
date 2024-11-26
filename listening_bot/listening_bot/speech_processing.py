@@ -1,11 +1,15 @@
 from datetime import datetime
+import os
 
 import speech_recognition as sr
+import requests
 
 
-SAFETY_PREFIX = "hey car"   # words that have to be spoken before any action is taken (set to "", None or False if not desired)
+SAFETY_PREFIX = "sonic"   # words that have to be spoken before any action is taken (set to "", None or False if not desired)
 
-DEFAULT_THROTTLE = 0.5
+TIME_TO_LISTEN = 4      # time to listen (will then stop listening to process); in seconds
+
+DEFAULT_THROTTLE = 0.2
 MAX_THROTTLE = 1.0
 ZERO_THROTTLE = 0.0
 MAX_LEFT_ANGLE = -1.0
@@ -19,6 +23,19 @@ COMMAND_VALUES = {
     "right": (MAX_RIGHT_ANGLE, DEFAULT_THROTTLE),
     "stop": (STRAIGHT_ANGLE, ZERO_THROTTLE)
 }
+
+LLM_SYSTEM_PROMPT = """
+Extract the command from this sentence. We need to extract three things: the direction (only left or right), the steering angle (as a number between 0 and 45) and the throttle value (from 0 to 1).
+In your response, only respond with left or right, followed by a number indicating the angle of the turn, followed by the throttle value. If no throttle is given, output "default". If no turn is given, return "straight 0".
+Examples:
+- "please please take a left turn of 45 degrees here" should result in "left 45 throttle default".
+- "go straight" results in "straight 0 throttle default"
+- "be very quick, full throttle" results in "straight 0 throttle 1"
+- "be kinda slow and take a right turn" results in "right 45 throttle 0.1"
+- "normal speed" results in "straight 0 throttle default"
+- "I want you to take a stroll, turning right 32 degrees" results in "right 32 throttle default"
+Respond to this sentence: 
+"""
 
 
 def speech_to_text(verbose: bool = False) -> str:
@@ -37,7 +54,7 @@ def speech_to_text(verbose: bool = False) -> str:
             #listens for the user's input
             if verbose:
                 print("Start listening")
-            audio = recognizer.listen(mic_source, phrase_time_limit=2)
+            audio = recognizer.listen(mic_source, phrase_time_limit=TIME_TO_LISTEN)
             if verbose:
                 print("Stopped listening")
             
@@ -59,6 +76,26 @@ def speech_to_text(verbose: bool = False) -> str:
     except sr.UnknownValueError:
         print("Unknown value error. Did you say anything?")
 
+
+def make_gemini_request(text: str) -> str:
+    url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent"
+
+    headers = {"Content-Type": "application/json"}
+
+    data = {
+        "contents": [
+            {"parts": [
+                    {"text": LLM_SYSTEM_PROMPT + text}
+                ]
+            }
+        ]
+    }
+
+    # Send the POST request
+    response = requests.post(f"{url}?key={os.environ['API_KEY']}", headers=headers, json=data)
+
+    # Print the response
+    return response.json()['candidates'][0]['content']['parts'][0]['text']
 
 def get_steering_values_from_text(text_recognized: str) -> tuple:
     """Matches recognized text to the supported commands. Returns command and flag indicating if the command is supported."""
@@ -85,7 +122,30 @@ def get_steering_values_from_text(text_recognized: str) -> tuple:
     elif text_recognized in ["stop"]:
         return COMMAND_VALUES["stop"]
     
-    # TODO More complicated strings - degree angles, throttle numbers, ...
+    # LLM-based More complicated strings
+    time_before_llm = datetime.now()
+    response = make_gemini_request(text_recognized) # looks like: 'left 35 throttle 0.2'
+    llm_latency = (datetime.now() - time_before_llm).microseconds / 1000
+    print(f'Response: {response} (latency: {llm_latency} ms)')
+
+    direction, angle, _, throttle_value = response.split()
+    
+    # Convert angle
+    if direction == "left":
+        steering_angle = -1 * float(angle) / 45.0
+    elif direction == "right":
+        steering_angle = float(angle) / 45.0
+    else:
+        steering_angle = 0
+
+    # Throttle
+    if throttle_value == "default":
+        throttle = DEFAULT_THROTTLE
+    else:
+        throttle = float(throttle_value)
+
+    if (type(steering_angle is float) and (type(throttle) is float)):
+        return steering_angle, throttle 
 
     # No match
     print(f'No suitable command found for recognized text "{text_recognized}"')
