@@ -5,7 +5,7 @@ import speech_recognition as sr
 import requests
 
 
-SAFETY_PREFIX = "sonic"   # words that have to be spoken before any action is taken (set to "", None or False if not desired)
+SAFETY_PREFIX = ""   # words that have to be spoken before any action is taken (set to "", None or False if not desired)
 
 TIME_TO_LISTEN = 4      # time to listen (will then stop listening to process); in seconds
 
@@ -16,6 +16,9 @@ MAX_LEFT_ANGLE = -1.0
 MAX_RIGHT_ANGLE = 1.0
 STRAIGHT_ANGLE = 0.0
 
+FASTER_INCREMENT = 0.2
+SLOWER_INCREMENT = 0.2
+
 COMMAND_VALUES = {
     "forward": (STRAIGHT_ANGLE, DEFAULT_THROTTLE),
     "backward": (STRAIGHT_ANGLE, -DEFAULT_THROTTLE),
@@ -23,9 +26,9 @@ COMMAND_VALUES = {
     "right": (MAX_RIGHT_ANGLE, DEFAULT_THROTTLE),
     "stop": (STRAIGHT_ANGLE, ZERO_THROTTLE)
 }
-
+# reverse
 LLM_SYSTEM_PROMPT = """
-Extract the command from this sentence. We need to extract three things: the direction (only left or right), the steering angle (as a number between 0 and 45) and the throttle value (from 0 to 1).
+Extract the command from this sentence. We need to extract three things: the direction (only left or right), the steering angle (as a number between 0 and 45) and the throttle value (from -1 to 1). Everything positive (0 to 1) is considered forward, all negative throttle value (below 0 to -1) are considered backward/in reverse. 
 In your response, only respond with left or right, followed by a number indicating the angle of the turn, followed by the throttle value. If no throttle is given, output "default". If no turn is given, return "straight 0".
 Examples:
 - "please please take a left turn of 45 degrees here" should result in "left 45 throttle default".
@@ -34,7 +37,9 @@ Examples:
 - "be kinda slow and take a right turn" results in "right 45 throttle 0.1"
 - "normal speed" results in "straight 0 throttle default"
 - "I want you to take a stroll, turning right 32 degrees" results in "right 32 throttle default"
-Respond to this sentence: 
+- "u-turn" results in "left 45 throttle default"
+- "reverse" results in "left 38 throttle 0.4" 
+
 """
 
 
@@ -77,27 +82,21 @@ def speech_to_text(verbose: bool = False) -> str:
         print("Unknown value error. Did you say anything?")
 
 
-def make_gemini_request(text: str) -> str:
+def make_gemini_request(text: str, current_direction, current_angle, current_throttle) -> str:
     url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent"
 
     headers = {"Content-Type": "application/json"}
 
-    data = {
-        "contents": [
-            {"parts": [
-                    {"text": LLM_SYSTEM_PROMPT + text}
-                ]
-            }
-        ]
-    }
+    llm_prompt = LLM_SYSTEM_PROMPT + text
 
-    # Send the POST request
+    # Package up and send the POST request
+    data = {"contents": [{"parts": [{"text": llm_prompt}]}]}
     response = requests.post(f"{url}?key={os.environ['GOOGLE_API_KEY']}", headers=headers, json=data)
 
     # Print the response
     return response.json()['candidates'][0]['content']['parts'][0]['text']
 
-def get_steering_values_from_text(text_recognized: str) -> tuple:
+def get_steering_values_from_text(text_recognized: str, current_angle, current_throttle) -> tuple:
     """Matches recognized text to the supported commands. Returns command and flag indicating if the command is supported."""
     # Make sure safety prefix is uttered first
     text_recognized = text_recognized.lower()
@@ -124,7 +123,7 @@ def get_steering_values_from_text(text_recognized: str) -> tuple:
     
     # LLM-based More complicated strings
     time_before_llm = datetime.now()
-    response = make_gemini_request(text_recognized) # looks like: 'left 35 throttle 0.2'
+    response = make_gemini_request(text_recognized, current_angle, current_throttle) # looks like: 'left 35 throttle 0.2'
     llm_latency = (datetime.now() - time_before_llm).microseconds / 1000
     print(f'Response: {response} (latency: {llm_latency} ms)')
 
@@ -136,7 +135,7 @@ def get_steering_values_from_text(text_recognized: str) -> tuple:
     elif direction == "right":
         steering_angle = float(angle) / 45.0
     else:
-        steering_angle = 0
+        steering_angle = 0.0
 
     # Throttle
     if throttle_value == "default":

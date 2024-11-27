@@ -25,7 +25,7 @@ class SteeringCommandPublisher(Node):
         if text_recognized is None:
             return
         
-        steering_angle, throttle = get_steering_values_from_text(text_recognized)
+        steering_angle, throttle = get_steering_values_from_text(text_recognized, current_angle=, current_throttle=)
         
         if (steering_angle is not None) and (throttle is not None):
             self.get_logger().info(f"Matched steering values: steering angle = {steering_angle}, throttle = {throttle}")
