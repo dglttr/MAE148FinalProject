@@ -19,26 +19,29 @@ STRAIGHT_ANGLE = 0.0
 FASTER_INCREMENT = 0.2
 SLOWER_INCREMENT = 0.2
 
+DEFAULT_TIMEOUT = 10    # when to stop after receiving command (in seconds)
+
 COMMAND_VALUES = {
-    "forward": (STRAIGHT_ANGLE, DEFAULT_THROTTLE),
+    "forward": (STRAIGHT_ANGLE, DEFAULT_THROTTLE, DEFAULT_TIMEOUT),
     "backward": (STRAIGHT_ANGLE, -DEFAULT_THROTTLE),
     "left": (MAX_LEFT_ANGLE, DEFAULT_THROTTLE),
     "right": (MAX_RIGHT_ANGLE, DEFAULT_THROTTLE),
     "stop": (STRAIGHT_ANGLE, ZERO_THROTTLE)
 }
-# reverse
+
 LLM_SYSTEM_PROMPT = """
 Extract the command from this sentence. We need to extract three things: the direction (only left or right), the steering angle (as a number between 0 and 45) and the throttle value (from -1 to 1). Everything positive (0 to 1) is considered forward, all negative throttle value (below 0 to -1) are considered backward/in reverse. 
 In your response, only respond with left or right, followed by a number indicating the angle of the turn, followed by the throttle value. If no throttle is given, output "default". If no turn is given, return "straight 0".
+"direction angle throttle throttle_value timeout"
 Examples:
-- "please please take a left turn of 45 degrees here" should result in "left 45 throttle default".
-- "go straight" results in "straight 0 throttle default"
-- "be very quick, full throttle" results in "straight 0 throttle 1"
-- "be kinda slow and take a right turn" results in "right 45 throttle 0.1"
-- "normal speed" results in "straight 0 throttle default"
-- "I want you to take a stroll, turning right 32 degrees" results in "right 32 throttle default"
-- "u-turn" results in "left 45 throttle default"
-- "reverse" results in "left 38 throttle 0.4" 
+- "please please take a left turn of 45 degrees here" should result in "left 45 throttle default default".
+- "go straight" results in "straight 0 throttle default default"
+- "be very quick, full throttle" results in "straight 0 throttle 1 default"
+- "be kinda slow and take a right turn" results in "right 45 throttle 0.1 default"
+- "normal speed" results in "straight 0 throttle default default"
+- "I want you to take a stroll, turning right 32 degrees" results in "right 32 throttle default default"
+- "u-turn" results in "left 45 throttle default default"
+- "reverse" results in "left 38 throttle 0.4 default"
 
 """
 
@@ -123,7 +126,7 @@ def get_steering_values_from_text(text_recognized: str, current_angle, current_t
     
     # LLM-based More complicated strings
     time_before_llm = datetime.now()
-    response = make_gemini_request(text_recognized, current_angle, current_throttle) # looks like: 'left 35 throttle 0.2'
+    response = make_gemini_request(text_recognized, current_angle, current_throttle) # looks like: 'left 35 throttle 0.2 8'
     llm_latency = (datetime.now() - time_before_llm).microseconds / 1000
     print(f'Response: {response} (latency: {llm_latency} ms)')
 
@@ -144,7 +147,7 @@ def get_steering_values_from_text(text_recognized: str, current_angle, current_t
         throttle = float(throttle_value)
 
     if (type(steering_angle is float) and (type(throttle) is float)):
-        return steering_angle, throttle 
+        return steering_angle, throttle
 
     # No match
     print(f'No suitable command found for recognized text "{text_recognized}"')

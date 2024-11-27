@@ -35,6 +35,7 @@ class SteeringCommandSubscriber(Node):
         # Ensure car keeps moving until receiving another command
         self.keep_moving_timer = self.create_timer(0.01, self.keep_moving)
         self.command_start_time = None
+        self.timeout = SAFETY_TIMEOUT
 
         self.get_logger().info('Start listening for commands...')
 
@@ -42,6 +43,7 @@ class SteeringCommandSubscriber(Node):
         """Move car according to incoming commands."""
         steering_angle = msg.angular.z
         throttle = msg.linear.x
+        timeout = ...
         self.get_logger().info(f'Received steering values: steering angle = {steering_angle}, throttle = {throttle}. Actuating...')
 
         try:
@@ -59,10 +61,10 @@ class SteeringCommandSubscriber(Node):
             return        
         
         time_passed = (datetime.now() - self.command_start_time).seconds
-        if time_passed <= SAFETY_TIMEOUT:      # Check that timeout has not lapsed
+        if time_passed <= self.timeout:      # Check that timeout has not lapsed
             self.twist_publisher.publish(self.twist_cmd)
         else:
-            self.get_logger().info(f"Command timed out after {SAFETY_TIMEOUT} seconds. Stopping car...")
+            self.get_logger().info(f"Command timed out after {self.timeout} seconds. Stopping car...")
             self.stop_car()
             self.command_start_time = None  # reset safety timeout
         
