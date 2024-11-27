@@ -92,7 +92,7 @@ def make_gemini_request(text: str) -> str:
     }
 
     # Send the POST request
-    response = requests.post(f"{url}?key={os.environ['API_KEY']}", headers=headers, json=data)
+    response = requests.post(f"{url}?key={os.environ['GOOGLE_API_KEY']}", headers=headers, json=data)
 
     # Print the response
     return response.json()['candidates'][0]['content']['parts'][0]['text']
