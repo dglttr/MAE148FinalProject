@@ -1,3 +1,0 @@
-[console_scripts]
-publisher = listening_bot.publisher_laptop:main
-subscriber = listening_bot.subscriber_jetson:main
