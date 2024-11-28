@@ -13,7 +13,7 @@ LIDAR_TOPIC_NAME = '/scan'
 ZERO_THROTTLE = 0.0
 STRAIGHT_ANGLE = 0.0
 
-MIN_ALLOWED_DISTANCE = 0.2
+MIN_ALLOWED_DISTANCE = 0.4  # in meters
 SAFETY_TIMEOUT = 10    # when to stop after receiving command (in seconds)
 
 
@@ -36,9 +36,10 @@ class SteeringCommandSubscriber(Node):
         self.keep_moving_timer = self.create_timer(0.01, self.keep_moving)
         self.command_start_time = None
 
+        self.get_logger().info('Start listening for commands...')
+
     def command_callback(self, msg):
         """Move car according to incoming commands."""
-        self.get_logger().info(f'Received CMD: {msg}')
         steering_angle = msg.angular.z
         throttle = msg.linear.x
         self.get_logger().info(f'Received steering values: steering angle = {steering_angle}, throttle = {throttle}. Actuating...')
@@ -63,18 +64,18 @@ class SteeringCommandSubscriber(Node):
         else:
             self.get_logger().info(f"Command timed out after {SAFETY_TIMEOUT} seconds. Stopping car...")
             self.stop_car()
+            self.command_start_time = None  # reset safety timeout
         
     def lidar_callback(self, msg):
         """Listen to LIDAR signal and stop car if an obstacle gets too close."""
         ranges = msg.ranges
-        start_idx = int(len(ranges) * 0.5)
-        end_idx = len(ranges) - 1
+        # Filter: Only check between 10% and 40% (roughly front third)
+        start_idx = int(len(ranges) * 0.1)
+        end_idx = int(len(ranges) * 0.4)
         front_ranges = ranges[start_idx:end_idx]
         min_distance = min(front_ranges)
 
-        too_close = True if min_distance <= MIN_ALLOWED_DISTANCE else False
-
-        if too_close:
+        if min_distance <= MIN_ALLOWED_DISTANCE:
             self.get_logger().info(f'Too close ({min_distance} m). Stopping vehicle...')
             self.stop_car()
 
