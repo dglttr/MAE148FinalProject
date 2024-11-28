@@ -14,7 +14,6 @@ ZERO_THROTTLE = 0.0
 STRAIGHT_ANGLE = 0.0
 
 MIN_ALLOWED_DISTANCE = 0.4  # in meters
-SAFETY_TIMEOUT = 10    # when to stop after receiving command (in seconds)
 
 
 class SteeringCommandSubscriber(Node):
@@ -35,7 +34,7 @@ class SteeringCommandSubscriber(Node):
         # Ensure car keeps moving until receiving another command
         self.keep_moving_timer = self.create_timer(0.01, self.keep_moving)
         self.command_start_time = None
-        self.timeout = SAFETY_TIMEOUT
+        self.timeout = 10    # when to stop after receiving command (in seconds)
 
         self.get_logger().info('Start listening for commands...')
 
@@ -43,11 +42,12 @@ class SteeringCommandSubscriber(Node):
         """Move car according to incoming commands."""
         steering_angle = msg.angular.z
         throttle = msg.linear.x
-        timeout = ...
-        self.get_logger().info(f'Received steering values: steering angle = {steering_angle}, throttle = {throttle}. Actuating...')
+        timeout = msg.linear.y
+        self.get_logger().info(f'Received steering values: steering angle = {steering_angle}, throttle = {throttle}, timeout = {timeout}. Actuating...')
 
         try:
             self.command_start_time = datetime.now()
+            self.timeout = timeout
             self.publish_to_vesc(steering_angle, throttle)
         except KeyboardInterrupt:
             self.stop_car()
