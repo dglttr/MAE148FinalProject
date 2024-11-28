@@ -5,7 +5,7 @@ import speech_recognition as sr
 import requests
 
 
-SAFETY_PREFIX = ""   # words that have to be spoken before any action is taken (set to "", None or False if not desired)
+SAFETY_PREFIX = "sonic"   # words that have to be spoken before any action is taken (set to "", None or False if not desired)
 
 TIME_TO_LISTEN = 4      # time to listen (will then stop listening to process); in seconds
 
@@ -23,12 +23,14 @@ DEFAULT_TIMEOUT = 10    # when to stop after receiving command (in seconds)
 
 COMMAND_VALUES = {
     "forward": (STRAIGHT_ANGLE, DEFAULT_THROTTLE, DEFAULT_TIMEOUT),
-    "backward": (STRAIGHT_ANGLE, -DEFAULT_THROTTLE),
-    "left": (MAX_LEFT_ANGLE, DEFAULT_THROTTLE),
-    "right": (MAX_RIGHT_ANGLE, DEFAULT_THROTTLE),
-    "stop": (STRAIGHT_ANGLE, ZERO_THROTTLE)
+    "backward": (STRAIGHT_ANGLE, -DEFAULT_THROTTLE, DEFAULT_TIMEOUT),
+    "left": (MAX_LEFT_ANGLE, DEFAULT_THROTTLE, DEFAULT_TIMEOUT),
+    "right": (MAX_RIGHT_ANGLE, DEFAULT_THROTTLE, DEFAULT_TIMEOUT),
+    "stop": (STRAIGHT_ANGLE, ZERO_THROTTLE, DEFAULT_TIMEOUT)
 }
 
+# TODO update to reflext current direction, angle, throttle and timeout (instruction + examples)
+# Test that faster/slower commands are capped at 0, 1 or -1 
 LLM_SYSTEM_PROMPT = """
 Extract the command from this sentence. We need to extract three things: the direction (only left or right), the steering angle (as a number between 0 and 45) and the throttle value (from -1 to 1). Everything positive (0 to 1) is considered forward, all negative throttle value (below 0 to -1) are considered backward/in reverse. 
 In your response, only respond with left or right, followed by a number indicating the angle of the turn, followed by the throttle value. If no throttle is given, output "default". If no turn is given, return "straight 0".
@@ -85,22 +87,19 @@ def speech_to_text(verbose: bool = False) -> str:
         print("Unknown value error. Did you say anything?")
 
 
-def make_gemini_request(text: str, current_direction, current_angle, current_throttle) -> str:
+def make_gemini_request(text: str, current_direction: str, current_angle: float, current_throttle: float, current_timeout: float) -> str:
+    """Make a request to the Google Gemini LLM API using the currently recognized command text and currently set steering parameters."""
+    llm_prompt = LLM_SYSTEM_PROMPT + text   # TODO incorporate current direction, angle, throttle and timeout
+
+    # Send the request to the API and retrieve response
     url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent"
-
     headers = {"Content-Type": "application/json"}
-
-    llm_prompt = LLM_SYSTEM_PROMPT + text
-
-    # Package up and send the POST request
     data = {"contents": [{"parts": [{"text": llm_prompt}]}]}
     response = requests.post(f"{url}?key={os.environ['GOOGLE_API_KEY']}", headers=headers, json=data)
-
-    # Print the response
     return response.json()['candidates'][0]['content']['parts'][0]['text']
 
-def get_steering_values_from_text(text_recognized: str, current_angle, current_throttle) -> tuple:
-    """Matches recognized text to the supported commands. Returns command and flag indicating if the command is supported."""
+def get_steering_values_from_text(text_recognized: str, current_angle: float, current_throttle: float, current_timeout: float) -> tuple:
+    """Determine new steering parameters (angle, throttle, timeout) based on currently recognized command text and currently set steering parameters."""
     # Make sure safety prefix is uttered first
     text_recognized = text_recognized.lower()
     if SAFETY_PREFIX and (not text_recognized.startswith(SAFETY_PREFIX)):
@@ -125,8 +124,13 @@ def get_steering_values_from_text(text_recognized: str, current_angle, current_t
         return COMMAND_VALUES["stop"]
     
     # LLM-based More complicated strings
+    # TODO Convert current angle to a direction and a degree° value
+    current_direction = ... # "left" or "right"
+    current_angle = ...     # converted to degrees [°]
+
+
     time_before_llm = datetime.now()
-    response = make_gemini_request(text_recognized, current_angle, current_throttle) # looks like: 'left 35 throttle 0.2 8'
+    response = make_gemini_request(text_recognized, current_direction, current_angle, current_throttle, current_timeout) # looks like: 'left 35 throttle 0.2 8'
     llm_latency = (datetime.now() - time_before_llm).microseconds / 1000
     print(f'Response: {response} (latency: {llm_latency} ms)')
 
@@ -151,4 +155,4 @@ def get_steering_values_from_text(text_recognized: str, current_angle, current_t
 
     # No match
     print(f'No suitable command found for recognized text "{text_recognized}"')
-    return None, None
+    return None, None, None
