@@ -1,3 +1,4 @@
+import os
 from datetime import datetime
 
 import rclpy
@@ -6,6 +7,8 @@ from rclpy.node import Node
 from geometry_msgs.msg import Twist
 from sensor_msgs.msg import LaserScan
 
+from roboflowoak import RoboflowOak
+
 COMMAND_TOPIC_NAME = 'steering_commands'
 ACTUATOR_TOPIC_NAME = '/cmd_vel'
 LIDAR_TOPIC_NAME = '/scan'
@@ -13,7 +16,10 @@ LIDAR_TOPIC_NAME = '/scan'
 ZERO_THROTTLE = 0.0
 STRAIGHT_ANGLE = 0.0
 
-MIN_ALLOWED_DISTANCE = 0.4  # in meters
+MIN_ALLOWED_DISTANCE = 0.4  # when LIDAR detects something at a closer distance, it stops the car [in meters] 
+
+STOP_SIGN_DETECTION_CONFIDENCE = 0.8    # how confident the model should be in detecting a stop sign [0-1]
+STOP_SIGN_DETECTION_DISTANCE = 1    # how far the stop sign would be away [meters]
 
 
 class SteeringCommandSubscriber(Node):
@@ -35,6 +41,15 @@ class SteeringCommandSubscriber(Node):
         self.keep_moving_timer = self.create_timer(0.01, self.keep_moving)
         self.command_start_time = None
         self.timeout = 10    # when to stop after receiving command (in seconds)
+
+        # Use model on OAK-D for stop sign detection
+        try:
+            self.stop_sign_detection_model = RoboflowOak(model="stopsigndetection-xuceg", confidence=STOP_SIGN_DETECTION_CONFIDENCE,
+                                                         overlap=0.5, version="1", api_key=os.environ['ROBOFLOW_API_KEY'],
+                                                         rgb=True, depth=True, device=None, blocking=True)
+            self.stop_sign_detection_timer = self.create_timer(0.1, self.stop_at_stop_sign)
+        except Exception as e:
+            self.get_logger().warning(f'Could not create stop sign detection model due to: {e}. Will NOT check for stop signs.')
 
         self.get_logger().info('Start listening for commands...')
 
@@ -86,6 +101,14 @@ class SteeringCommandSubscriber(Node):
         self.twist_cmd.angular.z = steering_angle
         self.twist_cmd.linear.x = throttle
         self.twist_publisher.publish(self.twist_cmd)
+
+    def stop_at_stop_sign(self):
+        """Try to detect a stop sign using OAK-D camera and stop when it is too close."""
+        result, frame, raw_frame, depth = self.stop_sign_detection_model.detect()
+        depths = [pred["depth"] for pred in result["predictions"]]
+        #max_depth = np.amax(depth) -- need to normalize depths? 
+        if any([depth <= STOP_SIGN_DETECTION_DISTANCE for depth in depths]):
+            self.stop_car()
 
 
 def main(args=None):
