@@ -1,4 +1,5 @@
 import os
+import logging
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
 from launch.actions import IncludeLaunchDescription, GroupAction
@@ -34,6 +35,7 @@ def generate_launch_description():
         parameters=[config],
         remappings=[(original_topic_name,new_topic_name)]
     )
+    sensor_node.get_logger().setLevel(logging.WARNING)
     ld.add_action(sensor_node)
     global_ld.add_action(ld)
 
@@ -58,6 +60,7 @@ def generate_launch_description():
         output='screen',
         remappings=[(original_topic_name,new_topic_name)],
         parameters=[config])
+    vesc_twist_node.get_logger().setLevel(logging.WARNING)
     ld.add_action(vesc_twist_node)
     global_ld.add_action(ld)
 
