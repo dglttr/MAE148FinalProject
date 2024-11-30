@@ -47,7 +47,7 @@ class SteeringCommandSubscriber(Node):
             self.stop_sign_detection_model = RoboflowOak(model="stopsigndetection-xuceg", confidence=STOP_SIGN_DETECTION_CONFIDENCE,
                                                          overlap=0.5, version="1", api_key=os.environ['ROBOFLOW_API_KEY'],
                                                          rgb=True, depth=True, device=None, blocking=True)
-            self.stop_sign_detection_timer = self.create_timer(0.1, self.stop_at_stop_sign)
+            self.stop_sign_detection_timer = self.create_timer(0.01, self.stop_at_stop_sign)
         except Exception as e:
             self.get_logger().warning(f'Could not create stop sign detection model due to: {e}. Will NOT check for stop signs.')
 
