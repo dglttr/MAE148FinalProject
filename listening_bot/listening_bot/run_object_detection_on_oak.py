@@ -1,3 +1,5 @@
+import os
+
 from roboflowoak import RoboflowOak
 import cv2
 import time
@@ -6,7 +8,7 @@ import numpy as np
 if __name__ == '__main__':
     # instantiating an object (rf) with the RoboflowOak module
     rf = RoboflowOak(model="stopsigndetection-xuceg", confidence=0.05, overlap=0.5,
-        version="1", api_key="Dp0Xs572v021OR1ZJkkH", rgb=True,
+        version="1", api_key=os.environ['ROBOFLOW_API_KEY'], rgb=True,
         depth=True, device=None, blocking=True)
     # Running our model and displaying the video output with detections
     while True:
