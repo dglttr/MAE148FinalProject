@@ -108,6 +108,7 @@ class SteeringCommandSubscriber(Node):
         depths = [pred["depth"] for pred in result["predictions"]]
         #max_depth = np.amax(depth) -- need to normalize depths? 
         if any([depth <= STOP_SIGN_DETECTION_DISTANCE for depth in depths]):
+            self.get_logger().info(f'Detected stop sign at {min(depths)} m distance. Stopping car...')
             self.stop_car()
 
 
