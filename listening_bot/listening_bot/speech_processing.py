@@ -38,13 +38,13 @@ In your response, only respond with left or right, followed by a number indicati
 Examples:
 - "please please take a left turn of 45 degrees here" should result in "left 45 throttle default default".
 - "go straight" results in "straight 0 throttle default default"
-- "be very quick, full throttle" results in "straight 0 throttle 1 default"
+- "be very quick, full throttle for 10 seconds" results in "straight 0 throttle 1 default"
 - "be kinda slow and take a right turn" results in "right 45 throttle 0.1 default"
 - "normal speed" results in "straight 0 throttle default default"
 - "I want you to take a stroll, turning right 32 degrees" results in "right 32 throttle default default"
 - "u-turn" results in "left 45 throttle default default"
 - "reverse" results in "left 38 throttle 0.4 default"
-
+-"I want you to go straight for 5 seconds" results in "straight 0 throttle 1 5"
 """
 
 
@@ -104,7 +104,7 @@ def get_steering_values_from_text(text_recognized: str, current_angle: float, cu
     text_recognized = text_recognized.lower()
     if SAFETY_PREFIX and (not text_recognized.startswith(SAFETY_PREFIX)):
         print(f'Did not start with "{SAFETY_PREFIX}".')
-        return None, None
+        return None, None, None
     
     # Preprocess text
     text_recognized = text_recognized.replace(SAFETY_PREFIX, "")    # remove safety prefix
@@ -134,7 +134,7 @@ def get_steering_values_from_text(text_recognized: str, current_angle: float, cu
     llm_latency = (datetime.now() - time_before_llm).microseconds / 1000
     print(f'Response: {response} (latency: {llm_latency} ms)')
 
-    direction, angle, _, throttle_value = response.split()
+    direction, angle, timeout_value, throttle_value = response.split()
     
     # Convert angle
     if direction == "left":
@@ -152,6 +152,11 @@ def get_steering_values_from_text(text_recognized: str, current_angle: float, cu
 
     if (type(steering_angle is float) and (type(throttle) is float)):
         return steering_angle, throttle
+    # Timeout
+    if timeout_value = "default"
+    timeout = DEFAULT_TIMEOUT
+    else:
+timeout = float(timeout_value)
 
     # No match
     print(f'No suitable command found for recognized text "{text_recognized}"')
