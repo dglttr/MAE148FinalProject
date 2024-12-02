@@ -125,8 +125,8 @@ def get_steering_values_from_text(text_recognized: str, current_angle: float, cu
     
     # LLM-based More complicated strings
     # TODO Convert current angle to a direction and a degree° value
-    current_direction = ... # "left" or "right"
-    current_angle = ...     # converted to degrees [°]
+    current_direction = "TODO" # "left" or "right"
+    current_angle = 45.0     # converted to degrees [°]
 
     time_before_llm = datetime.now()
     response = make_gemini_request(text_recognized, current_direction, current_angle, current_throttle, current_timeout)
