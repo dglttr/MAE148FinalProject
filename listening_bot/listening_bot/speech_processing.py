@@ -9,6 +9,8 @@ SAFETY_PREFIX = "sonic"   # words that have to be spoken before any action is ta
 
 TIME_TO_LISTEN = 4      # time to listen (will then stop listening to process); in seconds
 
+MAX_STEERING_ANGLE = 45.0   # maximum angle that car can steer (in degrees [°])
+
 DEFAULT_THROTTLE = 0.2
 MAX_THROTTLE = 1.0
 ZERO_THROTTLE = 0.0
@@ -124,9 +126,9 @@ def get_steering_values_from_text(text_recognized: str, current_angle: float, cu
         return COMMAND_VALUES["stop"]
     
     # LLM-based More complicated strings
-    # TODO Convert current angle to a direction and a degree° value
-    current_direction = "TODO" # "left" or "right"
-    current_angle = 45.0     # converted to degrees [°]
+    # Convert current angle to a direction and a degree° value
+    current_direction = "left" if current_angle < 0 else "right"
+    current_angle = abs(current_angle) * MAX_STEERING_ANGLE     # convert to degrees [°]
 
     time_before_llm = datetime.now()
     response = make_gemini_request(text_recognized, current_direction, current_angle, current_throttle, current_timeout)
@@ -137,9 +139,9 @@ def get_steering_values_from_text(text_recognized: str, current_angle: float, cu
     
     # Convert angle
     if direction == "left":
-        steering_angle = -1 * float(angle) / 45.0
+        steering_angle = -1 * float(angle) / MAX_STEERING_ANGLE
     elif direction == "right":
-        steering_angle = float(angle) / 45.0
+        steering_angle = float(angle) / MAX_STEERING_ANGLE
     else:
         steering_angle = 0.0
 
