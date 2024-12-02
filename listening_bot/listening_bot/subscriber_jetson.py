@@ -61,12 +61,12 @@ class SteeringCommandSubscriber(Node):
         self.get_logger().info(f'Received steering values: steering angle = {steering_angle}, throttle = {throttle}, timeout = {timeout}. Actuating...')
 
         try:
-         self.command_start_time = datetime.now()
-        self.publish_to_vesc(steering_angle, throttle)  # Start moving the car
-        time.sleep(timeout)  # Move for the specified timeout duration
-        self.stop_car()  # Stop the car after the timeout
+            self.command_start_time = datetime.now()
+            self.timeout = timeout
+            self.publish_to_vesc(steering_angle, throttle)
         except KeyboardInterrupt:
-        self.stop_car()  # Ensure the car stops on interruption
+            self.stop_car()
+
     def stop_car(self):
         self.publish_to_vesc(STRAIGHT_ANGLE, ZERO_THROTTLE)
     
