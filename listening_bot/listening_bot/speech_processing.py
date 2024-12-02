@@ -128,13 +128,12 @@ def get_steering_values_from_text(text_recognized: str, current_angle: float, cu
     current_direction = ... # "left" or "right"
     current_angle = ...     # converted to degrees [°]
 
-
     time_before_llm = datetime.now()
-    response = make_gemini_request(text_recognized, current_direction, current_angle, current_throttle, current_timeout) # looks like: 'left 35 throttle 0.2 8'
+    response = make_gemini_request(text_recognized, current_direction, current_angle, current_throttle, current_timeout)
     llm_latency = (datetime.now() - time_before_llm).microseconds / 1000
     print(f'Response: {response} (latency: {llm_latency} ms)')
 
-    direction, angle, timeout_value, throttle_value = response.split()
+    direction, angle, _, throttle_value, timeout_value = response.split()   # return value looks like: 'left 35 throttle 0.2 8'
     
     # Convert angle
     if direction == "left":
@@ -150,13 +149,14 @@ def get_steering_values_from_text(text_recognized: str, current_angle: float, cu
     else:
         throttle = float(throttle_value)
 
-    if (type(steering_angle is float) and (type(throttle) is float)):
-        return steering_angle, throttle
     # Timeout
-    if timeout_value = "default"
-    timeout = DEFAULT_TIMEOUT
+    if timeout_value == "default":
+        timeout = DEFAULT_TIMEOUT
     else:
-timeout = float(timeout_value)
+        timeout = float(timeout_value)
+
+    if (type(steering_angle is float) and (type(throttle) is float)):
+        return steering_angle, throttle, timeout
 
     # No match
     print(f'No suitable command found for recognized text "{text_recognized}"')
