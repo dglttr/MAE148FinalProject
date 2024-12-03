@@ -105,11 +105,12 @@ class SteeringCommandSubscriber(Node):
     def stop_at_stop_sign(self):
         """Try to detect a stop sign using OAK-D camera and stop when it is too close."""
         result, frame, raw_frame, depth = self.stop_sign_detection_model.detect()
-        depths = [pred["depth"] for pred in result["predictions"]]
-        #max_depth = np.amax(depth) -- need to normalize depths? 
-        if any([depth <= STOP_SIGN_DETECTION_DISTANCE for depth in depths]):
-            self.get_logger().info(f'Detected stop sign at {min(depths)} m distance. Stopping car...')
-            self.stop_car()
+        for prediction in result["predictions"]:
+            if prediction["depth"] <= STOP_SIGN_DETECTION_DISTANCE:
+                #max_depth = np.amax(depth) -- need to normalize depths? 
+                self.get_logger().info(f'Stop sign detected at {prediction["depth"]} m distance with {prediction["confidence"]*100:.1f}% confidence. Stopping car...')
+                self.stop_car()
+                return
 
 
 def main(args=None):
