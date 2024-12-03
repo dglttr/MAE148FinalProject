@@ -21,7 +21,7 @@ The project represents a synthesis of voice control, AI-based natural language p
 - **Human-Machine Interaction:**  
   - Achieved smooth interaction between the user and vehicle through real-time processing of voice commands, improving accessibility and user experience.  
 
-- **Seamless System Integration:**  
+- **System Integration:**  
   - Combined inputs from multiple sensors (LiDAR and camera) and software systems (speech-to-text, LLM, deep learning) into a unified decision-making framework.  
   - Maintained consistent performance in diverse scenarios, showcasing the adaptability of the SonicCar system.  
 
