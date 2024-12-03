@@ -1,7 +1,7 @@
 # SonicCar Documentation
 ## SonicCar: An Intelligent Voice-Controlled Autonomous Vehicle
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/321f3eaf-28ea-4087-9bfc-1047f653198e" alt="SonicCar" style="width: 20%;">
+  <img src="https://github.com/user-attachments/assets/321f3eaf-28ea-4087-9bfc-1047f653198e" alt="SonicCar" style="width: 40%;">
 </div>
 
 In recent years, the field of autonomous vehicles has made significant strides, leveraging advancements in artificial intelligence (AI), sensor technologies, and deep learning to redefine transportation. As part of UCSD’s [ECE/MAE148 (Introduction to Autonomous Vehicles)](https://ucsd-ecemae-148.github.io/) course, our team worked on the development of SonicCar, a state-of-the-art autonomous vehicle capable of responding to voice commands and navigating its environment intelligently and safely.
