@@ -1,7 +1,13 @@
 # SonicCar Documentation
-SonicCar listens to voice commands and the drives accordingly, while making sure to brake for obstacles and stop signs.
+## SonicCar: An Intelligent Voice-Controlled Autonomous Vehicle
 
-It was developed in the Fall Quarter 2024 in the class [MAE148 (Introduction to Autonomous Vehicles)](https://ucsd-ecemae-148.github.io/) of UC San Diego.
+In recent years, the field of autonomous vehicles has made significant strides, leveraging advancements in artificial intelligence (AI), sensor technologies, and deep learning to redefine transportation. As part of UCSD’s [ECE/MAE148 (Introduction to Autonomous Vehicles)](https://ucsd-ecemae-148.github.io/) course, our team worked on the development of SonicCar, a state-of-the-art autonomous vehicle capable of responding to voice commands and navigating its environment intelligently and safely.
+
+The SonicCar system integrates several innovative technologies to achieve its functionality. It uses speech-to-text recognition to convert spoken commands into actionable text, which is then processed by a large language model (LLM) to interpret and execute the instructions. This unique approach allows SonicCar to understand complex and natural language commands, providing a seamless user experience.
+
+To ensure safety and compliance with road rules, SonicCar incorporates both LiDAR-based obstacle detection and a camera-based stop sign recognition system. The obstacle detection module enables the vehicle to detect and brake for objects in its path, while the stop sign recognition module, trained using RoboFlow deep learning, ensures adherence to traffic regulations. Together, these systems enhance the vehicle's reliability and situational awareness in dynamic environments.
+
+The project represents a synthesis of voice control, AI-based natural language processing, and autonomous vehicle navigation, offering an accessible and interactive user interface while prioritizing safety. SonicCar showcases the potential for integrating human-machine interaction technologies with autonomous systems, paving the way for innovative applications in modern transportation.
 
 # Project Goals and Timeline
 
