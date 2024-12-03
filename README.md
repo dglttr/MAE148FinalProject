@@ -47,7 +47,33 @@ The mechanical design of SonicCar focused on creating custom components to suppo
   - Applied **laser cutting techniques** to achieve precise and efficient fabrication of the platform with intricate design features.  
 
 # Electronics
-List components and show wiring diagram
+The SonicCar project utilizes a comprehensive set of electronic components to ensure reliable processing, communication, navigation, and power management. The key electronic parts include:  
+
+- **Processing and Communication:**  
+  - Jetson Nano  
+  - USB Hub (for multiple connections)  
+  - GPS Board and GPS Receiver  
+  - Logitech Receiver (for console remote control)  
+  - WiFi Dongle (to connect to local WiFi)  
+  - Camera (Oak-D Lite)  
+
+- **Sensing and Navigation:**  
+  - LiDAR Board and LiDAR Sensor  
+
+- **Actuation:**  
+  - VESC (Electronic Speed Controller)  
+  - DC Motor (XeRun 3660 G2)  
+  - Servo PDB (Power Distribution Board)  
+  - Servo Motor  
+
+- **Power Management:**  
+  - DC/DC Converter  
+  - Anti-Spark Switch  
+  - Emergency Stop Button  
+  - Battery (3 Cell LiPo)  
+  - Battery Voltage Checker  
+
+These components are interconnected via a detailed wiring system, ensuring efficient power distribution, signal communication, and system reliability. The **wiring diagram** below provides an overview of these connections, serving as a guide for assembly and troubleshooting.  
 ![image](https://github.com/user-attachments/assets/8656e657-a212-436b-b657-306ff00b81a1)
 
 # Programming
