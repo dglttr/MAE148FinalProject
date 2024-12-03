@@ -10,7 +10,20 @@ To ensure safety and compliance with road rules, SonicCar incorporates both LiDA
 The project represents a synthesis of voice control, AI-based natural language processing, and autonomous vehicle navigation, offering an accessible and interactive user interface while prioritizing safety. SonicCar showcases the potential for integrating human-machine interaction technologies with autonomous systems, paving the way for innovative applications in modern transportation.
 
 # Project Goals and Timeline
+- **Voice Command Integration:**  
+  - Implemented a **speech-to-text recognition** system that transcribes spoken user commands, starting with the safe word "Sonic" in order to activate the system.
+  - Integrated a **large language model (LLM)** to interpret and act on natural language commands, enabling the car to respond intuitively to a variety of inputs.  
 
+- **Autonomous Navigation and Safety:**  
+  - Integrated a **LiDAR-based obstacle detection system** to ensure the vehicle identifies and brakes for potential hazards in its path.  
+  - Developed a **stop sign recognition module** using **RoboFlow deep learning**, ensuring the vehicle complies with traffic signals.  
+
+- **Human-Machine Interaction:**  
+  - Achieved smooth interaction between the user and vehicle through real-time processing of voice commands, improving accessibility and user experience.  
+
+- **Seamless System Integration:**  
+  - Combined inputs from multiple sensors (LiDAR and camera) and software systems (speech-to-text, LLM, deep learning) into a unified decision-making framework.  
+  - Maintained consistent performance in diverse scenarios, showcasing the adaptability of the SonicCar system.  
 
 # Mechanical Design
 Fixture (mounting feet), wooden board design, camera mount
