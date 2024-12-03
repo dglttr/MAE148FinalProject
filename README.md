@@ -29,7 +29,19 @@ The project represents a synthesis of voice control, AI-based natural language p
   - Maintained consistent performance in diverse scenarios, showcasing the adaptability of the SonicCar system.  
 
 # Mechanical Design
-Fixture (mounting feet), wooden board design, camera mount
+The mechanical design of SonicCar focused on creating custom components to support the functionality of the vehicle. These components were carefully designed, prototyped, and fabricated to ensure flexibility, durability, and compatibility with the onboard systems. Key mechanical elements include:  
+
+- **Platform Design:**  
+  - Designed and laser-cut a **custom platform** mounted on top of the car’s base to hold critical components such as the Jetson Nano, smart camera, LiDAR, and GPS.
+  - Incorporated **multiple line spaces** in the platform’s design to allow flexibility in the positioning and installation of components.  
+
+- **Camera Mount:**  
+  - Developed a **3D-printed adjustable camera mount** to enable easy modification of the camera’s viewing angle.  
+  - Integrated a **sunlight protection feature** into the mount to minimize interference from direct sunlight, ensuring consistent and reliable camera feed.  
+
+- **Fabrication Process:**  
+  - Used **3D printing** to prototype and produce robust, lightweight parts.  
+  - Applied **laser cutting techniques** to achieve precise and efficient fabrication of the platform with intricate design features.  
 
 # Electronics
 List components and show wiring diagram
