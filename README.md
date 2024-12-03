@@ -37,7 +37,10 @@ The mechanical design of SonicCar focused on creating custom components to suppo
 
 - **Camera Mount:**  
   - Developed a **3D-printed adjustable camera mount** to enable easy modification of the camera’s viewing angle.  
-  - Integrated a **sunlight protection feature** into the mount to minimize interference from direct sunlight, ensuring consistent and reliable camera feed.  
+  - Integrated a **sunlight protection feature** into the mount to minimize interference from direct sunlight, ensuring consistent and reliable camera feed.
+  
+- **Other Components:**  
+  - Designed and **3D-printed** multiple necessary components to hold every parts in place, including LiDAR mount and emergency stop button mount.
 
 - **Fabrication Process:**  
   - Used **3D printing** to prototype and produce robust, lightweight parts.  
