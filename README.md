@@ -1,5 +1,4 @@
-# SonicCar Documentation
-## SonicCar: An Intelligent Voice-Controlled Autonomous Vehicle
+# SonicCar: An Intelligent Voice-Controlled Autonomous Vehicle
 <div align="center">
   <img src="https://github.com/user-attachments/assets/321f3eaf-28ea-4087-9bfc-1047f653198e" alt="SonicCar" style="width: 40%;">
 </div>
@@ -29,18 +28,25 @@ The project represents a synthesis of voice control, AI-based natural language p
   - Maintained consistent performance in diverse scenarios, showcasing the adaptability of the SonicCar system.  
 
 # Mechanical Design
-The mechanical design of SonicCar focused on creating custom components to support the functionality of the vehicle. These components were carefully designed, prototyped, and fabricated to ensure flexibility, durability, and compatibility with the onboard systems. Key mechanical elements include:  
+The mechanical design of SonicCar focused on creating custom components to support the functionality of the vehicle. These components were designed, prototyped, and fabricated to ensure flexibility, durability, and compatibility with the onboard systems. Key mechanical elements include:  
 
-- **Platform Design:**  
-  - Designed and laser-cut a **custom platform** mounted on top of the car’s base to hold critical components such as the Jetson Nano, smart camera, LiDAR, and GPS.
-  - Incorporated **multiple line spaces** in the platform’s design to allow flexibility in the positioning and installation of components.  
+- **Platform:**  
+  - Designed and laser-cut a **custom platform** mounted on top of the car’s base to hold critical components such as the Jetson Nano, camera, LiDAR, and GPS.
+  - The platform uses **multiple parallel slots** to allow flexibility in the positioning and installation of components.
+  - It also has four pins that connect it to the car body. They are simple, sturdy and very flexible (for example, we simply adjusted the length and reprinted the feet when we needed to raise the platform).
+<img src="https://github.com/user-attachments/assets/79200905-30d8-4d16-b568-79eab4f0dc33" alt="Car Platform" height="350">
+<img src="https://github.com/user-attachments/assets/c7840c50-d0e0-4207-9368-6ee696d16b36" alt="Platform Pins" height="350">
+
+TODO: Let's add a picture of the real-life car here
 
 - **Camera Mount:**  
   - Developed a **3D-printed adjustable camera mount** to enable easy modification of the camera’s viewing angle.  
-  - Integrated a **sunlight protection feature** into the mount to minimize interference from direct sunlight, ensuring consistent and reliable camera feed.
-  
-- **Other Components:**  
-  - Designed and **3D-printed** multiple necessary components to hold every parts in place, including LiDAR mount and emergency stop button mount.
+  - Integrated a ledge for **sunlight protection** to minimize interference from direct sunlight, ensuring a reliable camera feed.
+<img src="https://github.com/user-attachments/assets/ab1196b7-ec52-46e8-a0eb-abda582e849f" alt="Camera Mount" height="350">
+
+- **Emergency stop mount:**  
+  - Mount to hold the emergency stop button in place.
+<img src="https://github.com/user-attachments/assets/9a6f0e6f-05e1-42ca-9e0d-b649314b7ee0" alt="Emergency Stop Mount" height="350">
 
 - **Fabrication Process:**  
   - Used **3D printing** to prototype and produce robust, lightweight parts.  
