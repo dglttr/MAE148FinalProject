@@ -11,6 +11,7 @@ Fixture (mounting feet), wooden board design, camera mount
 
 # Electronics
 List components and show wiring diagram
+![image](https://github.com/user-attachments/assets/8656e657-a212-436b-b657-306ff00b81a1)
 
 # Programming
 ## Text-to-Speech
