@@ -34,22 +34,26 @@ The mechanical design of SonicCar focused on creating custom components to suppo
   - Designed and laser-cut a **custom platform** mounted on top of the car’s base to hold critical components such as the Jetson Nano, camera, LiDAR, and GPS.
   - The platform uses **multiple parallel slots** to allow flexibility in the positioning and installation of components.
   - It also has four pins that connect it to the car body. They are simple, sturdy and very flexible (for example, we simply adjusted the length and reprinted the feet when we needed to raise the platform).
-<img src="https://github.com/user-attachments/assets/1c2f31f1-a217-452b-93ae-7ebe3370926d" alt="Car Platform" height="350">
-<img src="https://github.com/user-attachments/assets/819c9ce5-c165-415d-8f91-24416138c714" alt="Platform Pins" height="350">
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/1c2f31f1-a217-452b-93ae-7ebe3370926d" alt="Car Platform" height="350">
+  <img src="https://github.com/user-attachments/assets/819c9ce5-c165-415d-8f91-24416138c714" alt="Platform Pins" height="350">
+</div>
 
 TODO: Let's add a picture of the real-life car here
 
 - **Camera Mount:**  
   - Developed a **3D-printed adjustable camera mount** to enable easy modification of the camera’s viewing angle.  
   - Integrated a ledge for **sunlight protection** to minimize interference from direct sunlight, ensuring a reliable camera feed.
-<img src="https://github.com/user-attachments/assets/5b0900c5-bfa2-4a3d-b747-38d66222ca1e" alt="Camera Mount" height="350">
-<img src="https://github.com/user-attachments/assets/51780adc-a634-4045-9227-05bc99ba7b4b" alt="Camera Mount" height="350">
-
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/5b0900c5-bfa2-4a3d-b747-38d66222ca1e" alt="Camera Mount" height="350">
+  <img src="https://github.com/user-attachments/assets/51780adc-a634-4045-9227-05bc99ba7b4b" alt="Camera Mount" height="350">
+</div>
 
 - **Emergency stop mount:**  
   - Mount to hold the emergency stop button in place.
-<img src="https://github.com/user-attachments/assets/9a6f0e6f-05e1-42ca-9e0d-b649314b7ee0" alt="Emergency Stop Mount" height="350">
-
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/690cc514-0458-4111-a6ab-28c815f4038a" alt="Emergency Stop Mount" height="350">
+</div>
 - **Fabrication Process:**  
   - Used **3D printing** to prototype and produce robust, lightweight parts.  
   - Applied **laser cutting techniques** to achieve precise and efficient fabrication of the platform with intricate design features.  
@@ -82,8 +86,9 @@ The SonicCar project utilizes a comprehensive set of electronic components to en
   - Battery Voltage Checker  
 
 These components are interconnected via a detailed wiring system, ensuring efficient power distribution, signal communication, and system reliability. The **wiring diagram** below provides an overview of these connections, serving as a guide for assembly and troubleshooting.  
-
-![image](https://github.com/user-attachments/assets/8656e657-a212-436b-b657-306ff00b81a1)
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/8656e657-a212-436b-b657-306ff00b81a1">
+</div>
 
 # Programming
 ## Text-to-Speech
