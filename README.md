@@ -34,7 +34,7 @@ The mechanical design of SonicCar focused on creating custom components to suppo
   - Designed and laser-cut a **custom platform** mounted on top of the car’s base to hold critical components such as the Jetson Nano, camera, LiDAR, and GPS.
   - The platform uses **multiple parallel slots** to allow flexibility in the positioning and installation of components.
   - It also has four pins that connect it to the car body. They are simple, sturdy and very flexible (for example, we simply adjusted the length and reprinted the feet when we needed to raise the platform).
-<img src="https://github.com/user-attachments/assets/79200905-30d8-4d16-b568-79eab4f0dc33" alt="Car Platform" height="350">
+<img src="https://github.com/user-attachments/assets/3fd07acf-4e84-46ea-a5c1-0584232a0424" alt="Car Platform" height="350">
 <img src="https://github.com/user-attachments/assets/c7840c50-d0e0-4207-9368-6ee696d16b36" alt="Platform Pins" height="350">
 
 TODO: Let's add a picture of the real-life car here
