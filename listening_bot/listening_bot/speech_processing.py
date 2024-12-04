@@ -22,6 +22,8 @@ STRAIGHT_ANGLE = 0.0
 FASTER_INCREMENT = 0.2
 SLOWER_INCREMENT = 0.2
 
+ANGLE_INCREMENT = 5/MAX_STEERING_ANGLE 
+
 DEFAULT_TIMEOUT = 10  # when to stop after receiving command (in seconds)
 
 COMMAND_VALUES = {
@@ -38,12 +40,12 @@ LLM_SYSTEM_PROMPT = """
 Instructions:
 Extract the steering commands for the car from the given sentence. We need to extract these things:
 - the steering direction: This can only be "left", "right" or "straight". Use "straight" if no direction/turn is mentioned.
-- the steering angle: This can only be a number between 0.0 and 45.0 and is meant to be measured in degrees. If no direction/turn is mentioned, output 0.0.
+- the steering angle: This can only be a number between 0.0 and 45.0 and is meant to be measured in degrees. If no direction/turn is mentioned, output 0.0. If a change in current angle is mentioned use "increment" or "decrement" depending on if angle gets larger or smaller
 - the throttle mode: This can only be "forward" or "backward". By default, use "forward", unless going backward/ in reverse is indicated.
 - the throttle value: This can only be a float number between 0.0 and 1.0. If no throttle is mentioned, output "default".
-- the throttle value can also be adjusted incrementally using "faster" or "slower" commands. "faster" increases the throttle by 0.2, and "slower" decreases it by 0.2. The throttle value is clamped between 0.0 and 1.0.
 - the timeout: this encapsulates how long the car should execute the command before it stops. If no timeout is mentioned, output "default".
 In your response, always carefully take into account the restrictions mentioned above for each point. If no throttle is given, output "default".
+
 
 Examples:
 - "please please take a left turn of 45 degrees here" should result in {"direction": "left", "angle": 45.0, "throttle_mode": "forward", "throttle_value": "default", "timeout": "default"}
@@ -55,9 +57,10 @@ Examples:
 - "u-turn" results in {"direction": "left", "angle": 45.0, "throttle_mode": "forward", "throttle_value": "default", "timeout": "default"}
 - "go in reverse" results in {"direction": "straight", "angle": 0.0, "throttle_mode": "backward", "throttle_value": "default", "timeout": "default"}
 -"I want you to go straight for 5 seconds" results in {"direction": "straight", "angle": 0.0, "throttle_mode": "forward", "throttle_value": "default", "timeout": 5.0}
-- "go faster" results in {"direction": "straight", "angle": 0.0, "throttle_mode": "forward", "throttle_value": "increment", "timeout": "default"}
-- "please go slower" results in {"direction": "straight", "angle": 0.0, "throttle_mode": "forward", "throttle_value": "decrement", "timeout": "default"}
-
+-"Go more towards the right" results in {"direction": "right", "angle": "increment", "throttle_mode": "unchanged", "throttle_value": "unchanged", "timeout": "default"}
+- "Take a smoother left curve" results in {"direction": "left", "angle": "decrement", "throttle_mode": "unchanged", "throttle_value": "unchanged", "timeout": "default"}
+-"Make a harder turn" results in {"direction": "unchanged", "angle": "increment", "throttle_mode": "unchanged", "throttle_value": "unchanged", "timeout": "default"}
+-"Make a hard left turn" results in {"direction": "left", "angle": 45.0, "throttle_mode": "forward", "throttle_value": "default", "timeout": "default"}
 Output Formatting:
 Use proper JSON syntax, following this exact JSON schema:
 Return: {"direction": str, "angle": float, "throttle_mode": str, "throttle_value": float|str, "timeout": float|str}
@@ -114,7 +117,9 @@ def make_gemini_request(
     current_timeout: float
 ) -> str:
     """Make a request to the Google Gemini LLM API using the currently recognized command text and currently set steering parameters."""
-    llm_prompt = LLM_SYSTEM_PROMPT + text  # TODO incorporate current direction, angle, throttle and timeout
+    llm_prompt = LLM_SYSTEM_PROMPT + text
+     # f"Current direction: {current_direction}, Current angle: {current_angle}, Current throttle_mode: {current_throttle_mode}, Current throttle_value: {current_throttle_value}, Current timeout: {current_timeout}, " + text  # TODO incorporate current direction, angle, throttle and timeout
+# Give Current Values and Recognized Text
 
     # Send the request to the API and retrieve response
     before = datetime.now()
@@ -128,28 +133,8 @@ def make_gemini_request(
     response_text = response.json()["candidates"][0]["content"]["parts"][0]["text"]
     latency = (datetime.now() - before).microseconds / 1000
     print(f'Response text: {response_text} (latency: {latency} ms)')
-    
     parsed_response = json.loads(response_text)
-
-    # Adjust the throttle dynamically if the LLM returns "increment" or "decrement"
-    if parsed_response["throttle_value"] == "increment":
-        current_throttle_value = min(current_throttle_value + FASTER_INCREMENT, MAX_THROTTLE)
-        print(f"Throttle increased: {current_throttle_value} (previous: {current_throttle})")
-    elif parsed_response["throttle_value"] == "decrement":
-        current_throttle_value = max(current_throttle_value - SLOWER_INCREMENT, ZERO_THROTTLE)
-        print(f"Throttle decreased: {current_throttle_value} (previous: {current_throttle})")
-    else:
-        # If a specific throttle value is returned, use it
-        current_throttle_value = parsed_response.get("throttle_value", current_throttle_value)
-
-    # Return the updated state
-    return {
-        "direction": parsed_response.get("direction", current_direction),
-        "angle": parsed_response.get("angle", current_angle),
-        "throttle_mode": parsed_response.get("throttle_mode", current_throttle_mode),
-        "throttle_value": current_throttle_value,
-        "timeout": parsed_response.get("timeout", current_timeout),
-    }
+    return parsed_response
 
 
 def get_steering_values_from_text(
@@ -181,19 +166,6 @@ def get_steering_values_from_text(
         return COMMAND_VALUES["right"]
     elif text_recognized in ["stop"]:
         return COMMAND_VALUES["stop"]
-     elif text_recognized in ["faster"]:
-        # Increase throttle value while keeping the current angle and direction
-        new_throttle = min(current_throttle + FASTER_INCREMENT, MAX_THROTTLE)
-        print(f"Throttle increased to: {new_throttle}")
-        return current_angle, new_throttle, current_timeout
-    elif text_recognized in ["slower"]:
-        # Decrease throttle value while keeping the current angle and direction
-        new_throttle = max(current_throttle - SLOWER_INCREMENT, ZERO_THROTTLE)
-        print(f"Throttle decreased to: {new_throttle}")
-        return current_angle, new_throttle, current_timeout
-    else:
-        print("Unknown command received!")
-        return current_angle, current_throttle, current_timeout  
 
     # LLM-based More complicated strings
     # Convert current angle to a direction and a degree° value
@@ -209,13 +181,33 @@ def get_steering_values_from_text(
     throttle_value = response["throttle_value"]
     timeout = response["timeout"]
 
+# Increment or Decrement
+    if direction == "unchanged":
+        direction = current_direction
+    if angle == "increment":
+        if direction == "left":
+            steering_angle = current_angle - ANGLE_INCREMENT
+        if direction == "right":
+            steering_angle = current_angle + ANGLE_INCREMENT
+    if angle == "decrement":
+        if direction == "left":
+            steering_angle = current_angle + ANGLE_INCREMENT
+        if direction == "right":
+            steering_angle = current_angle - ANGLE_INCREMENT        
+
     # Convert angle
     if direction == "left":
         steering_angle = -1 * float(angle) / MAX_STEERING_ANGLE
     elif direction == "right":
         steering_angle = float(angle) / MAX_STEERING_ANGLE
     else:
-        steering_angle = 0.0
+        steering_angle = 0.0 
+
+    # Clip the steering angle at -1 or 1
+    if steering_angle > 0:
+       steering_angle = min(1, steering_angle)
+    elif steering_angle < 0:
+        steering_angle = max(-1, steering_angle)
 
     # Throttle
     throttle = DEFAULT_THROTTLE if throttle_value == "default" else float(throttle_value)
