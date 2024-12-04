@@ -93,6 +93,8 @@ These components are interconnected via a detailed wiring system, ensuring effic
 
 # Programming
 ## Text-to-Speech
+The python script used for this project was created using a publisher and subscriber method. The laptop handles speech recognition using a microphone and will extract three variables, direction (angle), speed (ranging from 0 to 1), and the amount of time to do such actions. When the three values have been collected, it is converted from speech to text through Large Language Models (LLMs). This is incredibly useful in this scenario for translating speech into tokens which can be used as key values for the three variables. 
+The ROS2 topic acts as a central communications channel. This is important for the publisher and subscriber relationship. The mechanism decouples the sender (publisher) from the receiver (subscriber), making it a flexible and scalable system for inter-node communication. In our scenario, the laptop acts as the publisher whereas the jetson nano acts as the subscriber. 
 
 
 ## Understanding Intent with LLMs
