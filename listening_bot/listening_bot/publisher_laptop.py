@@ -1,4 +1,4 @@
-from listening_bot.speech_processing import speech_to_text, get_steering_values_from_text
+from listening_bot.speech_processing import speech_to_text, get_steering_values_from_text, DEFAULT_THROTTLE, DEFAULT_TIMEOUT
 
 import rclpy
 from rclpy.node import Node
@@ -14,6 +14,11 @@ class SteeringCommandPublisher(Node):
         super().__init__('command_publisher')
         self.publisher_ = self.create_publisher(Twist, COMMAND_TOPIC_NAME, 10)
         self.twist_cmd = Twist()
+        
+        # Defaults
+        self.twist_cmd.linear.x = DEFAULT_THROTTLE
+        self.twist_cmd.linear.y = DEFAULT_TIMEOUT
+        self.twist_cmd.angular.z = 0.0
 
         timer_period = 0.01  # seconds
         self.timer = self.create_timer(timer_period, self.listen_and_send_command)
