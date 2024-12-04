@@ -35,7 +35,7 @@ The mechanical design of SonicCar focused on creating custom components to suppo
   - The platform uses **multiple parallel slots** to allow flexibility in the positioning and installation of components.
   - It also has four pins that connect it to the car body. They are simple, sturdy and very flexible (for example, we simply adjusted the length and reprinted the feet when we needed to raise the platform).
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/1c2f31f1-a217-452b-93ae-7ebe3370926d" alt="Car Platform" height="350">
+  <img src="https://github.com/user-attachments/assets/1c2f31f1-a217-452b-93ae-7ebe3370926d" alt="Car Platform" height="350" style="margin-right: 10px">
   <img src="https://github.com/user-attachments/assets/819c9ce5-c165-415d-8f91-24416138c714" alt="Platform Pins" height="350">
 </div>
 
@@ -45,7 +45,7 @@ TODO: Let's add a picture of the real-life car here
   - Developed a **3D-printed adjustable camera mount** to enable easy modification of the camera’s viewing angle.  
   - Integrated a ledge for **sunlight protection** to minimize interference from direct sunlight, ensuring a reliable camera feed.
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/5b0900c5-bfa2-4a3d-b747-38d66222ca1e" alt="Camera Mount" height="350">
+  <img src="https://github.com/user-attachments/assets/5b0900c5-bfa2-4a3d-b747-38d66222ca1e" alt="Camera Mount" height="350" style="margin-right: 10px">
   <img src="https://github.com/user-attachments/assets/51780adc-a634-4045-9227-05bc99ba7b4b" alt="Camera Mount" height="350">
 </div>
 
