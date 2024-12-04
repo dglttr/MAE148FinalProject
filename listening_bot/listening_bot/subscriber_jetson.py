@@ -8,6 +8,7 @@ from geometry_msgs.msg import Twist
 from sensor_msgs.msg import LaserScan
 
 from roboflowoak import RoboflowOak
+import numpy as np
 
 COMMAND_TOPIC_NAME = 'steering_commands'
 ACTUATOR_TOPIC_NAME = '/cmd_vel'
@@ -106,9 +107,9 @@ class SteeringCommandSubscriber(Node):
         """Try to detect a stop sign using OAK-D camera and stop when it is too close."""
         result, frame, raw_frame, depth = self.stop_sign_detection_model.detect()
         for prediction in result["predictions"]:
-            if prediction["depth"] <= STOP_SIGN_DETECTION_DISTANCE:
+            if prediction.depth <= STOP_SIGN_DETECTION_DISTANCE:
                 #max_depth = np.amax(depth) -- need to normalize depths? 
-                self.get_logger().info(f'Stop sign detected at {prediction["depth"]} m distance with {prediction["confidence"]*100:.1f}% confidence. Stopping car...')
+                self.get_logger().info(f'Stop sign detected at {prediction.depth} m distance with {prediction.confidence*100:.1f}% confidence. Stopping car...')
                 self.stop_car()
                 return
 
