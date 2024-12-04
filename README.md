@@ -49,10 +49,10 @@ TODO: Let's add a picture of the real-life car here
   <img src="https://github.com/user-attachments/assets/51780adc-a634-4045-9227-05bc99ba7b4b" alt="Camera Mount" height="350">
 </div>
 
-- **Emergency stop mount:**  
-  - Mount to hold the emergency stop button in place.
+- **Anti-Spark Switch mount:**  
+  - Mount to hold the Anti-Spark Switch in place.
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/690cc514-0458-4111-a6ab-28c815f4038a" alt="Emergency Stop Mount" height="350">
+  <img src="https://github.com/user-attachments/assets/690cc514-0458-4111-a6ab-28c815f4038a" alt="Anti-Spark Switch Mount" height="350">
 </div>
 
 - **Fabrication Process:**  
