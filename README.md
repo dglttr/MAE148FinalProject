@@ -54,6 +54,7 @@ TODO: Let's add a picture of the real-life car here
 <div align="center">
   <img src="https://github.com/user-attachments/assets/690cc514-0458-4111-a6ab-28c815f4038a" alt="Emergency Stop Mount" height="350">
 </div>
+
 - **Fabrication Process:**  
   - Used **3D printing** to prototype and produce robust, lightweight parts.  
   - Applied **laser cutting techniques** to achieve precise and efficient fabrication of the platform with intricate design features.  
