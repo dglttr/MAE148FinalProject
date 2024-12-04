@@ -92,17 +92,43 @@ These components are interconnected via a detailed wiring system, ensuring effic
 </div>
 
 # Programming
-## Text-to-Speech
+## Overview
+The chart below shows how the software is structured. Fundamentally, we are using ROS2, especially to provide communication (the blue boxes in the chart represent ROS2 nodes). A high-level overview over the components:
+- **Publisher**: Runs on a laptop, uses the laptop's microphone to turn voice commands into text (speech-to-text), then uses a Large Language Model to understand the intent of the text and translates it into commands for the car steering angle, throttle and the runtime (how long a command should be executed). It then publishes these commands to the `steering_commands` topics.
+- **Subscriber**: Runs on the Jetson Nano, listens to incoming commands on the `steering_commands` topic and publishes them to the VESC node. Also tracks the LIDAR to prevent collisions with appearing objects and uses the OAK-D camera to detect stop signs.
+- **VESC node**: Prewritten node from DonkeyCar, tranlates commands on the `/cmd_vel` topic to electronic signals to the servo motor (for steering) and DC motor (for throttle).
+- **LIDAR node**: Prewritten node from DonkeyCar, publishes LIDAR measurements to the `/scan` topic.
+- **FastDDS discovery server**: Running on the Jetson, used to enable communication between devices (laptop and Jetson). All ROS2 nodes register with the discovery server so they are discoverable to all other nodes.
+- **OAK-D Camera**: Directly connected to the Jetson via USB, runs the stop sign detection AI model.
 
+![Software Overview](https://github.com/user-attachments/assets/33715aae-859f-4e02-af10-2c55a63c8c86)
 
+## Speech-to-Text (STT)
+For understanding voice commands, we leverage the microphone of the laptop so the user does not have to move along the Jetson Nano. We use the Python package `SpeechRecognition` and concretely, the underlying Google Speech Recognition API, to get the command spoken as text. We typically saw latencies of 400-600 ms, depending on the network connection.
 
-## Understanding Intent with LLMs
+The code listens for 4 seconds (by default) and then sends off anything recorded to the API.
 
+## Understanding Intent with an LLM
+- Gemini API
+- System Prompt
+- Output Formatting
+- Text processing
+- Case handling (if-else)
 
 ## Communication with ROS2
-
+- Explain FastDDS discovery server
+- Hostname did not work (potentially helpful links)
 
 ## LIDAR-based Collision Avoidance
-
+- Subscribing to `/scan`
+- Filtering to only front range
+- Comparing to minimum allowed distance
+- Stopping car
 
 ## Stop Sign Detection
+- Data collection, labeling, training in Roboflow
+- Direct deployment to OAK-D via `roboflowoak` Python package --> running on OAK-D
+- Detection with certain confidence
+- Latency?
+- Compare distance (not working yet)
+- Stopping car
