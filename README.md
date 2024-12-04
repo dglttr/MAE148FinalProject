@@ -42,7 +42,9 @@ TODO: Let's add a picture of the real-life car here
 - **Camera Mount:**  
   - Developed a **3D-printed adjustable camera mount** to enable easy modification of the camera’s viewing angle.  
   - Integrated a ledge for **sunlight protection** to minimize interference from direct sunlight, ensuring a reliable camera feed.
-<img src="https://github.com/user-attachments/assets/ab1196b7-ec52-46e8-a0eb-abda582e849f" alt="Camera Mount" height="350">
+<img src="https://github.com/user-attachments/assets/5b0900c5-bfa2-4a3d-b747-38d66222ca1e" alt="Camera Mount" height="350">
+<img src="https://github.com/user-attachments/assets/51780adc-a634-4045-9227-05bc99ba7b4b" alt="Camera Mount" height="350">
+
 
 - **Emergency stop mount:**  
   - Mount to hold the emergency stop button in place.
