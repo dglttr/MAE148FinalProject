@@ -19,7 +19,7 @@ STRAIGHT_ANGLE = 0.0
 
 MIN_ALLOWED_DISTANCE = 0.4  # when LIDAR detects something at a closer distance, it stops the car [in meters] 
 
-STOP_SIGN_DETECTION_CONFIDENCE = 0.8    # how confident the model should be in detecting a stop sign [0-1]
+STOP_SIGN_DETECTION_CONFIDENCE = 0.9    # how confident the model should be in detecting a stop sign [0-1]
 STOP_SIGN_DETECTION_DISTANCE = 1    # how far the stop sign would be away [meters]
 
 

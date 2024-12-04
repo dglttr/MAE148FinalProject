@@ -22,9 +22,9 @@ STRAIGHT_ANGLE = 0.0
 FASTER_INCREMENT = 0.2
 SLOWER_INCREMENT = 0.2
 
-ANGLE_INCREMENT = 5/MAX_STEERING_ANGLE 
+ANGLE_INCREMENT_PERCENTAGE = 0.5   # increase or decrease angle by this percentage
 
-DEFAULT_TIMEOUT = 10  # when to stop after receiving command (in seconds)
+DEFAULT_TIMEOUT = 10.0  # when to stop after receiving command (in seconds)
 
 COMMAND_VALUES = {
     "forward": (STRAIGHT_ANGLE, DEFAULT_THROTTLE, DEFAULT_TIMEOUT),
@@ -169,8 +169,8 @@ def get_steering_values_from_text(
 
     # LLM-based More complicated strings
     # Convert current angle to a direction and a degree° value
-    current_direction = "left" if current_angle < 0 else "right"
-    current_angle = abs(current_angle) * MAX_STEERING_ANGLE  # convert to degrees [°]
+    current_direction = "left" if current_angle < 0 else "right"    # TODO consider straight too
+    #current_angle = abs(current_angle) * MAX_STEERING_ANGLE  # convert to degrees [°]
     current_throttle_mode = "forward" if current_throttle >= 0 else "backward"
     current_throttle_value = abs(current_throttle)
 
@@ -181,41 +181,52 @@ def get_steering_values_from_text(
     throttle_value = response["throttle_value"]
     timeout = response["timeout"]
 
-# Increment or Decrement
+    # Set direction
     if direction == "unchanged":
         direction = current_direction
+    
+    # Set steering angle
     if angle == "increment":
-        if direction == "left":
-            steering_angle = current_angle - ANGLE_INCREMENT
-        if direction == "right":
-            steering_angle = current_angle + ANGLE_INCREMENT
-    if angle == "decrement":
-        if direction == "left":
-            steering_angle = current_angle + ANGLE_INCREMENT
-        if direction == "right":
-            steering_angle = current_angle - ANGLE_INCREMENT        
-
-    # Convert angle
-    if direction == "left":
-        steering_angle = -1 * float(angle) / MAX_STEERING_ANGLE
-    elif direction == "right":
-        steering_angle = float(angle) / MAX_STEERING_ANGLE
+        steering_angle = current_angle * (1 + ANGLE_INCREMENT_PERCENTAGE)
+    elif angle == "decrement":
+        steering_angle = current_angle * (1 - ANGLE_INCREMENT_PERCENTAGE)
     else:
-        steering_angle = 0.0 
+        # Not increment or decrement, but a number --> convert angle
+        if direction == "left":
+            steering_angle = -1 * float(angle) / MAX_STEERING_ANGLE
+        elif direction == "right":
+            steering_angle = float(angle) / MAX_STEERING_ANGLE
+        else:
+            steering_angle = 0.0 
 
     # Clip the steering angle at -1 or 1
     if steering_angle > 0:
-       steering_angle = min(1, steering_angle)
+       steering_angle = min(1.0, steering_angle)
     elif steering_angle < 0:
-        steering_angle = max(-1, steering_angle)
+        steering_angle = max(-1.0, steering_angle)
 
     # Throttle
-    throttle = DEFAULT_THROTTLE if throttle_value == "default" else float(throttle_value)
+    if throttle_mode == "unchanged":
+        throttle_mode == current_throttle_mode
+
+    if throttle_value == "unchanged":
+        throttle = current_throttle_value
+    elif throttle_value == "default":
+        throttle = DEFAULT_THROTTLE
+    else:
+        throttle = float(throttle_value)
+
     throttle = -1.0 * throttle if throttle_mode == "backward" else throttle
 
     # Timeout
-    timeout = DEFAULT_TIMEOUT if timeout == "default" else float(timeout)
+    if timeout == "unchanged":
+        timeout = current_timeout
+    elif timeout == "default":
+        timeout = DEFAULT_TIMEOUT
+    else:
+        timeout = float(timeout)
 
+    # Return values
     if type(steering_angle is float) and (type(throttle) is float):
         return steering_angle, throttle, timeout
 
