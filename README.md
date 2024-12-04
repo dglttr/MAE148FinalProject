@@ -1,6 +1,6 @@
 # SonicCar: An Intelligent Voice-Controlled Autonomous Vehicle
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/321f3eaf-28ea-4087-9bfc-1047f653198e" alt="SonicCar" style="width: 40%;">
+  <img src="https://github.com/user-attachments/assets/321f3eaf-28ea-4087-9bfc-1047f653198e" alt="SonicCar" style="width: 40%">
 </div>
 
 In recent years, the field of autonomous vehicles has made significant strides, creating advancements in **artificial intelligence (AI)**, **sensor technologies**, and **deep learning** to redefine transportation. As part of UCSD’s [ECE/MAE148 (Introduction to Autonomous Vehicles)](https://ucsd-ecemae-148.github.io/) course, our team worked on the development of **SonicCar**, a state-of-the-art autonomous vehicle capable of responding to **voice commands** and navigating its environment intelligently and safely.
@@ -87,7 +87,7 @@ The SonicCar project utilizes a comprehensive set of electronic components to en
 
 These components are interconnected via a detailed wiring system, ensuring efficient power distribution, signal communication, and system reliability. The **wiring diagram** below provides an overview of these connections, serving as a guide for assembly and troubleshooting.  
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/8656e657-a212-436b-b657-306ff00b81a1">
+  <img src="https://github.com/user-attachments/assets/8656e657-a212-436b-b657-306ff00b81a1" style="width: 50%>
 </div>
 
 # Programming
