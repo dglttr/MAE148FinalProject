@@ -40,7 +40,7 @@ class VoiceRecorderUI:
             mic_image = Image.open(MIC_ICON_FILE).resize((30, 30))
             self.mic_icon = ImageTk.PhotoImage(mic_image)
         except Exception:
-            print(f"Mic file path: {MIC_ICON_FILE}")
+            print(f"Mic file path not found: {MIC_ICON_FILE}")
             self.mic_icon = None  # Fallback in case icon isn't found
 
         # Recording button
@@ -112,7 +112,7 @@ class VoiceRecorderUI:
             else:
                 direction = "Straight"
             converted_angle = abs(steering_angle) * MAX_STEERING_ANGLE
-            self.status_label.config(text=f'Text recognized: "{text_recognized}"\n\nCommand identified:\n    ↔️ Direction: "{direction}"\n    📐 Angle: {converted_angle}°\n    ⚡ Throttle: {throttle}\n    ⏳ Timeout: {timeout}s\n\nPublishing to Jetson...')
+            self.status_label.config(text=f'Text recognized: "{text_recognized}"\n\nCommand identified:\n    ↔️ Direction: "{direction}"\n    📐 Angle: {converted_angle:.1f}°\n    ⚡ Throttle: {throttle*100:.1f}%\n    ⏳ Timeout: {timeout:.1f}s\n\nPublishing to Jetson...')
 
             # Publish to Jetson
             self.publisher_node.publish_new_steering_parameters(steering_angle, throttle, timeout)

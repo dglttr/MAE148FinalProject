@@ -1,5 +1,5 @@
 from listening_bot.speech_processing import DEFAULT_THROTTLE, DEFAULT_TIMEOUT
-from listening_bot.ui import VoiceRecorderUI
+from listening_bot.graphical_user_interface import VoiceRecorderUI
 
 import rclpy
 from rclpy.node import Node
