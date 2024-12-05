@@ -1,4 +1,4 @@
-from listening_bot.speech_processing import voice_recording, audio_to_text, get_steering_values_from_text, MAX_STEERING_ANGLE
+from listening_bot.speech_processing import voice_recording, audio_to_text, get_steering_values_from_text, MAX_STEERING_ANGLE, SAFETY_PREFIX, PrefixMissingError
 
 from os import path
 import tkinter as tk
@@ -61,7 +61,7 @@ class VoiceRecorderUI:
         # Status label
         self.status_label = tk.Label(
             root,
-            text='Press "Start Recording" to begin.',
+            text=f'Press "Start Recording" to begin.\n\n• Make sure to start your sentence with "{SAFETY_PREFIX}"\n• Recording stops automatically when you stop speaking',
             bg=BG_COLOR,
             font=("Segoe UI Emoji", 12),
             justify="left"
@@ -74,7 +74,7 @@ class VoiceRecorderUI:
             bg = GREY_COLOR,
             state = "disabled"
         )
-        self.status_label.config(text="Recording... Speak now!\n\n(recording stops automatically when you stop speaking)")
+        self.status_label.config(text=f'Recording... Speak now!\n\n• Make sure to start your sentence with "{SAFETY_PREFIX}"\n• Recording stops automatically when you stop speaking')
         self.status_label.update()  # calling update() to ensure text changes, even when another change happens quickly after
 
         # Record audio
@@ -86,15 +86,7 @@ class VoiceRecorderUI:
         # Speech-to-Text and error handling
         try:
             text_recognized = audio_to_text(audio, recognizer)
-        except sr.RequestError as e:
-            self.status_label.config(text='Could not request results. Try recording again.')
-            self.status_label.update()
-            self.publisher_node.get_logger().info(f"Request Error: {e}")
-        except sr.UnknownValueError as e:
-            self.status_label.config(text='Unknown value error. Did you say anything? Try recording again.')
-            self.status_label.update()
-            self.publisher_node.get_logger().info(f"Unknown Value Error: {e}")
-        else:   # Text recognized successfully
+
             self.status_label.config(text=f'Text recognized: "{text_recognized}"\n\nCalling LLM to understand intent...')
             self.status_label.update()
 
@@ -116,6 +108,22 @@ class VoiceRecorderUI:
 
             # Publish to Jetson
             self.publisher_node.publish_new_steering_parameters(steering_angle, throttle, timeout)
+        except sr.RequestError as e:
+            self.status_label.config(text='Could not request results. Try recording again.')
+            self.status_label.update()
+            self.publisher_node.get_logger().info(f"Request Error: {e}")
+        except sr.UnknownValueError as e:
+            self.status_label.config(text='Unknown value error. Did you say anything? Try recording again.')
+            self.status_label.update()
+            self.publisher_node.get_logger().info(f"Unknown Value Error: {e}")
+        except PrefixMissingError as e:
+            self.status_label.config(text=e.message)
+            self.status_label.update()
+            self.publisher_node.get_logger().info(e.message)
+        except KeyError as e:   # most likely error with LLM response
+            self.status_label.config(text='There was likely an error with the LLM API. Please check that you set the right API key.')
+            self.status_label.update()
+            self.publisher_node.get_logger().info(f'There was likely an error with the LLM API. Please check that you set the right API key as the environment variable "LLM_API_KEY". Full error: {e}')
 
         # tkinter re-enable button
         self.record_button.config(

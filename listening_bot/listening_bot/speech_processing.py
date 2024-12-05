@@ -63,6 +63,7 @@ Examples:
 - "Make a hard left turn" results in {"direction": "left", "angle": 45.0, "throttle_mode": "forward", "throttle_value": "default", "timeout": "default"}
 - "go faster" results in {"direction": "unchanged", "angle": "unchanged", "throttle_mode": "unchanged", "throttle_value": "increment", "timeout": "default"}
 - "go slower" results in {"direction": "unchanged", "angle": "unchanged", "throttle_mode": "unchanged", "throttle_value": "decrement", "timeout": "default"}
+- "oh no we're going to crash" results in {"direction": "unchanged", "angle": "unchanged", "throttle_mode": "unchanged", "throttle_value": 0.0, "timeout": "default"}
 
 Output Formatting:
 Use proper JSON syntax, following this exact JSON schema:
@@ -71,6 +72,14 @@ Do not include any prefix or whitespace in your response.
 
 Consider the following text: 
 """
+
+
+class PrefixMissingError(ValueError):
+    """Exception raised if safety prefix is missing."""
+
+    def __init__(self):
+        self.message = f'Did not start command with "{SAFETY_PREFIX}". Please try again.'
+        super().__init__(self.message)
 
 
 def voice_recording(recognizer: sr.Recognizer):
@@ -106,7 +115,7 @@ def make_gemini_request(text: str) -> dict:
     headers = {"Content-Type": "application/json"}
     data = {"contents": [{"parts": [{"text": llm_prompt}]}]}
     response = requests.post(
-        f"{GEMINI_URL}?key={os.environ['GOOGLE_API_KEY']}", headers=headers, json=data
+        f"{GEMINI_URL}?key={os.environ['LLM_API_KEY']}", headers=headers, json=data
     )
 
     response_text: str = response.json()["candidates"][0]["content"]["parts"][0]["text"]
@@ -126,8 +135,7 @@ def get_steering_values_from_text(
     # Make sure safety prefix is uttered first
     text_recognized = text_recognized.lower()
     if SAFETY_PREFIX and (not text_recognized.startswith(SAFETY_PREFIX)):
-        print(f'Did not start with "{SAFETY_PREFIX}".')
-        return None, None, None
+        raise PrefixMissingError()
 
     # Preprocess text
     text_recognized = text_recognized.replace(SAFETY_PREFIX, "")  # remove safety prefix
