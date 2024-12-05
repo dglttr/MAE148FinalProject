@@ -5,6 +5,16 @@ import tkinter as tk
 
 from PIL import Image, ImageTk  # For displaying icons
 import speech_recognition as sr
+from ament_index_python.packages import get_package_share_directory
+
+
+def get_image_path():
+    package_name = 'listening_bot'
+    image_file = 'resource/mic_icon.png'
+    
+    package_share_directory = get_package_share_directory(package_name)
+    image_path = path.join(package_share_directory, image_file)
+    return image_path
 
 
 GREEN_COLOR = '#228B22'
@@ -12,7 +22,7 @@ GREY_COLOR = '#808080'
 BLACK_COLOR = '#FFFFFF'
 BG_COLOR = "#f0f8ff"
 
-MIC_ICON_FILE = path.join(path.dirname(path.realpath(__file__)), "mic_icon.png")
+MIC_ICON_FILE = get_image_path()
 
 class VoiceRecorderUI:
     def __init__(self, root, publisher_node):
@@ -30,6 +40,7 @@ class VoiceRecorderUI:
             mic_image = Image.open(MIC_ICON_FILE).resize((30, 30))
             self.mic_icon = ImageTk.PhotoImage(mic_image)
         except Exception:
+            print(f"Mic file path: {MIC_ICON_FILE}")
             self.mic_icon = None  # Fallback in case icon isn't found
 
         # Recording button

@@ -48,7 +48,6 @@ def main(args=None):
 
     steering_command_publisher = SteeringCommandPublisher()
 
-    print("Spinning up node")
     rclpy.spin(steering_command_publisher)
 
     # Destroy the node explicitly
