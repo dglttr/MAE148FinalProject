@@ -122,7 +122,6 @@ class VoiceRecorderUI:
             # Start countdown
             self.timeout = timeout
             self.start_time = time.time()
-            print("Updating timer")
             self.update_timer()
         except sr.RequestError as e:
             self.status_label.config(text='Could not request results. Try recording again.')
