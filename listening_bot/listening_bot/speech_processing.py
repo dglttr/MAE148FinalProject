@@ -88,10 +88,10 @@ def voice_recording(recognizer: sr.Recognizer):
         # wait for a second to let the recognizer
         # adjust the energy threshold based on
         # the surrounding noise level
-        recognizer.adjust_for_ambient_noise(mic_source, duration=0.2)
+        recognizer.adjust_for_ambient_noise(mic_source, duration=0.5)
 
         # listens for the user's input
-        audio = recognizer.listen(mic_source)#, phrase_time_limit=TIME_TO_LISTEN)
+        audio = recognizer.listen(mic_source, phrase_time_limit=TIME_TO_LISTEN)
         return audio
     
 
