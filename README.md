@@ -94,7 +94,7 @@ These components are interconnected via a detailed wiring system, ensuring effic
 # Programming
 ## Overview
 The chart below shows how the software is structured. Fundamentally, we are using ROS2, especially to provide communication (the blue boxes in the chart represent ROS2 nodes). A high-level overview over the components:
-- **Publisher**: Runs on a laptop, uses the laptop's microphone to turn voice commands into text (speech-to-text), then uses a Large Language Model to understand the intent of the text and translates it into commands for the car steering angle, throttle and the runtime (how long a command should be executed). It then publishes these commands to the `steering_commands` topics.
+- **Publisher**: Runs on a laptop, uses the laptop's microphone to turn voice commands into text (speech-to-text), then uses a Large Language Model to understand the intent of the text and translates it into commands for the car steering angle, throttle and the runtime (how long a command should be executed). It then publishes these commands to the `steering_commands` topics. This is also where the graphical user interface runs.
 - **Subscriber**: Runs on the Jetson Nano, listens to incoming commands on the `steering_commands` topic and publishes them to the VESC node. Also tracks the LIDAR to prevent collisions with appearing objects and uses the OAK-D camera to detect stop signs.
 - **VESC node**: Prewritten node from DonkeyCar, tranlates commands on the `/cmd_vel` topic to electronic signals to the servo motor (for steering) and DC motor (for throttle).
 - **LIDAR node**: Prewritten node from DonkeyCar, publishes LIDAR measurements to the `/scan` topic.
@@ -114,6 +114,11 @@ The code listens for 4 seconds (by default) and then sends off anything recorded
 - Output Formatting
 - Text processing
 - Case handling (if-else)
+
+## Graphical User Interface
+- TODO: Add screenshots
+- Explain tkinter
+- Explain relation to publisher node (launched via timer, calls some functions, ...)
 
 ## Communication with ROS2
 - Explain FastDDS discovery server
