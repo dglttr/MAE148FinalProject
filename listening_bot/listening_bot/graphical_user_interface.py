@@ -2,6 +2,7 @@ from listening_bot.speech_processing import voice_recording, audio_to_text, get_
 
 from os import path
 import tkinter as tk
+import time
 
 from PIL import Image, ImageTk  # For displaying icons
 import speech_recognition as sr
@@ -31,7 +32,7 @@ class VoiceRecorderUI:
 
         self.root = root
         self.root.title("Speech-to-Text Voice Recorder")
-        self.root.geometry("450x400")
+        self.root.geometry("450x450")
         self.root.resizable(False, False)
         self.root.configure(bg=BG_COLOR)
 
@@ -50,7 +51,7 @@ class VoiceRecorderUI:
             command=self.record_and_update_steering_parameters,
             bg=GREEN_COLOR,
             fg=BLACK_COLOR,
-            font=("Arial", 14),
+            font=("Segoe UI Emoji", 14),
             padx=10,
             pady=5,
             image=self.mic_icon,
@@ -67,6 +68,15 @@ class VoiceRecorderUI:
             justify="left"
         )
         self.status_label.pack(pady=20)
+
+        # Timer label
+        self.timer_label = tk.Label(
+            root,
+            text="",
+            bg=BG_COLOR,
+            font=("Segoe UI Emoji", 12)
+        )
+        self.timer_label.pack(pady=10)
 
     def record_and_update_steering_parameters(self):
         self.record_button.config(
@@ -108,6 +118,12 @@ class VoiceRecorderUI:
 
             # Publish to Jetson
             self.publisher_node.publish_new_steering_parameters(steering_angle, throttle, timeout)
+
+            # Start countdown
+            self.timeout = timeout
+            self.start_time = time.time()
+            print("Updating timer")
+            self.update_timer()
         except sr.RequestError as e:
             self.status_label.config(text='Could not request results. Try recording again.')
             self.status_label.update()
@@ -131,6 +147,16 @@ class VoiceRecorderUI:
             bg = GREEN_COLOR,
             state = "normal"
         )
+
+    def update_timer(self):
+        elapsed_time = time.time() - self.start_time
+        time_remaining = self.timeout - elapsed_time
+
+        if time_remaining >= 0:
+            self.timer_label.config(text=f"Time remaining: {round(time_remaining)} seconds")
+            self.root.after(1000, self.update_timer)  # Update every second
+        else:
+            self.timer_label.config(text=f"Timeout of {self.timeout} seconds reached. Command stopped.")
 
 if __name__ == "__main__":
     root = tk.Tk()
