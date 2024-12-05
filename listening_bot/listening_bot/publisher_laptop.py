@@ -1,9 +1,11 @@
-from listening_bot.speech_processing import speech_to_text, get_steering_values_from_text, DEFAULT_THROTTLE, DEFAULT_TIMEOUT
+from listening_bot.speech_processing import DEFAULT_THROTTLE, DEFAULT_TIMEOUT
+from listening_bot.ui import VoiceRecorderApp
 
 import rclpy
 from rclpy.node import Node
-
 from geometry_msgs.msg import Twist
+
+import tkinter as tk
 
 COMMAND_TOPIC_NAME = 'steering_commands'
 
@@ -20,22 +22,20 @@ class SteeringCommandPublisher(Node):
         self.twist_cmd.linear.y = DEFAULT_TIMEOUT
         self.twist_cmd.angular.z = 0.0
 
-        timer_period = 0.01  # seconds
-        self.timer = self.create_timer(timer_period, self.listen_and_send_command)
+        # Launch UI
+        self.ui_timer = self.create_timer(0.01, self.launch_ui)
 
-    def listen_and_send_command(self):
-        """Listen to microphone, find the spoken command, parse steering values and communicate to Jetson."""
-        text_recognized = speech_to_text(verbose=True)
+    def launch_ui(self):
+        """Launch the User Interface."""
+        root = tk.Tk()
+        app = VoiceRecorderApp(root, self)
+        root.mainloop()
 
-        if text_recognized is None:
-            return
-        
-        steering_angle, throttle, timeout = get_steering_values_from_text(text_recognized,
-                                                                          current_angle=self.twist_cmd.angular.z,
-                                                                          current_throttle=self.twist_cmd.linear.x,
-                                                                          current_timeout=self.twist_cmd.linear.y)
-        
-        if (steering_angle is not None) and (throttle is not None):
+        self.ui_timer.cancel() # cancel timer so it is only executed once
+
+    def publish_new_steering_parameters(self, steering_angle, throttle, timeout):
+        """Publish steering parameters (angle, throttle and timeout) to Jetson via topic."""
+        if (steering_angle is not None) and (throttle is not None) and (timeout is not None):
             self.get_logger().info(f"Matched steering values: steering angle = {steering_angle}, throttle = {throttle}, timeout = {timeout}")
             self.twist_cmd.angular.z = steering_angle
             self.twist_cmd.linear.x = throttle
@@ -48,6 +48,7 @@ def main(args=None):
 
     steering_command_publisher = SteeringCommandPublisher()
 
+    print("Spinning up node")
     rclpy.spin(steering_command_publisher)
 
     # Destroy the node explicitly
