@@ -8,7 +8,6 @@ from geometry_msgs.msg import Twist
 from sensor_msgs.msg import LaserScan
 
 from roboflowoak import RoboflowOak
-import numpy as np
 
 COMMAND_TOPIC_NAME = 'steering_commands'
 ACTUATOR_TOPIC_NAME = '/cmd_vel'

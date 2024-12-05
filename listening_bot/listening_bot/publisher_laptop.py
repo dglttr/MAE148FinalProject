@@ -1,5 +1,5 @@
 from listening_bot.speech_processing import DEFAULT_THROTTLE, DEFAULT_TIMEOUT
-from listening_bot.ui import VoiceRecorderApp
+from listening_bot.ui import VoiceRecorderUI
 
 import rclpy
 from rclpy.node import Node
@@ -28,7 +28,7 @@ class SteeringCommandPublisher(Node):
     def launch_ui(self):
         """Launch the User Interface."""
         root = tk.Tk()
-        app = VoiceRecorderApp(root, self)
+        app = VoiceRecorderUI(root, self)
         root.mainloop()
 
         self.ui_timer.cancel() # cancel timer so it is only executed once

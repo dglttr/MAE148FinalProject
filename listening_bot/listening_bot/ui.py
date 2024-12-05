@@ -1,15 +1,12 @@
-#from listening_bot.speech_processing import voice_recording, audio_to_text, get_steering_values_from_text, MAX_STEERING_ANGLE
 from listening_bot.speech_processing import voice_recording, audio_to_text, get_steering_values_from_text, MAX_STEERING_ANGLE
 
+from os import path
 import tkinter as tk
-from tkinter import messagebox
+
 from PIL import Image, ImageTk  # For displaying icons
 import speech_recognition as sr
-from os import path
-import time
 
 
-RED_COLOR = '#8B0000'
 GREEN_COLOR = '#228B22'
 GREY_COLOR = '#808080'
 BLACK_COLOR = '#FFFFFF'
@@ -17,8 +14,9 @@ BG_COLOR = "#f0f8ff"
 
 MIC_ICON_FILE = path.join(path.dirname(path.realpath(__file__)), "mic_icon.png")
 
-class VoiceRecorderApp:
-    def __init__(self, root, publisher_node=None):
+class VoiceRecorderUI:
+    def __init__(self, root, publisher_node):
+        """Graphical User Interface for voice recognition and command parsing."""
         self.publisher_node = publisher_node
 
         self.root = root
@@ -31,10 +29,10 @@ class VoiceRecorderApp:
         try:
             mic_image = Image.open(MIC_ICON_FILE).resize((30, 30))
             self.mic_icon = ImageTk.PhotoImage(mic_image)
-        except Exception as e:
+        except Exception:
             self.mic_icon = None  # Fallback in case icon isn't found
 
-        # Add button
+        # Recording button
         self.record_button = tk.Button(
             root,
             text="Start Recording",
@@ -60,24 +58,21 @@ class VoiceRecorderApp:
         self.status_label.pack(pady=20)
 
     def record_and_update_steering_parameters(self):
-        self.start_time = time.time()
         self.record_button.config(
             text="Start Recording",
             bg = GREY_COLOR,
             state = "disabled"
         )
         self.status_label.config(text="Recording... Speak now!\n\n(recording stops automatically when you stop speaking)")
-        self.status_label.update()
+        self.status_label.update()  # calling update() to ensure text changes, even when another change happens quickly after
 
-        # Start recording
+        # Record audio
         recognizer = sr.Recognizer()
         audio = voice_recording(recognizer)
-
-        # Detected end of instruction, stopping recording
         self.status_label.config(text="Stopped recording. Attempting to recognize text...")
         self.status_label.update()
 
-        # Text recognition and error handling
+        # Speech-to-Text and error handling
         try:
             text_recognized = audio_to_text(audio, recognizer)
         except sr.RequestError as e:
@@ -88,8 +83,7 @@ class VoiceRecorderApp:
             self.status_label.config(text='Unknown value error. Did you say anything? Try recording again.')
             self.status_label.update()
             self.publisher_node.get_logger().info(f"Unknown Value Error: {e}")
-        else:
-            # Text recognized successfully
+        else:   # Text recognized successfully
             self.status_label.config(text=f'Text recognized: "{text_recognized}"\n\nCalling LLM to understand intent...')
             self.status_label.update()
 
@@ -121,5 +115,5 @@ class VoiceRecorderApp:
 
 if __name__ == "__main__":
     root = tk.Tk()
-    app = VoiceRecorderApp(root)
+    app = VoiceRecorderUI(root)
     root.mainloop()

@@ -34,6 +34,8 @@ COMMAND_VALUES = {
     "stop": (STRAIGHT_ANGLE, ZERO_THROTTLE, DEFAULT_TIMEOUT),
 }
 
+GEMINI_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent"
+
 LLM_SYSTEM_PROMPT = """
 Instructions:
 Extract the steering commands for the car from the given sentence. We need to extract these things:
@@ -87,8 +89,8 @@ def voice_recording(recognizer: sr.Recognizer):
 def audio_to_text(audio, recognizer: sr.Recognizer) -> str:
     start_time = datetime.now()
     text_recognized = recognizer.recognize_google(audio)
-    request_time = (datetime.now() - start_time).microseconds / 1000  # in ms
-    print(f'Text recognized: "{text_recognized}" (time taken: {request_time} ms)')
+    latency = (datetime.now() - start_time).microseconds / 1000  # in ms
+    print(f'Text recognized: "{text_recognized}" (latency: {latency} ms)')
 
     text_recognized = text_recognized.lower()
 
@@ -101,16 +103,15 @@ def make_gemini_request(text: str) -> dict:
 
     # Send the request to the API and retrieve response
     before = datetime.now()
-    url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent"
     headers = {"Content-Type": "application/json"}
     data = {"contents": [{"parts": [{"text": llm_prompt}]}]}
     response = requests.post(
-        f"{url}?key={os.environ['GOOGLE_API_KEY']}", headers=headers, json=data
+        f"{GEMINI_URL}?key={os.environ['GOOGLE_API_KEY']}", headers=headers, json=data
     )
 
-    response_text = response.json()["candidates"][0]["content"]["parts"][0]["text"]
+    response_text: str = response.json()["candidates"][0]["content"]["parts"][0]["text"]
     latency = (datetime.now() - before).microseconds / 1000
-    print(f'Response text: {response_text} (latency: {latency} ms)')
+    print(f'Response text: {response_text.strip()} (latency: {latency} ms)')
     parsed_response = json.loads(response_text)
     return parsed_response
 
