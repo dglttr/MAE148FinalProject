@@ -29,7 +29,7 @@ The project represents a synthesis of voice control, AI-based natural language p
 
 <div align="center">
   <img src="https://github.com/user-attachments/assets/53bfc4e6-5f2d-4a59-af19-3724c1d3ac05" alt="Car" height="350">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  <img src="" alt="Car" height="350">
+  <img src="https://github.com/user-attachments/assets/251a9552-a5dc-4f6a-830d-e0891b5de420" alt="Car" height="350">
 </div>
 
 
