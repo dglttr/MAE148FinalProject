@@ -27,7 +27,7 @@ The project represents a synthesis of voice control, AI-based natural language p
   - Combined inputs from multiple sensors (LiDAR and camera) and software systems (speech-to-text, LLM, deep learning) into a unified decision-making framework.  
   - Maintained consistent performance in diverse scenarios, showcasing the adaptability of the SonicCar system.
 
-<div align="center">
+<div align="center" style="border: 2px solid black; display: inline-block;">
   <img src="https://github.com/user-attachments/assets/53bfc4e6-5f2d-4a59-af19-3724c1d3ac05" alt="Car" height="350">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   <img src="https://github.com/user-attachments/assets/251a9552-a5dc-4f6a-830d-e0891b5de420" alt="Car" height="350">
 </div>
