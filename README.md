@@ -25,7 +25,12 @@ The project represents a synthesis of voice control, AI-based natural language p
 
 - **System Integration:**  
   - Combined inputs from multiple sensors (LiDAR and camera) and software systems (speech-to-text, LLM, deep learning) into a unified decision-making framework.  
-  - Maintained consistent performance in diverse scenarios, showcasing the adaptability of the SonicCar system.  
+  - Maintained consistent performance in diverse scenarios, showcasing the adaptability of the SonicCar system.
+
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/b0d4a368-a831-441b-9871-880613213ec1" alt="Car" height="350">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <img src="https://github.com/user-attachments/assets/3e750ad4-cd62-4228-8adf-64ed8a79d017" alt="Car" height="350">
+</div>
 
 # Mechanical Design
 The mechanical design of SonicCar focused on creating custom components to support the functionality of the vehicle. These components were designed, prototyped, and fabricated to ensure flexibility, durability, and compatibility with the onboard systems. Key mechanical elements include:  
@@ -38,8 +43,6 @@ The mechanical design of SonicCar focused on creating custom components to suppo
   <img src="https://github.com/user-attachments/assets/1c2f31f1-a217-452b-93ae-7ebe3370926d" alt="Car Platform" height="350">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   <img src="https://github.com/user-attachments/assets/819c9ce5-c165-415d-8f91-24416138c714" alt="Platform Pins" height="350">
 </div>
-
-TODO: Let's add a picture of the real-life car here
 
 - **Camera Mount:**  
   - Developed a **3D-printed adjustable camera mount** to enable easy modification of the camera’s viewing angle.  
