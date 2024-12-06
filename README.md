@@ -124,7 +124,7 @@ The GUI is consists of a button, a status text box and a timeout counter text bo
 
 Behind the scenes, the GUI leverages the Python `tkinter` package and is launched from the ROS2 publisher node and keeps running continuously. It is in the `graphical_user_interface.py` script and called the `VoiceRecorderUI`.
 
-![gui](https://github.com/user-attachments/assets/238156ba-1345-4412-b457-d4bc628c34c9)
+<img src="https://github.com/user-attachments/assets/238156ba-1345-4412-b457-d4bc628c34c9" alt="gui" style="width: 40%">
 
 ## Communication with ROS2
 Because our ROS2 nodes had to communicate across devices (laptop and Jetson), we had some unique challenges with making the nodes talk to each other. In theory, ROS2 should automatically discover all nodes running on the same WiFi network. Unfortunately, this did not work for us. We found a workaround by setting up out own [FastDDS discovery server](https://fast-dds.docs.eprosima.com/en/v2.14.3/fastdds/discovery/discovery_server.html). We have this server running at port `11888` on the Jetson in a separate terminal window. Then, on the laptop and all terminals where we run ROS2 nodes, we set an environment variable for the discovery server IP and port: `export ROS_DISCOVERY_SERVER="[YOUR-IP]:[YOUR-PORT]"` (on the Windows command line, this is `set ROS_DISCOVERY_SERVER=[YOUR-IP]:[YOUR-PORT]`). If this variable is set, ROS2 (more specifically FastDDS) automatically uses the server to discover nodes.
