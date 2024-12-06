@@ -138,9 +138,14 @@ One interesting issue we had: Instead of the IP address (which changes regularly
 - Stopping car
 
 ### Stop Sign Detection
-- Data collection, labeling, training in Roboflow
+- Data collection, labeling, training in Roboflow (talk about data set and accuracy)
 - Direct deployment to OAK-D via `roboflowoak` Python package --> running on OAK-D
 - Detection with certain confidence
-- Latency?
-- Compare distance (not working yet)
+
+![stop_sign_dataset](https://github.com/user-attachments/assets/a61879c2-2880-4ca9-a382-4e58883f334c)
+![stop_sign_detection_model_evaluation](https://github.com/user-attachments/assets/13799ae4-6e4d-4efa-b6ad-7a7ab2079f13)
+
+- Compare distance (not working yet): The way we currently retrieve results from OAK-D gives faulty values for the distance (but not a big deal)
 - Stopping car
+
+
