@@ -128,7 +128,7 @@ The code listens for 4 seconds (by default) and then sends off anything recorded
 - Explain FastDDS discovery server
 - Hostname did not work (potentially helpful links)
 
-### LIDAR-based Collision Avoidancejhjj
+### LIDAR-based Collision Avoidance
 - Subscribing to `/scan`
 - Filtering to only front range
 - Comparing to minimum allowed distance
