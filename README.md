@@ -29,7 +29,6 @@ The project represents a synthesis of voice control, AI-based natural language p
 
 
 ![IMG_2577](https://github.com/user-attachments/assets/2fb20111-11cc-458d-9333-9fddfa526283)
-![IMG_2578](https://github.com/user-attachments/assets/94c8baab-de6a-4718-a943-841e2003fded)
 
 # Mechanical Design
 The mechanical design of SonicCar focused on creating custom components to support the functionality of the vehicle. These components were designed, prototyped, and fabricated to ensure flexibility, durability, and compatibility with the onboard systems. Key mechanical elements include:  
