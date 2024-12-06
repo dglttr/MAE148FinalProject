@@ -11,7 +11,7 @@ To ensure safety and compliance with road rules, SonicCar incorporates both **Li
 
 The project represents a synthesis of voice control, AI-based natural language processing, and autonomous vehicle navigation, offering an accessible and interactive user interface while prioritizing safety. SonicCar showcases the potential for integrating **human-machine interaction technologies** with autonomous systems, paving the way for innovative applications in modern transportation.
 
-# Project Goals and Timeline
+## Project Goals and Timeline
 - **Voice Command Integration:**  
   - Implemented a **speech-to-text recognition** system that transcribes spoken user commands, starting with the safe word "Sonic" in order to activate the system.
   - Integrated a **large language model (LLM)** to interpret and act on natural language commands, enabling the car to respond intuitively to a variety of inputs.  
@@ -33,7 +33,7 @@ The project represents a synthesis of voice control, AI-based natural language p
 </div>
 
 
-# Mechanical Design
+## Mechanical Design
 The mechanical design of SonicCar focused on creating custom components to support the functionality of the vehicle. These components were designed, prototyped, and fabricated to ensure flexibility, durability, and compatibility with the onboard systems. Key mechanical elements include:  
 
 - **Platform:**  
@@ -63,7 +63,7 @@ The mechanical design of SonicCar focused on creating custom components to suppo
   - Used **3D printing** to prototype and produce robust, lightweight parts.  
   - Applied **laser cutting techniques** to achieve precise and efficient fabrication of the platform with intricate design features.  
 
-# Electronics
+## Electronics
 The SonicCar project utilizes a comprehensive set of electronic components to ensure reliable processing, communication, navigation, and power management. The key electronic parts include:  
 
 - **Processing and Communication:**  
@@ -95,8 +95,8 @@ These components are interconnected via a detailed wiring system, ensuring effic
   <img src="https://github.com/user-attachments/assets/8656e657-a212-436b-b657-306ff00b81a1" style="width: 75%">
 </div>
 
-# Programming
-## Overview
+## Programming
+### Overview
 The chart below shows how the software is structured. Fundamentally, we are using ROS2, especially to provide communication (the blue boxes in the chart represent ROS2 nodes). A high-level overview over the components:
 - **Publisher**: Runs on a laptop, uses the laptop's microphone to turn voice commands into text (speech-to-text), then uses a Large Language Model to understand the intent of the text and translates it into commands for the car steering angle, throttle and the runtime (how long a command should be executed). It then publishes these commands to the `steering_commands` topics. This is also where the graphical user interface runs.
 - **Subscriber**: Runs on the Jetson Nano, listens to incoming commands on the `steering_commands` topic and publishes them to the VESC node. Also tracks the LIDAR to prevent collisions with appearing objects and uses the OAK-D camera to detect stop signs.
@@ -107,34 +107,34 @@ The chart below shows how the software is structured. Fundamentally, we are usin
 
 ![Software Overview](https://github.com/user-attachments/assets/33715aae-859f-4e02-af10-2c55a63c8c86)
 
-## Speech-to-Text (STT)
+### Speech-to-Text (STT)
 For understanding voice commands, we leverage the microphone of the laptop so the user does not have to move along the Jetson Nano. We use the Python package `SpeechRecognition` and concretely, the underlying Google Speech Recognition API, to get the command spoken as text. We typically saw latencies of 400-600 ms, depending on the network connection.
 
 The code listens for 4 seconds (by default) and then sends off anything recorded to the API.
 
-## Understanding Intent with an LLM
+### Understanding Intent with an LLM
 - Gemini API
 - System Prompt
 - Output Formatting
 - Text processing
 - Case handling (if-else)
 
-## Graphical User Interface
+### Graphical User Interface
 - TODO: Add screenshots
 - Explain tkinter
 - Explain relation to publisher node (launched via timer, calls some functions, ...)
 
-## Communication with ROS2
+### Communication with ROS2
 - Explain FastDDS discovery server
 - Hostname did not work (potentially helpful links)
 
-## LIDAR-based Collision Avoidance
+### LIDAR-based Collision Avoidance
 - Subscribing to `/scan`
 - Filtering to only front range
 - Comparing to minimum allowed distance
 - Stopping car
 
-## Stop Sign Detection
+### Stop Sign Detection
 - Data collection, labeling, training in Roboflow
 - Direct deployment to OAK-D via `roboflowoak` Python package --> running on OAK-D
 - Detection with certain confidence
