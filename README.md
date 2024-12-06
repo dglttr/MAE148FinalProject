@@ -119,14 +119,17 @@ The code listens for 4 seconds (by default) and then sends off anything recorded
 - Text processing
 - Case handling (if-else)
 
-### Graphical User Interface
-- TODO: Add screenshots
-- Explain tkinter
-- Explain relation to publisher node (launched via timer, calls some functions, ...)
+## Graphical User Interface (GUI)
+The GUI is consists of a button, a status text box and a timeout counter text box. To interact with it, the user clicks the Start Recording button. After talking, the audio is transcribed and intent understood (as described above). The understood intent is then shown on the user interface. In case there are any errors, they are also shown in the GUI. After the command was sent to the Jetson, a countdown starts indicating how much longer the command will be executed on the Jetson.
 
-### Communication with ROS2
-- Explain FastDDS discovery server
-- Hostname did not work (potentially helpful links)
+Behind the scenes, the GUI leverages the Python `tkinter` package and is launched from the ROS2 publisher node and keeps running continuously. It is in the `graphical_user_interface.py` script and called the `VoiceRecorderUI`.
+
+![gui](https://github.com/user-attachments/assets/238156ba-1345-4412-b457-d4bc628c34c9)
+
+## Communication with ROS2
+Because our ROS2 nodes had to communicate across devices (laptop and Jetson), we had some unique challenges with making the nodes talk to each other. In theory, ROS2 should automatically discover all nodes running on the same WiFi network. Unfortunately, this did not work for us. We found a workaround by setting up out own [FastDDS discovery server](https://fast-dds.docs.eprosima.com/en/v2.14.3/fastdds/discovery/discovery_server.html). We have this server running at port `11888` on the Jetson in a separate terminal window. Then, on the laptop and all terminals where we run ROS2 nodes, we set an environment variable for the discovery server IP and port: `export ROS_DISCOVERY_SERVER="[YOUR-IP]:[YOUR-PORT]"` (on the Windows command line, this is `set ROS_DISCOVERY_SERVER=[YOUR-IP]:[YOUR-PORT]`). If this variable is set, ROS2 (more specifically FastDDS) automatically uses the server to discover nodes.
+
+One interesting issue we had: Instead of the IP address (which changes regularly), we wanted to use the Jetson's fixed hostname, `ucsdrobocar-148-12`. However, this resulted in errors since IPv4 hostnames apparently [can only include one dash](https://www.noip.com/support/knowledgebase/what-is-a-valid-hostname). To save time, we did not investigate this further, though there is likely a workaround. Instead, we regularly run `hostname -I` on the Jetson to see the current IP address.
 
 ### LIDAR-based Collision Avoidance
 - Subscribing to `/scan`
