@@ -28,7 +28,7 @@ The project represents a synthesis of voice control, AI-based natural language p
   - Maintained consistent performance in diverse scenarios, showcasing the adaptability of the SonicCar system.
 
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/b0d4a368-a831-441b-9871-880613213ec1" alt="Car" height="350">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <img src="https://github.com/user-attachments/assets/b0d4a368-a831-441b-9871-880613213ec1" height="350">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   <img src="https://github.com/user-attachments/assets/3e750ad4-cd62-4228-8adf-64ed8a79d017" alt="Car" height="350">
 </div>
 
