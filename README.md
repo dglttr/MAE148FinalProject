@@ -27,13 +27,13 @@ The project represents a synthesis of voice control, AI-based natural language p
   - Combined inputs from multiple sensors (LiDAR and camera) and software systems (speech-to-text, LLM, deep learning) into a unified decision-making framework.  
   - Maintained consistent performance in diverse scenarios, showcasing the adaptability of the SonicCar system.
 
+## Mechanical Design
+
 <div align="center">
   <img src="https://github.com/user-attachments/assets/53bfc4e6-5f2d-4a59-af19-3724c1d3ac05" alt="Car" height="300">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   <img src="https://github.com/user-attachments/assets/251a9552-a5dc-4f6a-830d-e0891b5de420" alt="Car" height="300">
 </div>
 
-
-## Mechanical Design
 The mechanical design of SonicCar focused on creating custom components to support the functionality of the vehicle. These components were designed, prototyped, and fabricated to ensure flexibility, durability, and compatibility with the onboard systems. Key mechanical elements include:  
 
 - **Platform:**  
