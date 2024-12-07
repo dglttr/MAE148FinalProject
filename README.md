@@ -113,12 +113,9 @@ For understanding voice commands, we leverage the microphone of the laptop so th
 The code listens for 4 seconds (by default) and then sends off anything recorded to the API.
 
 ### Understanding Intent with an LLM
-- Gemini API
-- System Prompt
-- Output Formatting
-- Text processing
-- Case handling (if-else)
-
+The python script used for this project was created using a publisher and subscriber method. The laptop handles speech recognition using a microphone and will extract three variables, direction (angle), speed (ranging from 0 to 1), and the amount of time to do such actions. When the three values have been collected, it is converted from speech to text through Large Language Models (LLMs). This is incredibly useful in this scenario for translating speech into tokens which can be used as key values for the three variables. An additional LLMs systems prompt was added to “train” the AI to look for the three values. This is where the Gemini API system comes into play.
+	An additional Gemini API system was used to configure LLMs through system prompts that define their behavior and context, ensuring they respond appropriately to user inputs. LLMs play a crucial role in transforming natural language commands into actionable outputs. Through system prompts, the LLM can be tailored to interpret specific driving instructions like "Go straight" or "Turn left" with higher accuracy. Its text processing capabilities enable tokenization and intent recognition, ensuring that each command is parsed and converted into structured data. This enables the car's control systems to be executed easier. LLMs ensure commands are delivered in a consistent, machine-readable format, while case handling logic allows it to respond appropriately to varied inputs, such as distinguishing between movement, stopping, or error cases. This integration streamlines the communication between the user's voice commands and the car's control systems, making the interaction intuitive, precise, and reliable.
+TODO: Add screenshot of LLM prompts
 ### Graphical User Interface (GUI)
 The GUI is consists of a button, a status text box and a timeout counter text box. To interact with it, the user clicks the Start Recording button. After talking, the audio is transcribed and intent understood (as described above). The understood intent is then shown on the user interface. In case there are any errors, they are also shown in the GUI. After the command was sent to the Jetson, a countdown starts indicating how much longer the command will be executed on the Jetson.
 
@@ -138,17 +135,12 @@ One interesting issue we had: Instead of the IP address (which changes regularly
 - Stopping car
 
 ### Stop Sign Detection
-- Data collection, labeling, training in Roboflow (talk about data set and accuracy)
-    - Dataset: Got 453 labelled stop sign images from Roboflow Universe, augmented with cropping, changing hue and changing brightness to make it more robust
-    - Training results: mAP (mean average precision; average precision over all classes); precision (how often the model is correct), recall (what percentage of relevant labels were successfully identified)
-- Direct deployment to OAK-D via `roboflowoak` Python package --> running on OAK-D
-- Detection with certain confidence (90% threshold)
+Roboflow streamlines the process of building a robust stop sign detection model by facilitating data collection, labeling, training, and deployment. The dataset used for this project was sourced from Roboflow Universe, containing 453 labeled stop sign images. To enhance the dataset's diversity and model robustness, data augmentation techniques were applied, including cropping, hue adjustments, and brightness modifications. These augmentations simulate varied real-world conditions, improving the model's ability to generalize across different environments. The original plan with this was to integrate Roboflow as a secondary emergency stop feature. However, we ran into issues as the way we retrieve results from OAK-D gives faulty values for distance. This is no big deal as originally, we planned on Sonic to stop one meter away from the stop sign but the minimum it can stop was 3 meters. 
+Training results were evaluated using key metrics such as mean Average Precision (mAP), which measures precision across all classes, ensuring balanced performance. Precision reflects how often the model's predictions are correct, while recall indicates the percentage of relevant labels successfully identified by the model. These metrics highlight the model's effectiveness and help fine-tune its performance.
+The trained model was deployed to the OAK-D camera using the Python package roboflowOAK. This integration enables real-time stop sign detection directly on the OAK-D. A confidence threshold of 90% ensures reliable detections, minimizing false positives while maintaining responsiveness. The reason it was bumped to 90% instead of 80% was because it kept viewing other people as stop signs. The combination of Roboflow's robust tools and the OAK-D's hardware efficiency delivers an optimized solution for stop sign detection.
 
 ![stop_sign_dataset](https://github.com/user-attachments/assets/a61879c2-2880-4ca9-a382-4e58883f334c)
 ![stop_sign_detection_model_evaluation](https://github.com/user-attachments/assets/13799ae4-6e4d-4efa-b6ad-7a7ab2079f13)
-
-- Compare distance (not working yet): The way we currently retrieve results from OAK-D gives faulty values for the distance (but not a big deal)
-- Stopping car
 
 ## How to Run (step-by-step)
 Anytime there is a variable here, remove the square brackets as well.
