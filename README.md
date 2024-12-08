@@ -41,9 +41,6 @@ The project represents a synthesis of voice control, AI-based natural language p
       </ul>
     </li>
     <li><a href="#how-to-run-step-by-step">How to Run (Step-by-Step)</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
-    <li><a href="#authors">Authors</a></li>
-    <li><a href="#contact">Contact</a></li>
   </ol>
 </details>
 
