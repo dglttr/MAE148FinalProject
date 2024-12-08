@@ -181,7 +181,7 @@ The GUI is consists of a button, a status text box and a timeout counter text bo
 Behind the scenes, the GUI leverages the Python `tkinter` package and is launched from the ROS2 publisher node and keeps running continuously. It is in the `graphical_user_interface.py` script and called the `VoiceRecorderUI`.
 
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/238156ba-1345-4412-b457-d4bc628c34c9" alt="GUI" style="width: 40%">
+  <img src="https://github.com/user-attachments/assets/84d3e41a-1bfe-46c2-a2eb-c1f5e96330ab" alt="GUI" style="width: 40%">
 </div>
 
 ### Communication with ROS2
