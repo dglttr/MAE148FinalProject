@@ -62,15 +62,17 @@ The project represents a synthesis of voice control, AI-based natural language p
 **Project Goals**:
 The project aimed to design and implement a sophisticated autonomous vehicle system with the following objectives:
 
-- **Voice Command Integration**: Developing a speech-to-text system to process natural language spoken commands and employing a large language model (LLM) to translate conversational speech into structured commands. This innovative approach allows the vehicle to understand natural speech patterns, ensuring a human-like interaction and enhancing usability.
+- **Voice Command Integration**: Developing a speech-to-text system to process natural language spoken commands, starting with the safe word "Sonic" in order to activate the system. Aditionally, we employed a large language model (LLM) to translate conversational speech into structured commands. This innovative approach allows the vehicle to understand natural speech patterns, ensuring a human-like interaction and enhancing usability.
 - **Human-Machine Interaction**: Enabling seamless communication between the user and vehicle through the real-time interpretation of conversational commands. The system focuses on providing an intuitive experience by converting everyday speech into precise, actionable controls for ROS2.
 - **LIDAR-based Collision Avoidance**: Integrating a robust LIDAR-based obstacle detection system to ensure the vehicle detects and avoids hazards in real time, prioritizing safety and navigation reliability.
 
 **Project Scope**:
 The project extended its functionality beyond the initial goals with the following additions:
 
-- **Stop Sign Detection**: Implementing a deep-learning-powered stop sign recognition system, utilizing the OAK-D camera to detect stop signs with high confidence, thereby ensuring compliance with traffic rules and improving situational awareness.
-- **Graphical User Interface (GUI)**: Developing an intuitive GUI that allows users to monitor critical vehicle parameters in real time, such as throttle, steering angle, direction, and timeout values. The GUI enhances user understanding of current vehicle operations and provides clarity during system interaction. (Refer to the example image above.)
+- **Stop Sign Detection**: Implementing a deep-learning-powered stop sign recognition system, utilizing the OAK-D camera to detect stop signs with high confidence, thereby improving situational awareness.
+- **Graphical User Interface (GUI)**: Developing an intuitive GUI that allows users to monitor critical vehicle parameters in real time, such as throttle, steering angle, direction, and timeout values. The GUI enhances user understanding of current vehicle operations and provides clarity during system interaction.
+
+The expanded scope reflects the adaptability and robustness of the system, showcasing its ability to integrate additional features seamlessly into its existing architecture. The project's innovative approach, integrating AI-driven conversational capabilities, sensor technologies, and interactive design to create a versatile, safe, and intuitive autonomous vehicle system. These features showcase the potential for real-world deployment in modern transportation systems.
 
 ## Mechanical Design
 
