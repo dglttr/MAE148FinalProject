@@ -1,7 +1,7 @@
 <div id="top"></div>
 
 <h1 align="center">SonicCar: An Intelligent Voice-Controlled Autonomous Vehicle</h1>
-<!-- PROJECT LOGO -->:
+<!-- PROJECT LOGO -->
 <br />
 <div align="center">
   <a href="https://jacobsschool.ucsd.edu/">
