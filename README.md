@@ -74,6 +74,9 @@ The project extended its functionality beyond the initial goals with the followi
 
 The expanded scope reflects the adaptability and robustness of the system, showcasing its ability to integrate additional features seamlessly into its existing architecture. The project's innovative approach, integrating AI-driven conversational capabilities, sensor technologies, and interactive design to create a versatile, safe, and intuitive autonomous vehicle system. These features showcase the potential for real-world deployment in modern transportation systems.
 
+**Timeline**:
+
+
 ## Mechanical Design
 
 <div align="center">
