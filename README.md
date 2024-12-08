@@ -7,7 +7,7 @@
   <a href="https://jacobsschool.ucsd.edu/">
     <img src="https://github.com/user-attachments/assets/95dfc96f-5263-4656-88a9-515fe4e0930c" alt="Logo" width="400" height="100">
   </a>
-<h3>ECE/MAE148 Final Project</h3>
+<h3>ECE/MAE 148 Final Project</h3>
 <p>
 Team 12 Fall 2024
 </p>
