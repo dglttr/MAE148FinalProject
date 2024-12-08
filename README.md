@@ -248,7 +248,6 @@ Nick, Daniel, Johnny, Shiv
 ## Contacts
 
 * Nick | yji@ieee.org
-* Shiv | skand@ucsd.edu
 * Daniel | dglatter@ucsd.edu 
 * Johnny | jol048@ucsd.edu
-
+* Shiv | skand@ucsd.edu
