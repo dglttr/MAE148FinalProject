@@ -38,6 +38,8 @@ The project represents a synthesis of voice control, AI-based natural language p
         <li><a href="#understanding-intent-with-an-llm">Understanding Intent with an LLM</a></li>
         <li><a href="#graphical-user-interface-gui">Graphical User Interface (GUI)</a></li>
         <li><a href="#communication-with-ros2">Communication with ROS2</a></li>
+        <li><a href="#li-dar-based-collision-avoidance">Li-DAR-based Collision Avoidance</a></li>
+        <li><a href="#stop-sign-detection">Stop Sign Detection</a></li>
       </ul>
     </li>
     <li><a href="#how-to-run-step-by-step">How to Run (Step-by-Step)</a></li>
