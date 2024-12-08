@@ -199,7 +199,7 @@ The trained model was deployed to the OAK-D camera using the Python package robo
 ## How to Run (step-by-step)
 Anytime there is a variable here, remove the square brackets as well.
 
-On the Jetson:
+### On the Jetson:
 
 0. Make sure the Jetson is turned on. Wait until the fan starts spinning (pretty good indication on when it has connected to the Wi-Fi. Make sure your laptop is also connected to the `UCSDRoboCar` network. Then, SSH into the Jetson: `ssh jetson@ucsdrobocar-148-[TEAM-NR].local`
 1. Get the UCSD DonkeyCar docker image: `docker pull djnighti/ucsd_robocar:devel`
@@ -218,7 +218,7 @@ On the Jetson:
 15. Set Roboflow environment variable to get the stop sign detection model: `export ROBOFLOW_API_KEY="[YOUR-ROBOFLOW-API-KEY]"`
 16. Run subscriber: `ros2 run listening_bot subscriber`
 
-On Laptop (this is on a Windows laptop):
+### On PC/Laptop (Windows):
 
 0. First, you will need to install ROS2. We used ROS2 Foxy. Newer ROS2 versions may work, but we did not test that. Here are the [install instructions for Windows](https://docs.ros.org/en/foxy/Installation/Windows-Install-Binary.html).
 1. The first time, clone the listening_bot repository into a folder of your choosing: `git clone https://github.com/dglttr/MAE148FinalProject.git`. Afterwards, navigate to that folder: `cd [PATH-TO-FOLDER]`.
