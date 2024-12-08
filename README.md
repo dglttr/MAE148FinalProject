@@ -106,7 +106,7 @@ The chart below shows how the software is structured. Fundamentally, we are usin
 - **OAK-D Camera**: Directly connected to the Jetson via USB, runs the stop sign detection AI model.
 
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/33715aae-859f-4e02-af10-2c55a63c8c86" alt="Program Overview">
+  <img src="https://github.com/user-attachments/assets/33715aae-859f-4e02-af10-2c55a63c8c86" alt="Program Overview" style="width: 70%">
 </div>
 
 ### Speech-to-Text (STT)
