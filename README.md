@@ -24,6 +24,38 @@ To ensure safety and compliance with road rules, SonicCar incorporates both **Li
 
 The project represents a synthesis of voice control, AI-based natural language processing, and autonomous vehicle navigation, offering an accessible and interactive user interface while prioritizing safety. SonicCar showcases the potential for integrating **human-machine interaction technologies** with autonomous systems, paving the way for innovative applications in modern transportation.
 
+<!-- TABLE OF CONTENTS -->
+<details>
+  <summary>Table of Contents</summary>
+  <ol>
+    <li><a href="#team-members">Team Members</a></li>
+    <li><a href="#project-goals-and-timeline">Project Goals and Timeline</a></li>
+    <li><a href="#mechanical-design">Mechanical Design</a></li>
+    <li><a href="#electronics">Electronics</a></li>
+    <li><a href="#programming">Programming</a>
+      <ul>
+        <li><a href="#speech-to-text-stt">Speech-to-Text (STT)</a></li>
+        <li><a href="#understanding-intent-with-an-llm">Understanding Intent with an LLM</a></li>
+        <li><a href="#graphical-user-interface-gui">Graphical User Interface (GUI)</a></li>
+        <li><a href="#communication-with-ros2">Communication with ROS2</a></li>
+      </ul>
+    </li>
+    <li><a href="#how-to-run-step-by-step">How to Run (Step-by-Step)</a></li>
+    <li><a href="#acknowledgments">Acknowledgments</a></li>
+    <li><a href="#authors">Authors</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ol>
+</details>
+
+<!-- TEAM MEMBERS -->
+## Team Members
+<ul>
+  <li>Nick Ji - Electrical Engineering - Class of 2026</li>
+  <li>Johnny Li - Mechanical Engineering - Class of 2025</li>
+  <li>Daniel Glatter - Mechanical Engineering - Class of 2025</li>
+  <li>Shivharsh Kand - Mechanical Engineering - Class of 2025</li>
+</ul>
+
 ## Project Goals and Timeline
 - **Voice Command Integration:**  
   - Implemented a **speech-to-text recognition** system that transcribes spoken user commands, starting with the safe word "Sonic" in order to activate the system.
