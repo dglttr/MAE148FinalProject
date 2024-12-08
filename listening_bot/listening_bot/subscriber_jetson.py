@@ -92,7 +92,7 @@ class SteeringCommandSubscriber(Node):
         front_ranges = ranges[start_idx:end_idx]
         min_distance = min(front_ranges)
 
-        if (min_distance <= MIN_ALLOWED_DISTANCE) and (min_distance >= 0.1):
+        if (min_distance <= MIN_ALLOWED_DISTANCE) and (min_distance >= 0.1):    # also check that min distance is greater than 0.1m to avoid triggers from erroneous readings or objects that are on the car itself
             self.get_logger().info(f'Too close ({min_distance} m). Stopping vehicle...')
             self.stop_car()
 
