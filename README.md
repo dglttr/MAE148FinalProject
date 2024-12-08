@@ -59,20 +59,18 @@ The project represents a synthesis of voice control, AI-based natural language p
 </ul>
 
 ## Project Goals and Timeline
-- **Voice Command Integration:**  
-  - Implemented a **speech-to-text recognition** system that transcribes spoken user commands, starting with the safe word "Sonic" in order to activate the system.
-  - Integrated a **large language model (LLM)** to interpret and act on natural language commands, enabling the car to respond intuitively to a variety of inputs.  
+**Project Goals**:
+The project aimed to design and implement a sophisticated autonomous vehicle system with the following objectives:
 
-- **Autonomous Navigation and Safety:**  
-  - Integrated a **Li-DAR-based obstacle detection system** to ensure the vehicle identifies and brakes for potential hazards in its path.  
-  - Developed a **stop sign recognition module** using **RoboFlow deep learning**, ensuring the vehicle complies with traffic signals.  
+- **Voice Command Integration**: Developing a speech-to-text system to process natural language spoken commands and employing a large language model (LLM) to translate conversational speech into structured commands. This innovative approach allows the vehicle to understand natural speech patterns, ensuring a human-like interaction and enhancing usability.
+- **Human-Machine Interaction**: Enabling seamless communication between the user and vehicle through the real-time interpretation of conversational commands. The system focuses on providing an intuitive experience by converting everyday speech into precise, actionable controls for ROS2.
+- **LIDAR-based Collision Avoidance**: Integrating a robust LIDAR-based obstacle detection system to ensure the vehicle detects and avoids hazards in real time, prioritizing safety and navigation reliability.
 
-- **Human-Machine Interaction:**  
-  - Achieved smooth interaction between the user and vehicle through real-time processing of voice commands, improving accessibility and user experience.  
+**Project Scope**:
+The project extended its functionality beyond the initial goals with the following additions:
 
-- **System Integration:**  
-  - Combined inputs from multiple sensors (Li-DAR and camera) and software systems (speech-to-text, LLM, deep learning) into a unified decision-making framework.  
-  - Maintained consistent performance in diverse scenarios, showcasing the adaptability of the SonicCar system.
+- **Stop Sign Detection**: Implementing a deep-learning-powered stop sign recognition system, utilizing the OAK-D camera to detect stop signs with high confidence, thereby ensuring compliance with traffic rules and improving situational awareness.
+- **Graphical User Interface (GUI)**: Developing an intuitive GUI that allows users to monitor critical vehicle parameters in real time, such as throttle, steering angle, direction, and timeout values. The GUI enhances user understanding of current vehicle operations and provides clarity during system interaction. (Refer to the example image above.)
 
 ## Mechanical Design
 
