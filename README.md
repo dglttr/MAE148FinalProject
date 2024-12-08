@@ -5,7 +5,7 @@
 <br />
 <div align="center">
   <a href="https://jacobsschool.ucsd.edu/">
-    <img src="https://github.com/user-attachments/assets/95dfc96f-5263-4656-88a9-515fe4e0930c" alt="Logo" width="400" height="100">
+    <img src="https://github.com/user-attachments/assets/95dfc96f-5263-4656-88a9-515fe4e0930c" alt="Logo" width="300">
   </a>
 <h3>ECE/MAE 148 Final Project</h3>
 <p>
