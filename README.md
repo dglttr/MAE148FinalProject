@@ -63,7 +63,7 @@ The project represents a synthesis of voice control, AI-based natural language p
 The project aimed to design and implement a sophisticated autonomous vehicle system with the following objectives:
 
 - **Voice Command Integration**: Developing a speech-to-text system to process natural language spoken commands, starting with the safe word "Sonic" in order to activate the system. Aditionally, we employed a large language model (LLM) to translate conversational speech into structured commands. This innovative approach allows the vehicle to understand natural speech patterns, ensuring a human-like interaction and enhancing usability.
-- **Human-Machine Interaction**: Enabling seamless communication between the user and vehicle through the real-time interpretation of conversational commands. The system focuses on providing an intuitive experience by converting everyday speech into precise, actionable controls for ROS2.
+- **Human-Machine Interaction**: Fostering smooth communication between the user and vehicle by enabling the system to interpret natural speech patterns, thereby improving accessibility, enhancing the user experience, and allowing intuitive vehicle control.
 - **LIDAR-based Collision Avoidance**: Integrating a robust LIDAR-based obstacle detection system to ensure the vehicle detects and avoids hazards in real time, prioritizing safety and navigation reliability.
 
 **Project Scope**:
