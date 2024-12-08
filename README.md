@@ -105,7 +105,9 @@ The chart below shows how the software is structured. Fundamentally, we are usin
 - **FastDDS discovery server**: Running on the Jetson, used to enable communication between devices (laptop and Jetson). All ROS2 nodes register with the discovery server so they are discoverable to all other nodes.
 - **OAK-D Camera**: Directly connected to the Jetson via USB, runs the stop sign detection AI model.
 
-![Software Overview](https://github.com/user-attachments/assets/33715aae-859f-4e02-af10-2c55a63c8c86)
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/33715aae-859f-4e02-af10-2c55a63c8c86" alt="Program Overview">
+</div>
 
 ### Speech-to-Text (STT)
 For understanding voice commands, we leverage the microphone of the laptop so the user does not have to move along the Jetson Nano. We use the Python package `SpeechRecognition` and concretely, the underlying Google Speech Recognition API, to get the command spoken as text. We typically saw latencies of 400-600 ms, depending on the network connection. Note that the `SpeechRecognition` uses a hardcoded API key for the API and there is a limit on the number of requests you can do per day.
@@ -121,7 +123,9 @@ The GUI is consists of a button, a status text box and a timeout counter text bo
 
 Behind the scenes, the GUI leverages the Python `tkinter` package and is launched from the ROS2 publisher node and keeps running continuously. It is in the `graphical_user_interface.py` script and called the `VoiceRecorderUI`.
 
-<img src="https://github.com/user-attachments/assets/238156ba-1345-4412-b457-d4bc628c34c9" alt="gui" style="width: 40%">
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/238156ba-1345-4412-b457-d4bc628c34c9" alt="GUI" style="width: 40%">
+</div>
 
 ### Communication with ROS2
 Because our ROS2 nodes had to communicate across devices (laptop and Jetson), we had some unique challenges with making the nodes talk to each other. In theory, ROS2 should automatically discover all nodes running on the same WiFi network. Unfortunately, this did not work for us. We found a workaround by setting up out own [FastDDS discovery server](https://fast-dds.docs.eprosima.com/en/v2.14.3/fastdds/discovery/discovery_server.html). We have this server running at port `11888` on the Jetson in a separate terminal window. Then, on the laptop and all terminals where we run ROS2 nodes, we set an environment variable for the discovery server IP and port: `export ROS_DISCOVERY_SERVER="[YOUR-IP]:[YOUR-PORT]"` (on the Windows command line, this is `set ROS_DISCOVERY_SERVER=[YOUR-IP]:[YOUR-PORT]`). If this variable is set, ROS2 (more specifically FastDDS) automatically uses the server to discover nodes.
