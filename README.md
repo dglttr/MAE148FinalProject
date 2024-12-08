@@ -1,6 +1,18 @@
-# SonicCar: An Intelligent Voice-Controlled Autonomous Vehicle
+<div id="top"></div>
+
+<h1 align="center">SonicCar: An Intelligent Voice-Controlled Autonomous Vehicle</h1>
+<!-- PROJECT LOGO -->:
+<br />
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/321f3eaf-28ea-4087-9bfc-1047f653198e" alt="SonicCar" style="width: 40%">
+  <a href="https://jacobsschool.ucsd.edu/">
+    <img src="/media/UCSDLogo_JSOE_BlueGold.png" alt="Logo" width="400" height="100">
+  </a>
+<h3>ECE/MAE148 Final Project</h3>
+<p>
+Team 12 Fall 2024
+</p>
+
+<img src="https://github.com/user-attachments/assets/321f3eaf-28ea-4087-9bfc-1047f653198e" alt="SonicCar" style="width: 40%">
 </div>
 
 In recent years, the field of autonomous vehicles has made significant strides, creating advancements in **artificial intelligence (AI)**, **sensor technologies**, and **deep learning** to redefine transportation. As part of UCSD’s [ECE/MAE148 (Introduction to Autonomous Vehicles)](https://ucsd-ecemae-148.github.io/) course, our team worked on the development of **SonicCar**, a state-of-the-art autonomous vehicle capable of responding to **voice commands** and navigating its environment intelligently and safely.
