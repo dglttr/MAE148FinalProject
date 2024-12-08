@@ -148,8 +148,8 @@ Training results were evaluated using key metrics such as mean Average Precision
 The trained model was deployed to the OAK-D camera using the Python package roboflowOAK. This integration enables real-time stop sign detection directly on the OAK-D. A confidence threshold of 90% ensures reliable detections, minimizing false positives while maintaining responsiveness. The reason it was bumped to 90% instead of 80% was because it kept viewing other people as stop signs. The combination of Roboflow's robust tools and the OAK-D's hardware efficiency delivers an optimized solution for stop sign detection.
 
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/a61879c2-2880-4ca9-a382-4e58883f334c" alt="stop_sign_dataset">
-  <img src="https://github.com/user-attachments/assets/13799ae4-6e4d-4efa-b6ad-7a7ab2079f13" alt="stop_sign_detection_model_evaluation">
+  <img src="https://github.com/user-attachments/assets/a61879c2-2880-4ca9-a382-4e58883f334c" alt="stop_sign_dataset" style="width: 70%">
+  <img src="https://github.com/user-attachments/assets/13799ae4-6e4d-4efa-b6ad-7a7ab2079f13" alt="stop_sign_detection_model_evaluation" style="width: 70%">
 </div>
 
 ## How to Run (step-by-step)
