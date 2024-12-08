@@ -26,7 +26,7 @@ The project represents a synthesis of voice control, AI-based natural language p
 
 <!-- TABLE OF CONTENTS -->
 <details>
-  <summary>Table of Contents</summary>
+  <summary>**Table of Contents**</summary>
   <ol>
     <li><a href="#team-members">Team Members</a></li>
     <li><a href="#project-goals-and-timeline">Project Goals and Timeline</a></li>
