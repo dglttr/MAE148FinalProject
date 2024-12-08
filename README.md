@@ -229,3 +229,22 @@ Anytime there is a variable here, remove the square brackets as well.
 6. `ros2 daemon stop`
 7. Set the LLM_API_KEY: `set LLM_API_KEY=[API-KEY]`. You can get the API key for the Google Gemini API [here](https://aistudio.google.com/apikey).
 8. Run the publisher: `ros2 run publisher`
+
+<!-- Authors -->
+## Authors
+Nick, Daniel, Johnny, Shiv
+
+<!-- Badges -->
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+<!-- ACKNOWLEDGMENTS -->
+## Acknowledgments
+*Huge thanks to the team, the TAs Alexander and Winston for carrying the class, and Professor Jack Silberman for the amazing opportunity to work on such a cool project! Special thanks to Alexander for the README template!*
+
+<!-- CONTACT -->
+## Contact
+
+* Nick | yji@ieee.org
+* Daniel | dglatter@ucsd.edu 
+* Johnny | jol048@ucsd.edu
+* Shiv | skand@ucsd.edu
