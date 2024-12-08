@@ -1,4 +1,4 @@
-from listening_bot.speech_processing import voice_recording, audio_to_text, get_steering_values_from_text, MAX_STEERING_ANGLE, SAFETY_PREFIX, PrefixMissingError
+from listening_bot.speech_processing import voice_recording, audio_to_text, get_steering_values_from_text, MAX_STEERING_ANGLE, SAFETY_PREFIX, PrefixMissingError, DEFAULT_TIMEOUT, ZERO_THROTTLE, STRAIGHT_ANGLE
 
 from os import path
 import tkinter as tk
@@ -32,7 +32,7 @@ class VoiceRecorderUI:
 
         self.root = root
         self.root.title("Speech-to-Text Voice Recorder")
-        self.root.geometry("450x450")
+        self.root.geometry("450x600")
         self.root.resizable(False, False)
         self.root.configure(bg=BG_COLOR)
 
@@ -77,6 +77,20 @@ class VoiceRecorderUI:
             font=("Segoe UI Emoji", 12)
         )
         self.timer_label.pack(pady=10)
+
+        # Emergency stop label
+        self.emergency_stop_button = tk.Button(
+            root,
+            text="Emergency Stop",
+            command=self.emergency_stop,
+            bg="#FF0000",
+            fg=BLACK_COLOR,
+            font=("Segoe UI Emoji", 14),
+            padx=10,
+            pady=15,
+            compound="left"
+        )
+        self.emergency_stop_button.pack(pady=50)
 
     def record_and_update_steering_parameters(self):
         self.record_button.config(
@@ -146,6 +160,10 @@ class VoiceRecorderUI:
             bg = GREEN_COLOR,
             state = "normal"
         )
+
+    def emergency_stop(self):
+        steering_angle, throttle, timeout = STRAIGHT_ANGLE, ZERO_THROTTLE, DEFAULT_TIMEOUT
+        self.publisher_node.publish_new_steering_parameters(steering_angle, throttle, timeout)
 
     def update_timer(self):
         elapsed_time = time.time() - self.start_time
