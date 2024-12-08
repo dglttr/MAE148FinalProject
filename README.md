@@ -244,8 +244,8 @@ Nick, Daniel, Johnny, Shiv
 ## Acknowledgments
 *Huge thanks to the team, the TAs Alexander and Winston for carrying the class, and Professor Jack Silberman for the amazing opportunity to work on such a cool project! Special thanks to Alexander for the README template!*
 
-<!-- CONTACT -->
-## Contact
+<!-- CONTACTS -->
+## Contacts
 
 * Nick | yji@ieee.org
 * Daniel | dglatter@ucsd.edu 
