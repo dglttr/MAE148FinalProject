@@ -20,7 +20,7 @@ In recent years, the field of autonomous vehicles has made significant strides, 
 
 The SonicCar system integrates several innovative technologies to achieve its functionality. It uses **speech-to-text recognition** to convert spoken commands into actionable text, which is then processed by a **large language model (LLM)** to interpret and execute the instructions. This unique approach allows SonicCar to understand complex and natural language commands, providing a seamless user experience.
 
-To ensure safety and compliance with road rules, SonicCar incorporates both **LiDAR-based obstacle detection** and a **camera-based stop sign recognition system**. The obstacle detection module enables the vehicle to detect and brake for objects in its path, while the stop sign recognition module, trained using **RoboFlow deep learning**, ensures adherence to traffic regulations. Together, these systems enhance the vehicle's reliability and situational awareness in dynamic environments.
+To ensure safety and compliance with road rules, SonicCar incorporates both **Li-DAR-based obstacle detection** and a **camera-based stop sign recognition system**. The obstacle detection module enables the vehicle to detect and brake for objects in its path, while the stop sign recognition module, trained using **RoboFlow deep learning**, ensures adherence to traffic regulations. Together, these systems enhance the vehicle's reliability and situational awareness in dynamic environments.
 
 The project represents a synthesis of voice control, AI-based natural language processing, and autonomous vehicle navigation, offering an accessible and interactive user interface while prioritizing safety. SonicCar showcases the potential for integrating **human-machine interaction technologies** with autonomous systems, paving the way for innovative applications in modern transportation.
 
@@ -59,14 +59,14 @@ The project represents a synthesis of voice control, AI-based natural language p
   - Integrated a **large language model (LLM)** to interpret and act on natural language commands, enabling the car to respond intuitively to a variety of inputs.  
 
 - **Autonomous Navigation and Safety:**  
-  - Integrated a **LiDAR-based obstacle detection system** to ensure the vehicle identifies and brakes for potential hazards in its path.  
+  - Integrated a **Li-DAR-based obstacle detection system** to ensure the vehicle identifies and brakes for potential hazards in its path.  
   - Developed a **stop sign recognition module** using **RoboFlow deep learning**, ensuring the vehicle complies with traffic signals.  
 
 - **Human-Machine Interaction:**  
   - Achieved smooth interaction between the user and vehicle through real-time processing of voice commands, improving accessibility and user experience.  
 
 - **System Integration:**  
-  - Combined inputs from multiple sensors (LiDAR and camera) and software systems (speech-to-text, LLM, deep learning) into a unified decision-making framework.  
+  - Combined inputs from multiple sensors (Li-DAR and camera) and software systems (speech-to-text, LLM, deep learning) into a unified decision-making framework.  
   - Maintained consistent performance in diverse scenarios, showcasing the adaptability of the SonicCar system.
 
 ## Mechanical Design
@@ -79,7 +79,7 @@ The project represents a synthesis of voice control, AI-based natural language p
 The mechanical design of SonicCar focused on creating custom components to support the functionality of the vehicle. These components were designed, prototyped, and fabricated to ensure flexibility, durability, and compatibility with the onboard systems. Key mechanical elements include:  
 
 - **Platform:**  
-  - Designed and laser-cut a **custom platform** mounted on top of the car’s base to hold critical components such as the Jetson Nano, camera, LiDAR, and GPS.
+  - Designed and laser-cut a **custom platform** mounted on top of the car’s base to hold critical components such as the Jetson Nano, camera, Li-DAR, and GPS.
   - The platform uses **multiple parallel slots** to allow flexibility in the positioning and installation of components.
   - It also has four pins that connect it to the car body. They are simple, sturdy and very flexible (for example, we simply adjusted the length and reprinted the feet when we needed to raise the platform).
 <div align="center">
@@ -117,7 +117,7 @@ The SonicCar project utilizes a comprehensive set of electronic components to en
   - Camera (Oak-D Lite)  
 
 - **Sensing and Navigation:**  
-  - LiDAR Board and LiDAR Sensor  
+  - Li-DAR Board and Li-DAR Sensor  
 
 - **Actuation:**  
   - VESC (Electronic Speed Controller)  
@@ -141,9 +141,9 @@ These components are interconnected via a detailed wiring system, ensuring effic
 ### Overview
 The chart below shows how the software is structured. Fundamentally, we are using ROS2, especially to provide communication (the blue boxes in the chart represent ROS2 nodes). A high-level overview over the components:
 - **Publisher**: Runs on a laptop, uses the laptop's microphone to turn voice commands into text (speech-to-text), then uses a Large Language Model to understand the intent of the text and translates it into commands for the car steering angle, throttle and the runtime (how long a command should be executed). It then publishes these commands to the `steering_commands` topics. This is also where the graphical user interface runs.
-- **Subscriber**: Runs on the Jetson Nano, listens to incoming commands on the `steering_commands` topic and publishes them to the VESC node. Also tracks the LIDAR to prevent collisions with appearing objects and uses the OAK-D camera to detect stop signs.
+- **Subscriber**: Runs on the Jetson Nano, listens to incoming commands on the `steering_commands` topic and publishes them to the VESC node. Also tracks the Li-DAR to prevent collisions with appearing objects and uses the OAK-D camera to detect stop signs.
 - **VESC node**: Prewritten node from DonkeyCar, tranlates commands on the `/cmd_vel` topic to electronic signals to the servo motor (for steering) and DC motor (for throttle).
-- **LIDAR node**: Prewritten node from DonkeyCar, publishes LIDAR measurements to the `/scan` topic.
+- **Li-DAR node**: Prewritten node from DonkeyCar, publishes Li-DAR measurements to the `/scan` topic.
 - **FastDDS discovery server**: Running on the Jetson, used to enable communication between devices (laptop and Jetson). All ROS2 nodes register with the discovery server so they are discoverable to all other nodes.
 - **OAK-D Camera**: Directly connected to the Jetson via USB, runs the stop sign detection AI model.
 
@@ -174,11 +174,11 @@ Because our ROS2 nodes had to communicate across devices (laptop and Jetson), we
 
 One interesting issue we had: Instead of the IP address (which changes regularly), we wanted to use the Jetson's fixed hostname, `ucsdrobocar-148-12`. However, this resulted in errors since IPv4 hostnames apparently [can only include one dash](https://www.noip.com/support/knowledgebase/what-is-a-valid-hostname). To save time, we did not investigate this further, though there is likely a workaround. Instead, we regularly run `hostname -I` on the Jetson to see the current IP address.
 
-### LIDAR-based Collision Avoidance
-The LIDAR-based collision avoidance system utilizes the Jetson Nano and ROS2 for seamless integration with various hardware and software components to ensure safe and autonomous vehicle operation. Below is a detailed breakdown of the components and their roles:
-- **LIDAR Node**: Subscribes to the `/scan` topic, which publishes LIDAR measurements. The system filters the range data to focus on the front third of the vehicle's field of view and calculates the minimum distance to nearby objects. If the minimum detected distance is less than the configured threshold `(0.4 meters)`, the car is stopped immediately to avoid a collision. This ensures obstacle detection and prevention in real time.
-- **Subscriber Node**: This node subscribes to the `steering_commands` topic to receive motion commands and to the `/scan` topic for LIDAR data. It compares the received front-range LIDAR data to a predefined minimum allowed distance. Commands are published to the `/cmd_vel` topic to control steering and throttle. Additionally, a timer mechanism is employed to maintain movement or stop the vehicle after a timeout if no further commands are received.
-- **Collision Avoidance Logic**: The system filters the LIDAR data from 10% to 40% of the total range to focus on obstacles directly ahead. The `min()` function is used to find the closest object in this range, triggering a stop if the object is too close. This logic is encapsulated in the `lidar_callback` method.
+### Li-DAR-based Collision Avoidance
+The Li-DAR-based collision avoidance system utilizes the Jetson Nano and ROS2 for seamless integration with various hardware and software components to ensure safe and autonomous vehicle operation. Below is a detailed breakdown of the components and their roles:
+- **Li-DAR Node**: Subscribes to the `/scan` topic, which publishes Li-DAR measurements. The system filters the range data to focus on the front third of the vehicle's field of view and calculates the minimum distance to nearby objects. If the minimum detected distance is less than the configured threshold `(0.4 meters)`, the car is stopped immediately to avoid a collision. This ensures obstacle detection and prevention in real time.
+- **Subscriber Node**: This node subscribes to the `steering_commands` topic to receive motion commands and to the `/scan` topic for Li-DAR data. It compares the received front-range Li-DAR data to a predefined minimum allowed distance. Commands are published to the `/cmd_vel` topic to control steering and throttle. Additionally, a timer mechanism is employed to maintain movement or stop the vehicle after a timeout if no further commands are received.
+- **Collision Avoidance Logic**: The system filters the Li-DAR data from 10% to 40% of the total range to focus on obstacles directly ahead. The `min()` function is used to find the closest object in this range, triggering a stop if the object is too close. This logic is encapsulated in the `Li-DAR_callback` method.
 - **Command Integration**: Commands such as steering angles and throttle values are processed using the `command_callback` function. A timer (`keep_moving`) ensures the car continues moving until a timeout occurs or a new command is received.
 - **Real-time Actuation**: All decisions, including stopping due to obstacles or stop sign detection (further discussed in the next section), are immediately transmitted to the VESC node through the `/cmd_vel` topic. This ensures the vehicle reacts promptly to its environment.
 
@@ -208,11 +208,11 @@ On the Jetson:
 6. Source ROS2 package: `. /install/setup.bash`
 7. Check the current IP address of the Jetson (needed for discovery server later): `hostname -I`
 8. Launch FastDDS discovery server: `fastdds discovery --server-id 0 --port 11888`
-9. Now, open another terminal and repeat steps 0, 3, 4 and 6 - this will be used to launch the VESC and LIDAR nodes
+9. Now, open another terminal and repeat steps 0, 3, 4 and 6 - this will be used to launch the VESC and Li-DAR nodes
 10. Set environment variable for FastDDS server: `export ROS_DISCOVERY_SERVER="[IP-ADDRESS]:11888"`
 12. Stop ROS2 daemon to make sure the discovery server will be used: `ros2 daemon stop`
-13. Launch LIDAR and VESC nodes with launchfile: `ros2 launch listening_bot listening_bot.launch.py`
-14. Now, open another terminal and repeat steps 0, 3, 4, 6 and 10 - this will be used to launch the subscriber node (we do this in a separate terminal so the terminal is not flooded with messages from the VESC and LIDAR nodes)
+13. Launch Li-DAR and VESC nodes with launchfile: `ros2 launch listening_bot listening_bot.launch.py`
+14. Now, open another terminal and repeat steps 0, 3, 4, 6 and 10 - this will be used to launch the subscriber node (we do this in a separate terminal so the terminal is not flooded with messages from the VESC and Li-DAR nodes)
 15. Set Roboflow environment variable to get the stop sign detection model: `export ROBOFLOW_API_KEY="[YOUR-ROBOFLOW-API-KEY]"`
 16. Run subscriber: `ros2 run listening_bot subscriber`
 
