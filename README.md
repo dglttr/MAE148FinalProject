@@ -57,6 +57,9 @@ The project represents a synthesis of voice control, AI-based natural language p
   <li>Daniel Glatter - Mechanical Engineering - Class of 2025</li>
   <li>Shivharsh Kand - Mechanical Engineering - Class of 2025</li>
 </ul>
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/b73677f6-a740-4d5b-a945-56ab7ce24f93" alt="group_pic" style="width: 70%">
+</div>
 
 ## Project Goals and Timeline
 **Project Goals**:
