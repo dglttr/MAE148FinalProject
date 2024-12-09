@@ -76,7 +76,7 @@ The expanded scope reflects the adaptability and robustness of the system, showc
 
 **Timeline**:
 <div align="center">
-  <img src="https://github.com/dglttr/MAE148FinalProject/blob/main/Screenshot%202024-12-07%20205752.png" alt="Car" height="600">
+  <img src="https://github.com/dglttr/MAE148FinalProject/blob/main/Screenshot%202024-12-08%20221328.png" alt="Car" height="600">
 </div>
 
 
