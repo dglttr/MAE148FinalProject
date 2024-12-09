@@ -58,7 +58,7 @@ The project represents a synthesis of voice control, AI-based natural language p
   <li>Shivharsh Kand - Mechanical Engineering - Class of 2025</li>
 </ul>
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/b73677f6-a740-4d5b-a945-56ab7ce24f93" alt="group_pic" style="width: 70%">
+  <img src="https://github.com/user-attachments/assets/b73677f6-a740-4d5b-a945-56ab7ce24f93" alt="group_pic" style="width: 60%">
 </div>
 
 ## Project Goals and Timeline
