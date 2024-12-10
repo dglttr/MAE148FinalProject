@@ -162,8 +162,10 @@ The chart below shows how the software is structured. Fundamentally, we are usin
 - **OAK-D Camera**: Directly connected to the Jetson via USB, runs the stop sign detection AI model.
 
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/33715aae-859f-4e02-af10-2c55a63c8c86" alt="Program Overview" style="width: 70%">
+  <img src="https://github.com/user-attachments/assets/c256fe42-f3bf-4a1f-aab3-6564c327b950" alt="Program Overview" style="width: 70%">
 </div>
+
+
 
 ### Speech-to-Text (STT)
 For understanding voice commands, we leverage the microphone of the laptop so the user does not have to move along the Jetson Nano. We use the Python package `SpeechRecognition` and concretely, the underlying Google Speech Recognition API, to get the command spoken as text. We typically saw latencies of 400-600 ms, depending on the network connection. Note that the `SpeechRecognition` uses a hardcoded API key for the API and there is a limit on the number of requests you can do per day.
