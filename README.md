@@ -57,6 +57,9 @@ The project represents a synthesis of voice control, AI-based natural language p
   <li>Daniel Glatter - Mechanical Engineering - Class of 2025</li>
   <li>Shivharsh Kand - Mechanical Engineering - Class of 2025</li>
 </ul>
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/b73677f6-a740-4d5b-a945-56ab7ce24f93" alt="group_pic" style="width: 60%">
+</div>
 
 ## Project Goals and Timeline
 **Project Goals**:
@@ -76,7 +79,7 @@ The expanded scope reflects the adaptability and robustness of the system, showc
 
 **Timeline**:
 <div align="center">
-  <img src="https://github.com/dglttr/MAE148FinalProject/blob/main/Screenshot%202024-12-07%20205752.png" alt="Car" height="600">
+  <img src="https://github.com/dglttr/MAE148FinalProject/blob/main/Screenshot%202024-12-08%20221328.png" alt="Car" height="600">
 </div>
 
 
@@ -159,8 +162,11 @@ The chart below shows how the software is structured. Fundamentally, we are usin
 - **OAK-D Camera**: Directly connected to the Jetson via USB, runs the stop sign detection AI model.
 
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/33715aae-859f-4e02-af10-2c55a63c8c86" alt="Program Overview" style="width: 70%">
+  <img src="https://github.com/user-attachments/assets/70e2589e-7654-4777-99c4-f07131961fdc" alt="Software Overview" style="width: 70%">
 </div>
+
+
+
 
 ### Speech-to-Text (STT)
 For understanding voice commands, we leverage the microphone of the laptop so the user does not have to move along the Jetson Nano. We use the Python package `SpeechRecognition` and concretely, the underlying Google Speech Recognition API, to get the command spoken as text. We typically saw latencies of 400-600 ms, depending on the network connection. Note that the `SpeechRecognition` uses a hardcoded API key for the API and there is a limit on the number of requests you can do per day.
@@ -176,7 +182,7 @@ After handling speech-to-text, the next task is to extract three variables to di
 The API key for the Gemini API has to be set as an environment variable (see step-by-step instructions below). You can request your own key [here](https://aistudio.google.com/apikey). The Gemini API was chosen because it offers a very easy interface and a generous free plan. With the LLM in place, our system can interpret even more complex driving instructions like "make a u-turn" or "go a little more to the right while being way faster". The LLM parses each command and converts it into structured data that we use to steer the car. After we receive the output of the LLM, we do some processing and case handling to ensure that the right parameters are published to the `steering_commands` topic.
 
 ### Graphical User Interface (GUI)
-The GUI is consists of a button, a status text box and a timeout counter text box. To interact with it, the user clicks the Start Recording button. After talking, the audio is transcribed and intent understood (as described above). The understood intent is then shown on the user interface. In case there are any errors, they are also shown in the GUI. After the command was sent to the Jetson, a countdown starts indicating how much longer the command will be executed on the Jetson.
+The GUI is consists of a button, a status text box, a timeout dountdown text box and an emergency stop button. To interact with it, the user clicks the Start Recording button. After talking, the audio is transcribed and intent understood (as described above). The understood intent is then shown on the user interface (in the status text box). In case there are any errors, they are also shown in the GUI. After the command was sent to the Jetson, a countdown starts indicating how much longer the command will be executed on the Jetson. The emergency stop button works at all times to immediately publish a stop signal (zero velocity) to the `steering_commands` topic.
 
 Behind the scenes, the GUI leverages the Python `tkinter` package and is launched from the ROS2 publisher node and keeps running continuously. It is in the `graphical_user_interface.py` script and called the `VoiceRecorderUI`.
 
