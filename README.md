@@ -86,8 +86,8 @@ The expanded scope reflects the adaptability and robustness of the system, showc
 ## Mechanical Design
 
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/53bfc4e6-5f2d-4a59-af19-3724c1d3ac05" alt="Car" height="300">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  <img src="https://github.com/user-attachments/assets/251a9552-a5dc-4f6a-830d-e0891b5de420" alt="Car" height="300">
+  <img src="https://github.com/user-attachments/assets/53bfc4e6-5f2d-4a59-af19-3724c1d3ac05" alt="Car1" height="250">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <img src="https://github.com/user-attachments/assets/251a9552-a5dc-4f6a-830d-e0891b5de420" alt="Car2" height="250">
 </div>
 
 The mechanical design of SonicCar focused on creating custom components to support the functionality of the vehicle. These components were designed, prototyped, and fabricated to ensure flexibility, durability, and compatibility with the onboard systems. Key mechanical elements include:  
